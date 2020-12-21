@@ -1,0 +1,30 @@
+﻿<Application x:Class="ultra_comment_viewer.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ultra_comment_viewer"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+       <ResourceDictionary>
+           <!--================== マテリアルデザイン =======================-->
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+             <!--================= GridSplitterの設定 ======================-->
+            <Style x:Key="HorizontalGridSplitter" TargetType="{x:Type GridSplitter}">
+                <Setter Property="Height" Value="5" />
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+            </Style>
+            <Style x:Key="VerticalGridSplitter" TargetType="{x:Type GridSplitter}">
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="Width" Value="5" />
+            </Style>
+        </ResourceDictionary>
+        
+            
+    </Application.Resources>
+    
+      
+</Application>
