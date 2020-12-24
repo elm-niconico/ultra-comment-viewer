@@ -65,7 +65,6 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid
-                            Width="600"
                             >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="20*"/>
@@ -93,7 +92,7 @@
                                 Grid.RowSpan="2"
                                 Grid.Column="3"
                                 Grid.ColumnSpan="3"
-                                md:UniformCornerRadius="20"
+                                md:UniformCornerRadius="7"
                                 Background="GreenYellow"
                                 >
                                 <TextBlock
