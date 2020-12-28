@@ -11,11 +11,6 @@ namespace ultra_comment_viewer_test
 {
     class WebSocketTest
     {
-        [Test]
-        public async Task SuccessConnectToServer()
-        {
-          
-        }
 
         
 

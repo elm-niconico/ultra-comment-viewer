@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using ultra_comment_viewer.src.model.json;
+using ultra_comment_viewer.src.model.json.model;
 
 namespace ultra_comment_viewer.src.model.http
 {
@@ -21,8 +22,20 @@ namespace ultra_comment_viewer.src.model.http
 
         private async Task<string> GetMovieIdAsync(string userId)
         {
+            var userInfo = await GetUserInfoAsync(userId);
+            return userInfo.movie.id.ToString();
+        }
+
+        public async Task<bool> GetUserIsNotOnLive(string userId)
+        {
+            var userInfo = await GetUserInfoAsync(userId);
+            return !userInfo.movie.is_on_live;
+        }
+
+        private async Task<TwicasUserInfo> GetUserInfoAsync(string userId)
+        {
             var response = await ElmHttpClient.WrapGetAsync(TwicasApi.GetMoviIdApi(userId));
-            return new TwicasJsonConverter().ConverToUserInfo(response).movie.id.ToString();
+            return new TwicasJsonConverter().ConverToUserInfo(response);
         }
     }
 }
