@@ -10,8 +10,6 @@ namespace ultra_comment_viewer.src.model.http
     public class TwicasRestClient : ILiveRestClient
     {
 
-       
-
         public async Task<string> GetWebSocketUrlAsync(string userId)
         {
             var movieId = await GetMovieIdAsync(userId);

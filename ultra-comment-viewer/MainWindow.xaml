@@ -169,6 +169,8 @@
 
                             <!-- コメント -->
                             <md:Card
+                                Cursor="Hand"
+                                MouseMove="Card_MouseMove"
                                 VerticalAlignment="Top"
                                 Width="600"
                                 md:UniformCornerRadius="7"

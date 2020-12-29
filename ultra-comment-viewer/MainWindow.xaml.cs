@@ -1,4 +1,5 @@
-﻿using Reactive.Bindings;
+﻿using MaterialDesignThemes.Wpf;
+using Reactive.Bindings;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ultra_comment_viewer.src.commons.extends_mothod;
 using ultra_comment_viewer.src.model;
 using ultra_comment_viewer.src.model.http;
 using ultra_comment_viewer.src.model.json;
@@ -36,6 +38,8 @@ namespace ultra_comment_viewer
 
         private bool _autoScrollFlag;
 
+        private DropLogic _dropLogic;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -53,7 +57,8 @@ namespace ultra_comment_viewer
                                                                     new TwicasWebSocketClient(),
                                                                     new TwicasRestClient(), 
                                                                     new TwicasCommentConverter())));
-
+            this._dropLogic = new DropLogic();
+            
         }
 
    
@@ -88,10 +93,18 @@ namespace ultra_comment_viewer
 
         private void EventDropOnUrlMark(object sender, DragEventArgs e)
         {
-            if (!(sender is ListViewItem)) return;
+            var commentModel = (CommentModel)e.Data.GetData(typeof(CommentModel));
+            if (commentModel == null) return;
+               
+            this._dropLogic.DoStartOpenBrowser(commentModel.Comment);
+        }
 
-            var comment = sender as ListViewItem;
-
+        private void Card_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (sender.NotNull() && e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragDrop.DoDragDrop((Card)sender, CommentList.SelectedItem, DragDropEffects.Copy);
+            }
         }
     }
 }

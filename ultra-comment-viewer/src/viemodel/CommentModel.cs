@@ -12,6 +12,11 @@ namespace ultra_comment_viewer.src.viemodel
         public string UserName   { get; set; }
         public string Comment    { get; set; }
         public SolidColorBrush CommentColor { get; set; }
+        public string UserId { get; set; }
+        // 配信サイトの名前
+        public LiveSiteName LiveName { get; set; }
+
+
 
         public static CommentModel BuildDisconnectModel()
         {

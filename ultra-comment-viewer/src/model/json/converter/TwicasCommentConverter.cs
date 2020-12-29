@@ -29,7 +29,9 @@ namespace ultra_comment_viewer.src.model.json.converter
                 Image = userIcon,
                 UserName = jsonModel.author.name,
                 Comment = jsonModel.message,
-                CommentColor = new SolidColorBrush(Colors.GreenYellow)
+                CommentColor = new SolidColorBrush(Colors.GreenYellow),
+                UserId = jsonModel.author.id,
+                LiveName = LiveSiteName.TWICAS
             };
             return model;
         }

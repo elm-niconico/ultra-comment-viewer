@@ -13,6 +13,7 @@ using System.Net.WebSockets;
 using ultra_comment_viewer.src.viewLogic.observer;
 using ultra_comment_viewer.src.model.http;
 using ultra_comment_viewer.src.commons.extends_mothod;
+using System.Diagnostics;
 
 namespace ultra_comment_viewer.src.model
 {
@@ -45,7 +46,8 @@ namespace ultra_comment_viewer.src.model
             var restClient = new TwicasRestClient();
 
             await foreach(var response in _webSocket.ReadCommentFromServerAsync(webSocketUrl, observer))
-            {                
+            {
+                Debug.WriteLine(response);
                 if (this._responseEmpty.IsNotMatch(response))
                 {
                     yield return _converter.CovertToCommentModelFromJson(response);

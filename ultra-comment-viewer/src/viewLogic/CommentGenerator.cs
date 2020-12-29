@@ -29,14 +29,11 @@ namespace ultra_comment_viewer.src.viewLogic
         {
             await foreach(var commentModel in _server.FetchCommentAsync(userId, this._observer))
             {
+                //TODO ローカルファイルにコメントを保存
                 _collections.Add(commentModel);
                 scrollChange();
             }
-
         }
-
-
-
 
         public async Task DisConnectCommentServerAsync()
         {
