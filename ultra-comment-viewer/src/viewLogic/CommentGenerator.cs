@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ultra_comment_viewer.src.model;
 using ultra_comment_viewer.src.viemodel;
+using ultra_comment_viewer.src.viewLogic.log.logger;
 using ultra_comment_viewer.src.viewLogic.observer;
 
 namespace ultra_comment_viewer.src.viewLogic
@@ -27,9 +28,10 @@ namespace ultra_comment_viewer.src.viewLogic
 
         public async Task ConnectCommentServerAsync(string userId, Action scrollChange)
         {
+            var logger = new Logger();
             await foreach(var commentModel in _server.FetchCommentAsync(userId, this._observer))
             {
-                //TODO ローカルファイルにコメントを保存
+                logger.PushLog(commentModel);
                 _collections.Add(commentModel);
                 scrollChange();
             }
@@ -40,7 +42,6 @@ namespace ultra_comment_viewer.src.viewLogic
             await this._server.DisconnectServerASync();
            
         }
-
 
         public void AddDisconnectComment()
         {

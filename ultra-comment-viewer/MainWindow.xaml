@@ -52,6 +52,7 @@
                 </Grid.RowDefinitions>
                 <!-- URLドロップゾーン -->
                 <md:Card
+                    Content="URL#"
                     Grid.Row="0"
                     Background="Red"
                     Margin="5,5,5,5"
@@ -60,20 +61,24 @@
                     />
                 <!-- URLドロップゾーン -->
                 <md:Card
+                    Content="ユーザー情報"
                     Grid.Row="1"
                     Background="Blue"
                     Margin="5,5,5,5"
                     AllowDrop="True"
-                    Drop="EventDropOnUrlMark"
+                    Drop="Card_Drop"
                     />
                 <!-- URLドロップゾーン -->
                 <md:Card
+                    Content="ログコメント#"
                     Grid.Row="2"
-                    Background="Yellow"
+                    AllowDrop="True"
+                    Drop="EventDropOpenLogWindow"
                     Margin="5,5,5,5"
                     />
                 <!-- URLドロップゾーン -->
                 <md:Card
+                    Content="ユーザーNG"
                     Grid.Row="3"
                     Background="Green"
                     Margin="5,5,5,5"
@@ -139,6 +144,8 @@
             <ListView 
                 x:Name="CommentList"
                 ScrollViewer.ScrollChanged="EventScrollChangedUpdateAutoScrollFlag"
+                VirtualizingPanel.IsVirtualizing="True"
+                VirtualizingPanel.VirtualizationMode="Recycling"
                 >
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -159,8 +166,7 @@
                                     Grid.Column="0"
                                    />
                                 <!-- ユーザーネーム -->
-                                <TextBlock
-                                    
+                                <TextBlock                                    
                                     TextWrapping="Wrap"
                                     Text="{Binding UserName}"
                                     FontSize="8"
@@ -170,7 +176,7 @@
                             <!-- コメント -->
                             <md:Card
                                 Cursor="Hand"
-                                MouseMove="Card_MouseMove"
+                                MouseMove="EventMouseMoveCommentDrag"
                                 VerticalAlignment="Top"
                                 Width="600"
                                 md:UniformCornerRadius="7"

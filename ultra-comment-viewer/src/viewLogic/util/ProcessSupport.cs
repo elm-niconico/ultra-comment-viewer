@@ -24,7 +24,7 @@ namespace ultra_comment_viewer.src.viewLogic.util
             }
             catch
             {
-                MessageBox.Show(Mesasge.NOT_VALID_URL);
+                MessageBox.Show(Messages.NOT_VALID_URL);
             }
         }
     }

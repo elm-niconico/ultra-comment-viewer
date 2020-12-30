@@ -10,6 +10,22 @@ namespace ultra_comment_viewer.src.model
     {
         private ElmHttpClient() { }
 
+        //TODO  HttpClientを使いまわすか検討
+
+        public async static Task<string> WrapGetWithHeaderAsync(string api, string accessToken)
+        {
+            string response = null;
+            using(var client = new HttpClient())
+            {
+                var request = new HttpRequestMessage(HttpMethod.Get, api);
+                request.Headers.Add("Authorization", accessToken);
+                
+                var message = await client.SendAsync(request);
+                response = await message.Content.ReadAsStringAsync();
+            }
+            return response;
+        }
+
         public async static Task<string>  WrapGetAsync(string api)
         {
             string response = null;

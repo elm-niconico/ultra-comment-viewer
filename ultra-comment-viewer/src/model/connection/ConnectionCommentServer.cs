@@ -31,8 +31,7 @@ namespace ultra_comment_viewer.src.model
 
         public ConnectionCommentServer(ABLiveWebSocketClient ws,
                                        ILiveRestClient rest,
-                                       ABLiveInfoConverter converter                                
-                                  )
+                                       ABLiveInfoConverter converter)
         {
             this._webSocket = ws;
             this._rest = rest;
@@ -83,7 +82,7 @@ namespace ultra_comment_viewer.src.model
         {
             await this._webSocket.DisconnectServer(
                 WebSocketCloseStatus.NormalClosure,
-                Mesasge.CLOSE_SERVER_NORMAL
+                Messages.CLOSE_SERVER_NORMAL
                 );
         }
 

@@ -23,6 +23,7 @@ using ultra_comment_viewer.src.model.json.converter;
 using ultra_comment_viewer.src.model.websocket;
 using ultra_comment_viewer.src.viemodel;
 using ultra_comment_viewer.src.view.validater;
+using ultra_comment_viewer.src.view.window;
 using ultra_comment_viewer.src.viewLogic;
 
 namespace ultra_comment_viewer
@@ -58,7 +59,10 @@ namespace ultra_comment_viewer
                                                                     new TwicasRestClient(), 
                                                                     new TwicasCommentConverter())));
             this._dropLogic = new DropLogic();
-            
+
+
+           
+
         }
 
    
@@ -93,18 +97,41 @@ namespace ultra_comment_viewer
 
         private void EventDropOnUrlMark(object sender, DragEventArgs e)
         {
-            var commentModel = (CommentModel)e.Data.GetData(typeof(CommentModel));
+            var commentModel = CastToCommentModelOrNull(e);
             if (commentModel == null) return;
                
             this._dropLogic.DoStartOpenBrowser(commentModel.Comment);
         }
 
-        private void Card_MouseMove(object sender, MouseEventArgs e)
+        private void EventMouseMoveCommentDrag(object sender, MouseEventArgs e)
         {
             if (sender.NotNull() && e.LeftButton == MouseButtonState.Pressed)
             {
                 DragDrop.DoDragDrop((Card)sender, CommentList.SelectedItem, DragDropEffects.Copy);
             }
+        }
+
+        private void EventDropOpenLogWindow(object sender, DragEventArgs e)
+        {
+            var commentModel = CastToCommentModelOrNull(e);
+            if (commentModel == null) return;
+
+            this._dropLogic.OpenLogCommentWindow(window: this, commentModel);
+        }
+
+        private async void Card_Drop(object sender, DragEventArgs e)
+        {
+            var commentModel = CastToCommentModelOrNull(e);
+            if (commentModel == null) return;
+
+            await this._dropLogic.OpenTwicasUserInfoWindow(this, commentModel);
+
+        }
+
+
+        private CommentModel CastToCommentModelOrNull(DragEventArgs e)
+        {
+            return (CommentModel)e.Data.GetData(typeof(CommentModel));
         }
     }
 }

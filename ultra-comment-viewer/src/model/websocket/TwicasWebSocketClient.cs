@@ -24,7 +24,7 @@ namespace ultra_comment_viewer.src.model.websocket
                 if (response.MessageType == WebSocketMessageType.Close)
                 {
                     if(this.webSocketClient.State != WebSocketState.Closed)
-                        await DisconnectServer(WebSocketCloseStatus.NormalClosure, Mesasge.CLOSE_SERVER_NORMAL);
+                        await DisconnectServer(WebSocketCloseStatus.NormalClosure, Messages.CLOSE_SERVER_NORMAL);
                     yield break;
                 }
                 /*int EndOfMessageCount = await ReadToEndOfMessageAsync(response, buffer);
@@ -54,7 +54,7 @@ namespace ultra_comment_viewer.src.model.websocket
             {
               if(responseCount >= buffer.Length)
                 {
-                    await DisconnectServer(WebSocketCloseStatus.MessageTooBig, Mesasge.CLOSE_SERVER_MESSAGE_TO_BIG);
+                    await DisconnectServer(WebSocketCloseStatus.MessageTooBig, Messages.CLOSE_SERVER_MESSAGE_TO_BIG);
                     return -1;
                 }
                 var segment = new ArraySegment<byte>(buffer, responseCount, buffer.Length - responseCount);

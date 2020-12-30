@@ -24,7 +24,7 @@ namespace ultra_comment_viewer.src.viemodel
             {
                 Image = null,
                 UserName = "System",
-                Comment = Mesasge.CLOSE_SERVER_NORMAL,
+                Comment = Messages.CLOSE_SERVER_NORMAL,
                 CommentColor = new SolidColorBrush(Colors.Yellow),
                 
             };
