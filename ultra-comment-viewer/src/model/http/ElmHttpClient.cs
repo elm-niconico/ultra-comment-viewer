@@ -18,7 +18,7 @@ namespace ultra_comment_viewer.src.model
             using(var client = new HttpClient())
             {
                 var request = new HttpRequestMessage(HttpMethod.Get, api);
-                request.Headers.Add("Authorization", accessToken);
+                request.Headers.Add("Authorization", $"Bearer {accessToken}");
                 
                 var message = await client.SendAsync(request);
                 response = await message.Content.ReadAsStringAsync();

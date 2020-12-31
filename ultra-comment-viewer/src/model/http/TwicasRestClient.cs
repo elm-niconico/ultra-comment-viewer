@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using ultra_comment_viewer.src.model.json;
 using ultra_comment_viewer.src.model.json.model;
+using ultra_comment_viewer.src.model.json.model.userInfo;
+using ultra_comment_viewer.src.model.json.model.userInfo2;
 using ultra_comment_viewer.src.viemodel;
 
 namespace ultra_comment_viewer.src.model.http
@@ -31,14 +34,16 @@ namespace ultra_comment_viewer.src.model.http
             return !userInfo.movie.is_on_live;
         }
 
-        public async Task<TwicasUserInfoViewModel> GetUserInfoAsync(string userId, string acceessToken)
+        public async Task<TwicasUserInfoDetailFromJson> GetUserInfoAsync(string userId, string acceessToken)
         {
             var response = await ElmHttpClient.WrapGetWithHeaderAsync(TwicasApi.GetUserInfoUrl(userId), acceessToken);
-            return new TwicasJsonConverter().ConvertToUserInfoViewModel(response);
+            
+            return new TwicasJsonConverter().ConvertToUserInfoDetailModel(response);
         }
 
+
         //TODO MovieId取得処理メソッド名の変更？
-        private async Task<TwicasUserInfo> GetUserLiveInfoAsync(string userId)
+        private async Task<TwicasLiveInfoFromJson> GetUserLiveInfoAsync(string userId)
         {
             var response = await ElmHttpClient.WrapGetAsync(TwicasApi.GetMoviIdApi(userId));
             return new TwicasJsonConverter().ConverToUserInfo(response);

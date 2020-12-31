@@ -47,28 +47,6 @@ namespace ultra_comment_viewer.src.model.websocket
             return IsOpen();
         }
 
-        private async Task<int> ReadToEndOfMessageAsync(WebSocketReceiveResult receiveResult, byte[] buffer)
-        {
-            int responseCount = receiveResult.Count;
-            while (!receiveResult.EndOfMessage)
-            {
-              if(responseCount >= buffer.Length)
-                {
-                    await DisconnectServer(WebSocketCloseStatus.MessageTooBig, Messages.CLOSE_SERVER_MESSAGE_TO_BIG);
-                    return -1;
-                }
-                var segment = new ArraySegment<byte>(buffer, responseCount, buffer.Length - responseCount);
-                receiveResult = await webSocketClient.ReceiveAsync(segment, CancellationToken.None);
-
-                responseCount += receiveResult.Count;
-            }
-            return responseCount;
-        }
-
-
-        
-
-
         private bool IsOpen() => webSocketClient.State == WebSocketState.Open;
 
     }

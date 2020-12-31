@@ -19,7 +19,7 @@ namespace ultra_comment_viewer.src.view.window
     public partial class TwicasUserInfoWindow : Window
     {
 
-        public TwicasUserInfoWindow(TwicasUserInfoViewModel model)
+        public TwicasUserInfoWindow(TwicasUserInfoWindowViewModel model)
         {
             InitializeComponent();
 

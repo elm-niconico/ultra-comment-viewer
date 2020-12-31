@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ultra_comment_viewer.src.viemodel
+namespace ultra_comment_viewer.src.model.json.model.userInfo2
 {
     public class User
     {
@@ -19,7 +19,8 @@ namespace ultra_comment_viewer.src.viemodel
         public int created { get; set; }
     }
 
-    public class TwicasUserInfoViewModel : IUserInfoViewModel
+    public class TwicasUserInfoDetailFromJson
+
     {
         public User user { get; set; }
         public int supporter_count { get; set; }
@@ -27,5 +28,4 @@ namespace ultra_comment_viewer.src.viemodel
     }
 
 
-   
 }

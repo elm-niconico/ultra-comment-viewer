@@ -46,7 +46,7 @@ namespace ultra_comment_viewer.src.model
 
             await foreach(var response in _webSocket.ReadCommentFromServerAsync(webSocketUrl, observer))
             {
-                Debug.WriteLine(response);
+                //Debug.WriteLine(response);
                 if (this._responseEmpty.IsNotMatch(response))
                 {
                     yield return _converter.CovertToCommentModelFromJson(response);

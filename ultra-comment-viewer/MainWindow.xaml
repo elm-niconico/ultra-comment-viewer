@@ -150,6 +150,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel
+                            Margin="20 0 20 0"
                             Orientation="Horizontal"
                             Height="50"
                             >
@@ -170,6 +171,7 @@
                                     TextWrapping="Wrap"
                                     Text="{Binding UserName}"
                                     FontSize="8"
+                                    VerticalAlignment="Center"
                                     />
                             </StackPanel>
 
