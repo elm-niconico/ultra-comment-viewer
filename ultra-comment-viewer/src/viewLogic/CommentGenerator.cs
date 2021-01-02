@@ -12,14 +12,14 @@ namespace ultra_comment_viewer.src.viewLogic
 {
     public class CommentGenerator
     {
-        private readonly ConnectionCommentServer _server;
+        private readonly TwicasConnectionCommentServer _server;
 
-        private readonly ObservableCollection<CommentModel> _collections;
+        private readonly ObservableCollection<CommentViewModel> _collections;
 
         private readonly DisconnectObserver _observer;
 
-        public CommentGenerator(ObservableCollection<CommentModel> collections,
-                                 ConnectionCommentServer server)
+        public CommentGenerator(ObservableCollection<CommentViewModel> collections,
+                                 TwicasConnectionCommentServer server)
         {
             this._collections = collections;
             this._server = server;
@@ -45,7 +45,7 @@ namespace ultra_comment_viewer.src.viewLogic
 
         public void AddDisconnectComment()
         {
-            this._collections.Add(CommentModel.BuildDisconnectModel());
+            this._collections.Add(CommentViewModel.BuildDisconnectModel());
         }
 
 

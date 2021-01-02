@@ -13,18 +13,18 @@ namespace ultra_comment_viewer.src.model.json.converter
     {
 
 
-        private TwicasCommentModelFromJson ConvertToJsonModel(string responseJson)
+        private TwicasCommentJsonModel ConvertToJsonModel(string responseJson)
         {
-            return JsonSerializer.Deserialize<TwicasCommentModelFromJson[]>(responseJson)[0];
+            return JsonSerializer.Deserialize<TwicasCommentJsonModel[]>(responseJson)[0];
         }
 
 
 
-        public override CommentModel CovertToCommentModelFromJson(string responseJson)
+        public override CommentViewModel CovertToCommentViewModel(string responseJson)
         {
             var jsonModel = ConvertToJsonModel(responseJson);
             var userIcon = new BitmapImage(new Uri(jsonModel.author.profileImage));
-            var model = new CommentModel()
+            var model = new CommentViewModel()
             {
                 Image = userIcon,
                 UserName = jsonModel.author.name,

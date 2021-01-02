@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AngleSharp" Version="0.14.0" />
     <PackageReference Include="MaterialDesignColors" Version="1.2.7" />
     <PackageReference Include="MaterialDesignThemes" Version="3.2.0" />
     <PackageReference Include="MaterialDesignThemes.MahApps" Version="0.1.5" />
@@ -19,6 +20,7 @@
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.113.7" />
     <PackageReference Include="System.Linq.Async" Version="5.0.0" />
     <PackageReference Include="System.Text.Json" Version="5.0.0" />
+    <PackageReference Include="WebSocketSharp-netstandard" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="src\viewLogic\mainWindow\parser\" />
     <Folder Include="src\viewLogic\userInfoWindow\" />
   </ItemGroup>
 

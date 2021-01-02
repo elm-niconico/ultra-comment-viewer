@@ -15,5 +15,11 @@ namespace ultra_comment_viewer.src
         public const string NOT_VALID_URL = "正しいURLではありません";
 
         public const string NOT_SUPPORT_WINDOW_TYPE = "このコメントはどの配信サイトにも属しません";
+
+        public const string CLOSE_SERVER_MESSAGE_CONNECTION_ERROR = "WebSocket接続開始処理中にエラーが発生しました";
+
+        //TODO Messagewokaku
+        public const string FAILD_REGEX = "WebSocket";
+
     }
 }

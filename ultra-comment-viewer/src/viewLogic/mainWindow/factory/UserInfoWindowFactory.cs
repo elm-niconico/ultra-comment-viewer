@@ -12,7 +12,7 @@ namespace ultra_comment_viewer.src.viewLogic.factory
 {
     public class UserInfoWindowFactory
     {
-        public async Task<Window> FactoryUserInfoWindow(CommentModel model, Window window)
+        public async Task<Window> FactoryUserInfoWindow(CommentViewModel model, Window window)
         {
             switch (model.LiveName)
             {
@@ -28,7 +28,7 @@ namespace ultra_comment_viewer.src.viewLogic.factory
         }
 
 
-        private async Task<TwicasUserInfoWindow> CreateTwicasUserInfoWindow(CommentModel model, Window window)
+        private async Task<TwicasUserInfoWindow> CreateTwicasUserInfoWindow(CommentViewModel model, Window window)
         {
             var restClient = new TwicasRestClient();
 

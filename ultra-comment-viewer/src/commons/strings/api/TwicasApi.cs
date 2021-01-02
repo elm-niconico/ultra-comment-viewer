@@ -16,9 +16,14 @@ namespace ultra_comment_viewer.src.model
 
         public const string CSRF_TOKEN = "ELM";
 
-        public static string GetMoviIdApi(string userId) => $"https://frontendapi.twitcasting.tv/users/{userId}/latest-movie";
+        /* 【PUT】 指定したユーザーのサポーターになる
+        * bodyにサポーターになるユーザーIDを格納した配列を埋め込む
+        * 例 : {"target_user_ids": [{target_user_id}]}*/
+        public const string PUT_REGESITE_SUPPORTER = "https://apiv2.twitcasting.tv/support";
         
         public const string GET_WEB_SOCKET_URL = "https://twitcasting.tv/eventpubsuburl.php";
+
+        public static string GetMoviIdApi(string userId) => $"https://frontendapi.twitcasting.tv/users/{userId}/latest-movie";
 
         //ユーザーの連携認証ページ遷移のためのURL
         public static string GetUrlAccessAuthenticationPage()
@@ -26,8 +31,15 @@ namespace ultra_comment_viewer.src.model
             return $"https://apiv2.twitcasting.tv/oauth2/authorize?client_id={CLIENT_ID}&response_type=code&state={CSRF_TOKEN}";
         }
 
+        
+        // 【GET】 Twicasのユーザープロフいーる情報を取得するためのAPI
         public static string GetUserInfoUrl(string userId) => $"https://apiv2.twitcasting.tv/users/{userId}";
 
+        /* 【GET】 ユーザーのライブ情報(配信していなければ録画情報), プロフィール情報を取得するAPI
+         * ユーザーが配信していない && ユーザーが録画を残していない場合NotFound 404が発生するため注意*/
         public static string GetUserInfoDetailUrl(string movieId) => $"https://apiv2.twitcasting.tv/movies/{movieId}";
+
+       
+
     }
 }

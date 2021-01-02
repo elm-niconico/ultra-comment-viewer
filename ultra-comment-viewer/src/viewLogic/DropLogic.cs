@@ -27,7 +27,7 @@ namespace ultra_comment_viewer.src.viewLogic
         }
 
 
-        public void OpenLogCommentWindow(Window window, CommentModel model)
+        public void OpenLogCommentWindow(Window window, CommentViewModel model)
         {
             var logger = new Logger();
             var logComment = logger.SelectLogComment(model);
@@ -42,7 +42,7 @@ namespace ultra_comment_viewer.src.viewLogic
             logWindow.Show();
         }
 
-        public async Task OpenTwicasUserInfoWindow(Window window, CommentModel model)
+        public async Task OpenTwicasUserInfoWindow(Window window, CommentViewModel model)
         {
             var factory = new UserInfoWindowFactory();
 

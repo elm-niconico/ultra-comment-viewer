@@ -20,11 +20,11 @@ namespace ultra_comment_viewer.src.view.window
     public partial class LogCommentWindow : Window
     {
 
-        public LogCommentWindow(List<CommentModel> models, LogCommentViewModel logmodel)
+        public LogCommentWindow(List<CommentViewModel> models, LogCommentViewModel logmodel)
         {
             InitializeComponent();
 
-            var comments = new ObservableCollection<CommentModel>();
+            var comments = new ObservableCollection<CommentViewModel>();
             models.ForEach(m => comments.Add(m));
 
             this.DataContext = logmodel;

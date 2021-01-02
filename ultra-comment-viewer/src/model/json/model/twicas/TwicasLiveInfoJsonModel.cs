@@ -10,7 +10,7 @@ namespace ultra_comment_viewer.src.model.json.model
         public bool is_on_live { get; set; }
     }
 
-    public class TwicasLiveInfoFromJson
+    public class TwicasLiveInfoJsonModel
     {
         public int update_interval_sec { get; set; }
         public Movie movie { get; set; }

@@ -11,14 +11,14 @@ namespace ultra_comment_viewer.src.model.json
 {
     public class TwicasJsonConverter
     {
-        public TwicasLiveInfoFromJson ConverToUserInfo(string json)
+        public TwicasLiveInfoJsonModel ConverToUserInfo(string json)
         {
-            return JsonSerializer.Deserialize<TwicasLiveInfoFromJson>(json);
+            return JsonSerializer.Deserialize<TwicasLiveInfoJsonModel>(json);
         }
 
-        public WebSocketUrlModelFromJson ConvertToWebSocketUrl(string json)
+        public WebSocketUrlJsonModel ConvertToWebSocketUrl(string json)
         {
-            return JsonSerializer.Deserialize<WebSocketUrlModelFromJson>(json);
+            return JsonSerializer.Deserialize<WebSocketUrlJsonModel>(json);
         }
 
         public TwicasUserInfoDetailFromJson ConvertToUserInfoDetailModel(string json)
@@ -26,7 +26,10 @@ namespace ultra_comment_viewer.src.model.json
             return JsonSerializer.Deserialize<TwicasUserInfoDetailFromJson>(json);
         }
 
-        
+        public  TwicasSupporterJsonModel ConvertToSupporterCountModel(string json)
+        {
+            return JsonSerializer.Deserialize<TwicasSupporterJsonModel>(json);
+        }
 
 
 

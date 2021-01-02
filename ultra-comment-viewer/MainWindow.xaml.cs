@@ -45,7 +45,7 @@ namespace ultra_comment_viewer
         {
             InitializeComponent();
             
-            var collection = new ObservableCollection<CommentModel>();
+            var collection = new ObservableCollection<CommentViewModel>();
             CommentList.ItemsSource = collection;
 
             this._model = new MainWindowViewModel();
@@ -54,10 +54,8 @@ namespace ultra_comment_viewer
 
             _switcher = new ConnectSwitcher(_model,
                                             new CommentGenerator(collection,
-                                                                new ConnectionCommentServer(
-                                                                    new TwicasWebSocketClient(),
-                                                                    new TwicasRestClient(), 
-                                                                    new TwicasCommentConverter())));
+                                                                new TwicasConnectionCommentServer()));
+            
             this._dropLogic = new DropLogic();
 
 
@@ -129,9 +127,9 @@ namespace ultra_comment_viewer
         }
 
 
-        private CommentModel CastToCommentModelOrNull(DragEventArgs e)
+        private CommentViewModel CastToCommentModelOrNull(DragEventArgs e)
         {
-            return (CommentModel)e.Data.GetData(typeof(CommentModel));
+            return (CommentViewModel)e.Data.GetData(typeof(CommentViewModel));
         }
     }
 }

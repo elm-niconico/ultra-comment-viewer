@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ultra_comment_viewer.src.model.json.model
 {
-    public class WebSocketUrlModelFromJson
+    public class WebSocketUrlJsonModel
     {
         public string url { get; set; }
     }

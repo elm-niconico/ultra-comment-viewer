@@ -6,7 +6,7 @@ using System.Windows.Media.Imaging;
 
 namespace ultra_comment_viewer.src.viemodel
 {
-    public class CommentModel
+    public class CommentViewModel
     {
         public BitmapImage Image { get; set; }
         public string UserName   { get; set; }
@@ -18,9 +18,9 @@ namespace ultra_comment_viewer.src.viemodel
 
 
 
-        public static CommentModel BuildDisconnectModel()
+        public static CommentViewModel BuildDisconnectModel()
         {
-            return new CommentModel()
+            return new CommentViewModel()
             {
                 Image = null,
                 UserName = "System",

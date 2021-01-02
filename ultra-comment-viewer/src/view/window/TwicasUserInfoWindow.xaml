@@ -130,10 +130,11 @@
                 Badge="{md:PackIcon Heart}"
                 BadgeColorZoneMode="PrimaryMid">
                 <Button
+                    Click="EventClick"
                     Foreground="GhostWhite"
                     BorderBrush="LightCyan"
                     Background="DeepSkyBlue"
-                    Content="サポータ登録" />
+                    Content="サポータ登録" Cursor="Hand" />
             </md:Badged>
                 
             <TextBlock

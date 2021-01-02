@@ -14,7 +14,7 @@ namespace ultra_comment_viewer.src.model.json.model
         public int grade { get; set; }
     }
     
-    public class TwicasCommentModelFromJson
+    public class TwicasCommentJsonModel
     {
         public string type { get; set; }
         public long id { get; set; }
@@ -23,8 +23,5 @@ namespace ultra_comment_viewer.src.model.json.model
         public Author author { get; set; }
         public int numComments { get; set; }
     }
-
-
-
 
 }
