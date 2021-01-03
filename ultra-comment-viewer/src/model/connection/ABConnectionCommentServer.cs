@@ -39,14 +39,19 @@ namespace ultra_comment_viewer.src.model.connection
             
             await foreach(var repsonse in this.ItsWebSocket.ReadCommentFromServerAsync(ItsWebSocketUrl, observer))
             {
-                var isNotConnect = await CheckConnectionWebSocketAsync(repsonse);
-                if (isNotConnect)
-                {
-                    await DisconnectServerASync();
-                    yield break;
-                }
-                yield return this.ItsConverter.CovertToCommentViewModel(repsonse);
+                LiveStatus liveStatus = await CheckConnectionWebSocketAsync(repsonse);
 
+                switch (liveStatus)
+                {
+                    case LiveStatus.SUCCESS_CONNECT:
+                        yield return this.ItsConverter.CovertToCommentViewModel(repsonse);
+                        break;
+                    case LiveStatus.SKIP_THIS_COMMENT:
+                        break;
+                    case LiveStatus.EXIT:
+                        yield break;           
+                }
+             
             }
         }
 
@@ -54,7 +59,7 @@ namespace ultra_comment_viewer.src.model.connection
         {
             await this.ItsWebSocket.DisconnectServer(WebSocketCloseStatus.NormalClosure, Messages.CLOSE_SERVER_NORMAL);
         }
-        protected abstract Task<bool> CheckConnectionWebSocketAsync(string reponse);
+        protected abstract Task<LiveStatus> CheckConnectionWebSocketAsync(string reponse);
     }
 }
 

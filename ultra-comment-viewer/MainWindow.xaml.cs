@@ -55,12 +55,8 @@ namespace ultra_comment_viewer
             _switcher = new ConnectSwitcher(_model,
                                             new CommentGenerator(collection,
                                                                 new TwicasConnectionCommentServer()));
-            
+         
             this._dropLogic = new DropLogic();
-
-
-           
-
         }
 
    

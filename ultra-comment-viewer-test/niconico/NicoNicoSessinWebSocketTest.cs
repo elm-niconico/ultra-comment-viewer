@@ -11,7 +11,7 @@ namespace ultra_comment_viewer_test.niconico
 {
     class NicoNicoSessinWebSocketTest
     {
-        [Test]
+        //[Test]
         public async Task TestConsoleExtractResponseMessage()
         {
             var client = new NicoNicoRestClient();

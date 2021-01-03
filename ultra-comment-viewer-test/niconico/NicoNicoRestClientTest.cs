@@ -9,11 +9,11 @@ namespace ultra_comment_viewer_test
 {
     class NicoNicoRestClientTest
     {
-        [Test]
+        //[Test]
         public async Task ConsoleTestExtractWebSocketUrl()
         {
             var rest = new NicoNicoRestClient();
-            var liveId = "lv329828386";
+            var liveId = "lv329838614";
             //視聴セッション用のWebSocketUrl
             var webSocketUrl = await rest.GetWebSocketUrlAsync(liveId);
             TestContext.WriteLine(webSocketUrl);

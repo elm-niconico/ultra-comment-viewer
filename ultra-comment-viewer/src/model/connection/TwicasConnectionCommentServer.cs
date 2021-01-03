@@ -46,17 +46,19 @@ namespace ultra_comment_viewer.src.model
 
 
 
-        protected override async Task<bool> CheckConnectionWebSocketAsync(string reponse)
+        protected override async Task<LiveStatus> CheckConnectionWebSocketAsync(string reponse)
         {
+            if (this._responseEmpty.IsNotMatch(reponse)) return LiveStatus.SUCCESS_CONNECT;
 
             //空のレスポンスが5分ほど続くと自動でWebSocketから切断されるため、再接続する必要がある
             if (++this._emptyResponseCount >= 50 && this.ItsWebSocket.IsNotOpenConnection())
             {
                 await ReConnectionServer(ItsWebSocketUrl);
+                return LiveStatus.SKIP_THIS_COMMENT;
             }
 
             //配信が終了してもWebSocketからの接続は切れないため、自分で切断する
-            return await this._extendRest.GetUserIsNotOnLive(ItsId);
+            return await this._extendRest.GetUserIsNotOnLive(ItsId)? LiveStatus.EXIT : LiveStatus.SKIP_THIS_COMMENT;
         }
 
         private async Task ReConnectionServer(string webSocketUrl)

@@ -9,8 +9,7 @@ namespace ultra_comment_viewer.src.model.json
 {
     public abstract class ABLiveInfoConverter
     {
-        public abstract CommentViewModel CovertToCommentViewModel(string responseJson);
-        
 
+        public abstract CommentViewModel CovertToCommentViewModel(string responseJson);
     }
 }
