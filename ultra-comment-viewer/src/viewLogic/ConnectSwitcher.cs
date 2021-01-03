@@ -29,7 +29,8 @@ namespace ultra_comment_viewer.src.viewLogic
             else
             {
                 SwitchConnect();
-                await _generator.ConnectCommentServerAsync(_model.UserId, scrollChange);
+    
+                await _generator.ConnectCommentServerAsync(this._model.UserId, scrollChange);
             }
         }
 

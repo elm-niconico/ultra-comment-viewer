@@ -17,12 +17,12 @@ namespace ultra_comment_viewer.src.model.http
     public class NicoNicoRestClient : ILiveRestClient
     {
 
-       
 
         public async Task<string> GetWebSocketUrlAsync(string liveId)
         {
             var html = await LoadUserLiveHtmlAsync(liveId);
             var parser = new NicoNicoHtmlDataPropsParser(html);
+            
             var webSocketUrl = parser.GetWebSocketUrl();
 
             var connector = new NicoNicoSessionConnector();

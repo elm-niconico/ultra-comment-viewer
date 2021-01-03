@@ -9,13 +9,13 @@ namespace ultra_comment_viewer.src.model.json.converter
     public class NicoNicoJsonConverter
     {
         public DataPropsJsonModel ConverToDataPropsJsonModel(string json)
-        {
-            return JsonSerializer.Deserialize<DataPropsJsonModel>(json);
-        }
+            => JsonSerializer.Deserialize<DataPropsJsonModel>(json);
 
         public LiveRoomJsonModel ConverToLiveRoomJsonModel(string json)
-        {
-            return JsonSerializer.Deserialize<LiveRoomJsonModel>(json);
-        }
+            => JsonSerializer.Deserialize<LiveRoomJsonModel>(json);
+        
+
+        public NicoNicoCommentJsonModel ConverToCommentJsonModel(string json)
+            => JsonSerializer.Deserialize<NicoNicoCommentJsonModel>(json);
     }
 }

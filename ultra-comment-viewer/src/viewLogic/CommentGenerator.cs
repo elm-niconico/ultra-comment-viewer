@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 using ultra_comment_viewer.src.model;
+using ultra_comment_viewer.src.model.connection;
 using ultra_comment_viewer.src.viemodel;
 using ultra_comment_viewer.src.viewLogic.log.logger;
 using ultra_comment_viewer.src.viewLogic.observer;
@@ -12,14 +13,14 @@ namespace ultra_comment_viewer.src.viewLogic
 {
     public class CommentGenerator
     {
-        private readonly TwicasConnectionCommentServer _server;
+        private readonly ABConnectionCommentServer _server;
 
         private readonly ObservableCollection<CommentViewModel> _collections;
 
         private readonly DisconnectObserver _observer;
 
         public CommentGenerator(ObservableCollection<CommentViewModel> collections,
-                                 TwicasConnectionCommentServer server)
+                                 ABConnectionCommentServer server)
         {
             this._collections = collections;
             this._server = server;

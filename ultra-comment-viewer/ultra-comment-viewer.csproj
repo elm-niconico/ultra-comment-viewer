@@ -5,6 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>ultra_comment_viewer</RootNamespace>
     <UseWPF>true</UseWPF>
+    <StartupObject>ultra_comment_viewer.App</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>

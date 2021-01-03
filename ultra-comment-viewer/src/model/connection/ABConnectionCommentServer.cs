@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,8 +23,6 @@ namespace ultra_comment_viewer.src.model.connection
 
         protected string ItsWebSocketUrl;
 
- 
-
         public ABConnectionCommentServer(ABLiveWebSocketClient wb, ILiveRestClient rest, ABLiveInfoConverter converter)
         {
             this.ItsWebSocket = wb;
@@ -37,21 +36,20 @@ namespace ultra_comment_viewer.src.model.connection
             this.ItsId = id;
             this.ItsWebSocketUrl = await this.ItsRest.GetWebSocketUrlAsync(id);
             
-            await foreach(var repsonse in this.ItsWebSocket.ReadCommentFromServerAsync(ItsWebSocketUrl, observer))
+            await foreach(var response in this.ItsWebSocket.ReadCommentFromServerAsync(ItsWebSocketUrl, observer))
             {
-                LiveStatus liveStatus = await CheckConnectionWebSocketAsync(repsonse);
-
+                LiveStatus liveStatus = await CheckConnectionWebSocketAsync(response);
+                Debug.WriteLine(response);
                 switch (liveStatus)
                 {
                     case LiveStatus.SUCCESS_CONNECT:
-                        yield return this.ItsConverter.CovertToCommentViewModel(repsonse);
+                        yield return this.ItsConverter.CovertToCommentViewModel(response);
                         break;
                     case LiveStatus.SKIP_THIS_COMMENT:
                         break;
                     case LiveStatus.EXIT:
                         yield break;           
                 }
-             
             }
         }
 

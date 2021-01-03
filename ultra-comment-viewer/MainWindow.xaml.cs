@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ultra_comment_viewer.src.commons.extends_mothod;
 using ultra_comment_viewer.src.model;
+using ultra_comment_viewer.src.model.connection;
 using ultra_comment_viewer.src.model.http;
 using ultra_comment_viewer.src.model.json;
 using ultra_comment_viewer.src.model.json.converter;
@@ -54,7 +55,7 @@ namespace ultra_comment_viewer
 
             _switcher = new ConnectSwitcher(_model,
                                             new CommentGenerator(collection,
-                                                                new TwicasConnectionCommentServer()));
+                                                                new NicoNicoConnectionCommentServer()));
          
             this._dropLogic = new DropLogic();
         }
