@@ -47,11 +47,22 @@ namespace ultra_comment_viewer.src.model.websocket
 
         public async Task<bool> OnStartConnectServer(string webSocketUrl)
         {
+            await DisconnectBeforeLive();
+
             this.webSocketClient = new ClientWebSocket();
             this.ItsOpeator = new WebSocketOperator(this.webSocketClient, this._observer);
 
             return await this.ItsOpeator.StartConnectServer(webSocketUrl);
         }
+
+        private async Task DisconnectBeforeLive()
+        {
+            if (this.webSocketClient ==  null || this.webSocketClient.State != WebSocketState.Open) return;
+
+            var ope = new WebSocketOperator(this.webSocketClient, this._observer);
+            await ope.DisConnectServer(WebSocketCloseStatus.NormalClosure, Messages.CLOSE_SERVER_NORMAL);
+        }
+
 
         public void DisposeInstance()
         {

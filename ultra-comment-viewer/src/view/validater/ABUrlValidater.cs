@@ -19,15 +19,15 @@ namespace ultra_comment_viewer.src.view.validater
 
         public bool IsValidUrl(MainWindowViewModel model)
         {
-            var userId = ValidateUrl(model.Url);
+            var userId = ExtractMatchRegexUrl(model.LiveUrlWrittenByTwicasForm);
             if (String.IsNullOrEmpty(userId)) return false;
 
-            model.UserId = userId;
+            model.TwicasUserId = userId;
             return true;
 
         }
 
-        abstract protected string ValidateUrl(string url);
+        abstract protected string ExtractMatchRegexUrl(string url);
 
 
     }

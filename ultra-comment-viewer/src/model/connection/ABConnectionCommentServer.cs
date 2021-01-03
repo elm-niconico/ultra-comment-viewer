@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using ultra_comment_viewer.src.model.json;
 using ultra_comment_viewer.src.model.websocket;
 using ultra_comment_viewer.src.viemodel;
@@ -35,11 +36,17 @@ namespace ultra_comment_viewer.src.model.connection
 
             this.ItsId = id;
             this.ItsWebSocketUrl = await this.ItsRest.GetWebSocketUrlAsync(id);
-            
+
+            if (String.IsNullOrEmpty(this.ItsWebSocketUrl))
+            {
+                MessageBox.Show(Messages.CLOSE_SERVER_MESSAGE_CONNECTION_ERROR);
+                yield break;
+            }
+
             await foreach(var response in this.ItsWebSocket.ReadCommentFromServerAsync(ItsWebSocketUrl, observer))
             {
                 LiveStatus liveStatus = await CheckConnectionWebSocketAsync(response);
-                Debug.WriteLine(response);
+ 
                 switch (liveStatus)
                 {
                     case LiveStatus.SUCCESS_CONNECT:

@@ -18,9 +18,10 @@ namespace ultra_comment_viewer.src.viewLogic.factory
             {
                 case LiveSiteName.TWICAS:
                     return await CreateTwicasUserInfoWindow(model, window);
+
                 case LiveSiteName.NICONICO:
-                    throw new NotImplementedException();
-                //TODO ニコニコのウィンドウ生成処理を記述する
+                    return new NicoNicoUserInfoWindow();
+                
                 default:
                     MessageBox.Show(Messages.NOT_SUPPORT_WINDOW_TYPE);
                     throw new NullReferenceException();

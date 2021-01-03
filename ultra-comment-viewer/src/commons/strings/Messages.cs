@@ -18,8 +18,8 @@ namespace ultra_comment_viewer.src
 
         public const string CLOSE_SERVER_MESSAGE_CONNECTION_ERROR = "WebSocket接続開始処理中にエラーが発生しました";
 
-        //TODO Messagewokaku
-        public const string FAILD_REGEX = "WebSocket";
-
+        public const string FAILD_CONNECT_BOUYOMI_CHAN = "棒読みちゃんとの接続に失敗しました";
+        
+       
     }
 }

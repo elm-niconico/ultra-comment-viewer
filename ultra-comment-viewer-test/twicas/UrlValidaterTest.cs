@@ -21,11 +21,11 @@ namespace ultra_comment_viewer_test
         [TestCase("https://twitcasting.tv/c:riinukun","c:riinukun")]
         public void SuccessSuccesValidate(string url, string expect)
         {
-            model.Url = url;
-            var validater = new TwiacasUrlValidater();
+            model.LiveUrlWrittenByTwicasForm = url;
+            var validater = new TwiacasLiveUrlValidater();
             var actual = validater.IsValidUrl(model);
             Assert.AreEqual(true, actual);
-            var userId = model.UserId;
+            var userId = model.TwicasUserId;
             Assert.AreEqual(expect, userId);
         }
 
@@ -33,11 +33,11 @@ namespace ultra_comment_viewer_test
         [TestCase("c:riinukun", "c:riinukun")]
         public void ErrorSuccesValidate(string url, string expect)
         {
-            model.Url = url;
-            var validater = new TwiacasUrlValidater();
+            model.LiveUrlWrittenByTwicasForm = url;
+            var validater = new TwiacasLiveUrlValidater();
             var actual = validater.IsValidUrl(model);
             Assert.AreEqual(false, actual);
-            var userId = model.UserId;
+            var userId = model.TwicasUserId;
             Assert.AreEqual(String.Empty, userId);
         }
 

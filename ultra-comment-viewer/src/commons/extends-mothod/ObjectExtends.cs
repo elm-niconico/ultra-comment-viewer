@@ -10,5 +10,8 @@ namespace ultra_comment_viewer.src.commons.extends_mothod
         {
             return !(instance == null);
         }
+
+        public static bool IsNull(this object instance)
+            => instance == null;
     }
 }

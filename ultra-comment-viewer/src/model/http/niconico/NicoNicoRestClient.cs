@@ -23,7 +23,10 @@ namespace ultra_comment_viewer.src.model.http
             var html = await LoadUserLiveHtmlAsync(liveId);
             var parser = new NicoNicoHtmlDataPropsParser(html);
             
+            
             var webSocketUrl = parser.GetWebSocketUrl();
+            // 限定配信は視聴セッションのWebSocektUrlが空文字になる
+            if (String.IsNullOrEmpty(webSocketUrl)) return null;
 
             var connector = new NicoNicoSessionConnector();
             return connector.FetchCommentServerUrl(webSocketUrl);

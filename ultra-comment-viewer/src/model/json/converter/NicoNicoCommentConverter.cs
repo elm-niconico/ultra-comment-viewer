@@ -15,10 +15,11 @@ namespace ultra_comment_viewer.src.model.json.converter
 
             return new CommentViewModel()
             {
-                UserId  = model.chat.user_id,
+                UserId = model.chat.user_id,
                 UserName = "TEST",
                 Comment = model.chat.content,
-                CommentColor = new SolidColorBrush(Colors.Purple),
+                CommentColor = new SolidColorBrush(Colors.Violet),
+                LiveName = LiveSiteName.NICONICO
             };
         }
     }

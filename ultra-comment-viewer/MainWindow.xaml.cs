@@ -1,42 +1,27 @@
 ﻿using MaterialDesignThemes.Wpf;
-using Reactive.Bindings;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using ultra_comment_viewer.src.commons.extends_mothod;
 using ultra_comment_viewer.src.model;
 using ultra_comment_viewer.src.model.connection;
-using ultra_comment_viewer.src.model.http;
-using ultra_comment_viewer.src.model.json;
-using ultra_comment_viewer.src.model.json.converter;
-using ultra_comment_viewer.src.model.websocket;
 using ultra_comment_viewer.src.viemodel;
 using ultra_comment_viewer.src.view.validater;
-using ultra_comment_viewer.src.view.window;
 using ultra_comment_viewer.src.viewLogic;
 
 namespace ultra_comment_viewer
-{ 
+{
 
-    
+
 
     public partial class MainWindow : Window
     {
         private MainWindowViewModel _model;
 
-        private ConnectSwitcher _switcher;
+        private readonly CommentGenerator _twicasCommentGenerator;
+
+         private readonly CommentGenerator _niconicoCommentGenerator;
 
         private bool _autoScrollFlag;
 
@@ -53,10 +38,12 @@ namespace ultra_comment_viewer
 
             this.DataContext = this._model;
 
-            _switcher = new ConnectSwitcher(_model,
-                                            new CommentGenerator(collection,
-                                                                new NicoNicoConnectionCommentServer()));
-         
+            this._twicasCommentGenerator = new CommentGenerator(collection,
+                                                                 new TwicasConnectionCommentServer());
+
+            this._niconicoCommentGenerator = new CommentGenerator(collection,
+                                                                  new NicoNicoConnectionCommentServer()); 
+
             this._dropLogic = new DropLogic();
         }
 
@@ -72,25 +59,19 @@ namespace ultra_comment_viewer
         }
 
 
-        private async void EventClickConnectionButtonHandler(object sender, RoutedEventArgs e)
+        private async void EventClick_ConnectionTwicasCommentServer(object sender, RoutedEventArgs e)
         {
-            await this._switcher.DoStart(ScrollCommentView);
+            await this._twicasCommentGenerator.ConnectCommentServerAsync(_model.TwicasUserId, this.ScrollCommentView);
         }
 
 
-        private void EventChangedUrlTextBox(object sender, TextChangedEventArgs e)
-        {
-            var validater = new TwiacasUrlValidater();
-            _model.IsWriteUrl = validater.IsValidUrl(_model);
 
-        }
-
-        private void EventScrollChangedUpdateAutoScrollFlag(object sender, ScrollChangedEventArgs e)
+        private void EventScrollChanged_UpdateAutoScrollFlag(object sender, ScrollChangedEventArgs e)
         {
             _autoScrollFlag = (e.VerticalOffset + e.ViewportHeight >= e.ExtentHeight - 2);
         }
 
-        private void EventDropOnUrlMark(object sender, DragEventArgs e)
+        private void EventDrop_OnUrlMark(object sender, DragEventArgs e)
         {
             var commentModel = CastToCommentModelOrNull(e);
             if (commentModel == null) return;
@@ -98,7 +79,7 @@ namespace ultra_comment_viewer
             this._dropLogic.DoStartOpenBrowser(commentModel.Comment);
         }
 
-        private void EventMouseMoveCommentDrag(object sender, MouseEventArgs e)
+        private void EventMouseMove_CommentDrag(object sender, MouseEventArgs e)
         {
             if (sender.NotNull() && e.LeftButton == MouseButtonState.Pressed)
             {
@@ -106,7 +87,7 @@ namespace ultra_comment_viewer
             }
         }
 
-        private void EventDropOpenLogWindow(object sender, DragEventArgs e)
+        private void EventDrop_OpenLogWindow(object sender, DragEventArgs e)
         {
             var commentModel = CastToCommentModelOrNull(e);
             if (commentModel == null) return;
@@ -114,12 +95,12 @@ namespace ultra_comment_viewer
             this._dropLogic.OpenLogCommentWindow(window: this, commentModel);
         }
 
-        private async void Card_Drop(object sender, DragEventArgs e)
+        private async void Drop_OpenUserInfoWindow(object sender, DragEventArgs e)
         {
             var commentModel = CastToCommentModelOrNull(e);
             if (commentModel == null) return;
 
-            await this._dropLogic.OpenTwicasUserInfoWindow(this, commentModel);
+            await this._dropLogic.OpenUserInfoWindow(this, commentModel);
 
         }
 
@@ -127,6 +108,35 @@ namespace ultra_comment_viewer
         private CommentViewModel CastToCommentModelOrNull(DragEventArgs e)
         {
             return (CommentViewModel)e.Data.GetData(typeof(CommentViewModel));
+        }
+
+        private async void EventClick_DisconnectionTwicasServer(object sender, RoutedEventArgs e)
+        {
+            await this._twicasCommentGenerator.DisConnectCommentServerAsync();
+        }
+
+
+        private void TextChanged_ValidateTwicasLiveUrl(object sender, TextChangedEventArgs e)
+        {
+            var validater = new TwiacasLiveUrlValidater();
+            _model.IsWriteUrl = validater.IsValidUrl(_model);
+
+        }
+
+        private void TextChanged_ValidateNicoNicoLiveUrl(object sender, TextChangedEventArgs e)
+        {
+            var validater = new NicoNicoLiveUrlValidater();
+            this._model.IsWriteNicoNicoUrl = validater.ValidateLiveUrl(this._model);
+        }
+
+        private async void Click_ConnectionNicoNicoServer(object sender, RoutedEventArgs e)
+        {
+            await this._niconicoCommentGenerator.ConnectCommentServerAsync(this._model.NiconicoLiveId, this.ScrollCommentView);
+        }
+
+        private async void Click_DisConnectNicoNicoServer(object sender, RoutedEventArgs e)
+        {
+            await this._niconicoCommentGenerator.DisConnectCommentServerAsync();
         }
     }
 }

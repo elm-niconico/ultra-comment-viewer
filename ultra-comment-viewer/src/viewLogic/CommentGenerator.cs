@@ -19,12 +19,15 @@ namespace ultra_comment_viewer.src.viewLogic
 
         private readonly DisconnectObserver _observer;
 
+        private readonly BouyomiChanClient _boyomiChan;
+
         public CommentGenerator(ObservableCollection<CommentViewModel> collections,
                                  ABConnectionCommentServer server)
         {
             this._collections = collections;
             this._server = server;
             this._observer = new DisconnectObserver(this);
+            this._boyomiChan = new BouyomiChanClient();
         }
 
         public async Task ConnectCommentServerAsync(string userId, Action scrollChange)
@@ -32,6 +35,8 @@ namespace ultra_comment_viewer.src.viewLogic
             var logger = new Logger();
             await foreach(var commentModel in _server.FetchCommentAsync(userId, this._observer))
             {
+                //TODO 棒読みちゃんを使うかユーザーに設定させる
+                this._boyomiChan.SendComment(commentModel.Comment);
                 logger.PushLog(commentModel);
                 _collections.Add(commentModel);
                 scrollChange();
@@ -41,7 +46,6 @@ namespace ultra_comment_viewer.src.viewLogic
         public async Task DisConnectCommentServerAsync()
         {
             await this._server.DisconnectServerASync();
-           
         }
 
         public void AddDisconnectComment()

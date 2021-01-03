@@ -57,7 +57,7 @@
                     Background="Red"
                     Margin="5,5,5,5"
                     AllowDrop="True"
-                    Drop="EventDropOnUrlMark"
+                    Drop="EventDrop_OnUrlMark"
                     />
                 <!-- URLドロップゾーン -->
                 <md:Card
@@ -66,14 +66,14 @@
                     Background="Blue"
                     Margin="5,5,5,5"
                     AllowDrop="True"
-                    Drop="Card_Drop"
+                    Drop="Drop_OpenUserInfoWindow"
                     />
                 <!-- URLドロップゾーン -->
                 <md:Card
                     Content="ログコメント#"
                     Grid.Row="2"
                     AllowDrop="True"
-                    Drop="EventDropOpenLogWindow"
+                    Drop="EventDrop_OpenLogWindow"
                     Margin="5,5,5,5"
                     />
                 <!-- URLドロップゾーン -->
@@ -97,12 +97,13 @@
                 >
                 <!-- TwicasURlForm -->
                 <StackPanel
+                    Margin="20 3 0 0"
                     Orientation="Horizontal"
                     >
                     <TextBox
                         
-                        Width="600"
-                        Text="{Binding Url, UpdateSourceTrigger=PropertyChanged}"                        TextChanged="EventChangedUrlTextBox"
+                        Width="500"
+                        Text="{Binding LiveUrlWrittenByTwicasForm, UpdateSourceTrigger=PropertyChanged}"                        TextChanged="TextChanged_ValidateTwicasLiveUrl"
                       
                         md:HintAssist.Hint="Twicasの放送URlを入力して下さい"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -110,17 +111,66 @@
                         
                          />
                     <Button
-                        Content="{Binding IsConnect,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource TestConverter}}"
+                        Content="接続"
                         Width="60"
-                        Margin="10 0 0 0"
+                        Margin="10 10 0 0"
+                        Height="25" 
+                        Cursor="Hand"
+                        Background="Crimson"
+                        BorderBrush="Red"
+                        IsEnabled="{Binding IsWriteUrl}"
+                        Click="EventClick_ConnectionTwicasCommentServer"
+                        />
+                    <Button
+                        Background="DeepSkyBlue"
+                        BorderBrush="DodgerBlue"
+                        Content="切断"
+                        Width="60"
+                        Margin="10 10 0 0"
                         Height="25" 
                         Cursor="Hand"
                         IsEnabled="{Binding IsWriteUrl}"
-                        Click="EventClickConnectionButtonHandler"
+                        Click="EventClick_DisconnectionTwicasServer"
                         />
-
                 </StackPanel>
+                
                 <!-- NiconicoUrlForm -->
+                <StackPanel
+                    Margin="20 3 0 0"
+                    Orientation="Horizontal"
+                    >
+                    <TextBox
+                        Width="500"
+                        Text="{Binding LiveUrlWrittenByNicoNicoForm, UpdateSourceTrigger=PropertyChanged}"                        
+                        TextChanged="TextChanged_ValidateNicoNicoLiveUrl"
+                        md:HintAssist.Hint="ニコニコの放送URlを入力して下さい"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                        VerticalAlignment="Center"
+                        
+                         />
+                    <Button
+                        Content="接続"
+                        Width="60"
+                        Margin="10 10 0 0"
+                        Height="25" 
+                        Cursor="Hand"
+                        Background="Crimson"
+                        BorderBrush="Red"
+                        IsEnabled="{Binding IsWriteNicoNicoUrl}"
+                        Click="Click_ConnectionNicoNicoServer"
+                        />
+                    <Button
+                        Background="DeepSkyBlue"
+                        BorderBrush="DodgerBlue"
+                        Content="切断"
+                        Width="60"
+                        Margin="10 10 0 0"
+                        Height="25" 
+                        Cursor="Hand"
+
+                        Click="Click_DisConnectNicoNicoServer"
+                        />
+                </StackPanel>
                 <StackPanel></StackPanel>
             </StackPanel>
         </md:Card>
@@ -143,7 +193,7 @@
             Grid.Row="3" >
             <ListView 
                 x:Name="CommentList"
-                ScrollViewer.ScrollChanged="EventScrollChangedUpdateAutoScrollFlag"
+                ScrollViewer.ScrollChanged="EventScrollChanged_UpdateAutoScrollFlag"
                 VirtualizingPanel.IsVirtualizing="True"
                 VirtualizingPanel.VirtualizationMode="Recycling"
                 >
@@ -178,7 +228,7 @@
                             <!-- コメント -->
                             <md:Card
                                 Cursor="Hand"
-                                MouseMove="EventMouseMoveCommentDrag"
+                                MouseMove="EventMouseMove_CommentDrag"
                                 VerticalAlignment="Top"
                                 Width="600"
                                 md:UniformCornerRadius="7"
