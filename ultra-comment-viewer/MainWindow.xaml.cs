@@ -1,8 +1,11 @@
 ﻿using MaterialDesignThemes.Wpf;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using ultra_comment_viewer.src.commons;
 using ultra_comment_viewer.src.commons.extends_mothod;
 using ultra_comment_viewer.src.model;
 using ultra_comment_viewer.src.model.connection;
@@ -160,7 +163,9 @@ namespace ultra_comment_viewer
 
             setting.SetIsUsedBouyomi(!useFlag);
             //セッターの中で自動で反映される
-            this._model.BouyomiChanIcon = null; 
+            this._model.BouyomiChanIcon = null;
+            
+            
             
                 
         }
@@ -169,6 +174,18 @@ namespace ultra_comment_viewer
         {
             this._menuLogic.OpenSettingWindow(this);
         }
+
+        private void MouseLeave_ChangeAccountBackground(object sender, MouseEventArgs e)
+        {
+            this._dropLogic.ChangeWhiteColor((Card)sender, _model);
+        }
+
+        private void MouseMove_ChangeAccountBackGround(object sender, MouseEventArgs e)
+        {
+
+            this._dropLogic.ChangeGrayColor((Card)sender, _model);
+        }
+
 
     }
 }

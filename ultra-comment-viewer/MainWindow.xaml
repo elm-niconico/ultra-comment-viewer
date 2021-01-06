@@ -38,7 +38,7 @@
             >
             <ToolBarTray
                 Background="WhiteSmoke"
-            >
+                >
                 
                 
             <ToolBar
@@ -56,7 +56,10 @@
                     VerticalAlignment="Top"
                     Click="Click_ChangeIsUsedBouyomi"
                     >
-                    <Image  Height="25" Width="25" Source="{Binding BouyomiChanIcon}"/>
+                    <Image  Height="25"
+                            Width="25"
+                            Source="{Binding BouyomiChanIcon}"
+                            />
                 </Button>
                 <Separator></Separator>
 
@@ -69,38 +72,57 @@
         <md:Card
             Grid.Column="0"
             Grid.Row="4"
-  
             
             >
             <StackPanel>
                 <!-- URLドロップゾーン -->
-                <ContentControl
+                <md:Card
+                    md:ShadowAssist.ShadowDepth="Depth0"
+                    Background="{Binding WebColor}"
+                    x:Name="Web"
+                    MouseMove="MouseMove_ChangeAccountBackGround"
+                    MouseLeave="MouseLeave_ChangeAccountBackground"
                     Content="{md:PackIcon Kind=Web, Size=160}"
                     Grid.Row="0"
-                   
+                    Width="160"
+                    Height="160"
                     Margin="5,5,5,5"
                     AllowDrop="True"
                     Drop="EventDrop_OnUrlMark"
                     />
-                <Separator />
+                <Separator Margin="10" />
                 <!-- URLドロップゾーン -->
-                <ContentControl
+                <md:Card
+                    x:Name="User"
+                    Height="160"
+                    Width="160"
+                    Background="{Binding AccountColor}"
+                    md:ShadowAssist.ShadowDepth="Depth0"
+                    MouseMove="MouseMove_ChangeAccountBackGround"
+                    MouseLeave="MouseLeave_ChangeAccountBackground"
                     Content="{md:PackIcon Size=160, Kind=Account}"
                     Grid.Row="1"
                     Margin="5,5,5,5"
                     AllowDrop="True"
                     Drop="Drop_OpenUserInfoWindow"
                     />
-                <Separator></Separator>
+                <Separator Margin="10"></Separator>
                 <!-- URLドロップゾーン -->
-                <ContentControl
+                <md:Card
+                    md:ShadowAssist.ShadowDepth="Depth0"
+                    Background="{Binding LogColor}"
+                    x:Name="Log"
+                    MouseLeave="MouseLeave_ChangeAccountBackground"
+                    MouseMove="MouseMove_ChangeAccountBackGround"
+                    Width="160"
+                    Height="160"
                     Content="{md:PackIcon Size=160,Kind=CommentAccount}"
                     Grid.Row="2"
                     AllowDrop="True"
                     Drop="Drop_OpenLogWindow"
                     Margin="5,5,5,5"
                     />
-                <Separator/>
+                <Separator Margin="10"/>
                 <!-- URLドロップゾーン -->
                 <md:Card
                     Content="ユーザーNG"
@@ -131,8 +153,8 @@
                     <TextBox
                         
                         Width="500"
-                        Text="{Binding LiveUrlWrittenByTwicasForm, UpdateSourceTrigger=PropertyChanged}"                        TextChanged="TextChanged_ValidateTwicasLiveUrl"
-                      
+                        Text="{Binding LiveUrlWrittenByTwicasForm, UpdateSourceTrigger=PropertyChanged}"                        
+                        TextChanged="TextChanged_ValidateTwicasLiveUrl"
                         md:HintAssist.Hint="Twicasの放送URlを入力して下さい"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                         VerticalAlignment="Center"
@@ -166,7 +188,7 @@
 
                 <!-- NiconicoUrlForm -->
                 <StackPanel
-
+                
                     Margin="20 3 0 0"
                     Orientation="Horizontal"
                     >

@@ -1,9 +1,12 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
+using System.Windows.Media;
+using ultra_comment_viewer.src.commons;
 using ultra_comment_viewer.src.model.http;
 using ultra_comment_viewer.src.viemodel;
 using ultra_comment_viewer.src.view.window;
@@ -50,7 +53,57 @@ namespace ultra_comment_viewer.src.viewLogic
             userInfoWindow.Show();
         }
 
-        
+        public void ChangeWhiteColor(Card card, 
+                                     MainWindowViewModel model
+                  
+                                     )
+        {
+            var brush = ElmBackgroundUtil.WHITE;
+            switch (card.Name)
+            {
+                case "Web":
+                    model.WebColor = brush;
+                    break;
+                case "User":
+                    model.AccountColor = brush;
+                    break;
+                case "Log":
+                    model.LogColor = brush;
+                    break;
+                default:
+                    return;
+
+            }
+        }
+
+        public void ChangeGrayColor(Card card,
+                                     MainWindowViewModel model
+
+
+                                     )
+        {
+            var gray = ElmBackgroundUtil.DARK_GRAY;
+            switch (card.Name)
+            {
+                case "Web":
+                    if (model.WebColor == gray) return;
+                    model.WebColor = gray;
+                    break;
+                case "User":
+                    if (model.AccountColor == gray) return;
+                    model.AccountColor = gray;
+                    break;
+                case "Log":
+                    if (model.LogColor == gray) return;
+                    model.LogColor = gray;
+                    break;
+                default:
+                    return;
+
+            }
+        }
+
+
 
     }
 }

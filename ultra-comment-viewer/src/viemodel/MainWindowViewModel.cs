@@ -5,8 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.Text;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using ultra_comment_viewer.src.commons;
+using Brush = System.Windows.Media.Brush;
 
 namespace ultra_comment_viewer.src.viemodel
 {
@@ -30,6 +34,31 @@ namespace ultra_comment_viewer.src.viemodel
         private bool _IsWriteUrl;
 
         private  BitmapImage _boyomiChanIcon;
+
+        private Brush _accountColor = ElmBackgroundUtil.WHITE;
+
+        private Brush _userColor = ElmBackgroundUtil.WHITE;
+
+        private Brush _webColor = ElmBackgroundUtil.WHITE;
+
+        public Brush AccountColor
+        {
+            get => this._accountColor;
+            set => SetProperty(ref this._accountColor, value);
+        }
+
+        public Brush WebColor
+        {
+            get => this._webColor;
+            set => SetProperty(ref this._webColor, value);
+        }
+
+
+        public Brush LogColor
+        {
+            get => this._userColor;
+            set => SetProperty(ref this._userColor, value);
+        }
 
 
         public BitmapImage BouyomiChanIcon

@@ -35,7 +35,7 @@ namespace ultra_comment_viewer.src.model.parser
 
         }
 
-        public int GetFollowerCount() => this._model.userDetails.userDetails.user.followeeCount;
+        public int GetFollowerCount() => this._model.userDetails.userDetails.user.followerCount;
 
         public int GetFollowCount() => this._model.userDetails.userDetails.user.followeeCount;
 

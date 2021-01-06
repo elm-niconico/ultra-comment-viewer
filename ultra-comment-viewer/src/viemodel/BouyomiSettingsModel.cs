@@ -39,7 +39,8 @@ namespace ultra_comment_viewer.src.viemodel
             Properties.BoyomiChan.Default.IsUseBouyomi = use;
             Properties.BoyomiChan.Default.Save();
 
-            if(use) RunningBouyomiOrNull();   
+            if (use) RunningBouyomiOrNull();
+            else     CancelAllTask();
         }
         public string GetBouyomiPath() => Properties.BoyomiChan.Default.AppPath;
         public void SetBouyomiPath(string path)
@@ -48,6 +49,11 @@ namespace ultra_comment_viewer.src.viemodel
             Properties.BoyomiChan.Default.Save();
         }
 
+        private void CancelAllTask()
+        {
+            var client = new BouyomiChanClient();
+            client.CancelAllTask();
+        }
 
         private void RunningBouyomiOrNull()
         {

@@ -26,6 +26,9 @@ namespace ultra_comment_viewer.src.viewLogic
 
         private const Int16 COMMAND = 0x0001;
 
+        private const Int16 CANCEL_ALL_TASK_COMMAND = 0x0040;
+
+
         private readonly BouyomiSettingsModel _boyomiSetting = BouyomiSettingsModel.GetInstance();
 
         public void SendComment(CommentViewModel model)
@@ -49,6 +52,19 @@ namespace ultra_comment_viewer.src.viewLogic
             binaryWriter.Write((byte)0);
             binaryWriter.Write(buffer.Length);
             binaryWriter.Write(buffer);
+        }
+
+        public void CancelAllTask()
+        {
+            if (this.IsBouyomiRunning() == false) return;
+
+            using var client = new TcpClient(HOST, PORT);
+
+            using var stream = client.GetStream();
+
+            using var binaryWriter = new BinaryWriter(stream);
+
+            binaryWriter.Write(CANCEL_ALL_TASK_COMMAND);
         }
 
 

@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ultra_comment_viewer.src.view.window"
         mc:Ignorable="d"
-        Title="LogCommentWindow" Height="600" Width="530">
+        Title="LogCommentWindow" Height="600" Width="530" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="9*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
         <StackPanel
             Grid.Row="0"
@@ -19,8 +19,8 @@
             <Image
                 Margin="2"
                 Source="{Binding UserIcon}"
-                Height="50"
-                Width="50"
+                Height="70"
+                Width="70"
                 VerticalAlignment="Center"
                 />
             <TextBlock
@@ -31,11 +31,14 @@
                 Width="200"
                 Text="{Binding UserName}"/>
         </StackPanel>
-      
-        <ListView
-            Grid.Row="1"
-            Background="Red"
-            x:Name="CommentList"
+
+   
+            <ListView
+                Margin="10 0"
+                Grid.Row="1"
+                Background="Red"
+                x:Name="CommentList"
+            
             >
             <ListView.View>
                 <GridView>
@@ -44,5 +47,7 @@
             </ListView.View>
             
         </ListView>
+       
+        
     </Grid>
 </Window>
