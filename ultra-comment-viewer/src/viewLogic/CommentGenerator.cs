@@ -33,10 +33,12 @@ namespace ultra_comment_viewer.src.viewLogic
         public async Task ConnectCommentServerAsync(string userId, Action scrollChange)
         {
             var logger = new Logger();
+
+
             await foreach(var commentModel in _server.FetchCommentAsync(userId, this._observer))
             {
-                //TODO 棒読みちゃんを使うかユーザーに設定させる
-                this._boyomiChan.SendComment(commentModel.Comment);
+               
+                this._boyomiChan.SendComment(commentModel);
                 logger.PushLog(commentModel);
                 _collections.Add(commentModel);
                 scrollChange();

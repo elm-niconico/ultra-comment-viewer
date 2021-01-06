@@ -37,11 +37,20 @@ namespace ultra_comment_viewer.src.model.http
 
         private async Task<string> LoadUserLiveHtmlAsync(string liveId)
         {
-            return await ElmHttpClientUtil.WrapBaseWithHeaderAsync(api: NicoNicoApi.GetUserLiveHtml(liveId),
+            return await ElmHttpClientUtil.WrapBaseWithHeaderAsync(api: NicoNicoApi.GET_USER_LIVE_ID(liveId),
                                                                    method: HttpMethod.Get,
                                                                    headerKey: "Cookie",
-                                                                   headerValue: "player_version=leo"
-                );
+                                                                   headerValue: "player_version=leo");
         }
+
+
+        public async Task<string> ExtractUseNickNameXmlAsync(string userId) 
+           => await ElmHttpClientUtil.WrapGetAsync(NicoNicoApi.GET_USER_NICKNAME_API(userId));
+
+        public async Task<string> ExtractUserIconAsync(int userId)
+            => await ElmHttpClientUtil.WrapGetAsync(NicoNicoApi.GET_USER_ICON(userId));
+
+        public async Task<string> LoadUserMyPageHtmlAsync(int userId)
+            => await ElmHttpClientUtil.WrapGetAsync(NicoNicoApi.GET_USER_MY_PAGE(userId));
     }
 }

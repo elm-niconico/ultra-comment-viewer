@@ -16,6 +16,17 @@ namespace ultra_comment_viewer.src.model.connection
     {
         private readonly Regex commentRegex = new Regex("^{\"chat\":.+$");
 
+        private readonly Regex _servertInfoResponseRegex = new Regex("^{\"thread\":.+$");
+
+        private readonly Regex _exitLiveRegex = new Regex("");
+
+        private long _lastRes = 0;
+
+        private bool _hasNotLastRes = true;
+
+        private bool _didOverPasLog = false;
+
+
         public NicoNicoConnectionCommentServer() :
             base(
                     wb: new NicoNicoWebSocketClient(),
@@ -29,9 +40,37 @@ namespace ultra_comment_viewer.src.model.connection
 
         protected async override Task<LiveStatus> CheckConnectionWebSocketAsync(string response)
         {
-            if (commentRegex.IsNotMatch(response)) return LiveStatus.SKIP_THIS_COMMENT;
+            if (_hasNotLastRes && this._servertInfoResponseRegex.IsMatch(response))
+            {
+                ExtractServerTime(response);
+            }
+            if (commentRegex.IsNotMatch(response) ) return LiveStatus.SKIP_THIS_COMMENT;
 
-            return LiveStatus.SUCCESS_CONNECT;
+            //if (_exitLiveRegex.IsMatch(response)) return LiveStatus.EXIT;
+
+            if (this._didOverPasLog) return LiveStatus.SUCCESS_CONNECT;
+
+            
+
+            return IsPastComment(response)? LiveStatus.SKIP_THIS_COMMENT :  LiveStatus.SUCCESS_CONNECT;
+        }
+
+
+        private bool IsPastComment(string response)
+        {
+            var converter = new NicoNicoJsonConverter();
+            var model = converter.ConverToCommentJsonModel(response);
+
+            return model.chat.no < this._lastRes;
+
+        }
+
+        private void ExtractServerTime(string response)
+        {
+            var converter = new NicoNicoJsonConverter();
+            var model = converter.ConvertToServerJsonModel(response);
+            this._lastRes = model.thread.last_res;
+            _hasNotLastRes = false;
         }
     }
 }

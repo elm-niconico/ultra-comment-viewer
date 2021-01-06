@@ -9,6 +9,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ultra_comment_viewer.src.commons.extends_mothod;
+using ultra_comment_viewer.src.viemodel;
 
 namespace ultra_comment_viewer.src.view.window
 {
@@ -17,9 +19,11 @@ namespace ultra_comment_viewer.src.view.window
     /// </summary>
     public partial class NicoNicoUserInfoWindow : Window
     {
-        public NicoNicoUserInfoWindow()
+        public NicoNicoUserInfoWindow(NicoNicoUserInfoWindowViewModel model)
         {
             InitializeComponent();
+            this.DataContext = model;
+            
         }
     }
 }

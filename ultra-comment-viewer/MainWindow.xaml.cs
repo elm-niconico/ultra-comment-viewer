@@ -25,7 +25,9 @@ namespace ultra_comment_viewer
 
         private bool _autoScrollFlag;
 
-        private DropLogic _dropLogic;
+        private readonly DropLogic _dropLogic;
+
+        private readonly MenuLogic _menuLogic;
 
         public MainWindow()
         {
@@ -42,7 +44,8 @@ namespace ultra_comment_viewer
                                                                  new TwicasConnectionCommentServer());
 
             this._niconicoCommentGenerator = new CommentGenerator(collection,
-                                                                  new NicoNicoConnectionCommentServer()); 
+                                                      new NicoNicoConnectionCommentServer());
+            this._menuLogic = new MenuLogic();
 
             this._dropLogic = new DropLogic();
         }
@@ -61,10 +64,32 @@ namespace ultra_comment_viewer
 
         private async void EventClick_ConnectionTwicasCommentServer(object sender, RoutedEventArgs e)
         {
+            this._model.IsConnectTwicasLive = true;
             await this._twicasCommentGenerator.ConnectCommentServerAsync(_model.TwicasUserId, this.ScrollCommentView);
+            
         }
 
+        private async void Click_ConnectionNicoNicoServer(object sender, RoutedEventArgs e)
+        {
+            this._model.IsConnectNicoLive = true;
+            await this._niconicoCommentGenerator.ConnectCommentServerAsync(this._model.NiconicoLiveId, this.ScrollCommentView);
+            
+        }
 
+        private async void EventClick_DisconnectionTwicasServer(object sender, RoutedEventArgs e)
+        {
+            this._model.IsConnectTwicasLive = false;
+            await this._twicasCommentGenerator.DisConnectCommentServerAsync();
+            
+            
+        }
+
+        private async void Click_DisConnectNicoNicoServer(object sender, RoutedEventArgs e)
+        {
+             this._model.IsConnectNicoLive = false;
+            await this._niconicoCommentGenerator.DisConnectCommentServerAsync();
+           
+        }
 
         private void EventScrollChanged_UpdateAutoScrollFlag(object sender, ScrollChangedEventArgs e)
         {
@@ -79,7 +104,7 @@ namespace ultra_comment_viewer
             this._dropLogic.DoStartOpenBrowser(commentModel.Comment);
         }
 
-        private void EventMouseMove_CommentDrag(object sender, MouseEventArgs e)
+        private void MouseMove_CommentDrag(object sender, MouseEventArgs e)
         {
             if (sender.NotNull() && e.LeftButton == MouseButtonState.Pressed)
             {
@@ -87,7 +112,7 @@ namespace ultra_comment_viewer
             }
         }
 
-        private void EventDrop_OpenLogWindow(object sender, DragEventArgs e)
+        private void Drop_OpenLogWindow(object sender, DragEventArgs e)
         {
             var commentModel = CastToCommentModelOrNull(e);
             if (commentModel == null) return;
@@ -110,10 +135,7 @@ namespace ultra_comment_viewer
             return (CommentViewModel)e.Data.GetData(typeof(CommentViewModel));
         }
 
-        private async void EventClick_DisconnectionTwicasServer(object sender, RoutedEventArgs e)
-        {
-            await this._twicasCommentGenerator.DisConnectCommentServerAsync();
-        }
+        
 
 
         private void TextChanged_ValidateTwicasLiveUrl(object sender, TextChangedEventArgs e)
@@ -129,14 +151,24 @@ namespace ultra_comment_viewer
             this._model.IsWriteNicoNicoUrl = validater.ValidateLiveUrl(this._model);
         }
 
-        private async void Click_ConnectionNicoNicoServer(object sender, RoutedEventArgs e)
+        
+
+        private void Click_ChangeIsUsedBouyomi(object sender, RoutedEventArgs e)
         {
-            await this._niconicoCommentGenerator.ConnectCommentServerAsync(this._model.NiconicoLiveId, this.ScrollCommentView);
+            var setting = BouyomiSettingsModel.GetInstance();
+            var useFlag = setting.IsUsedBouyomi();
+
+            setting.SetIsUsedBouyomi(!useFlag);
+            //セッターの中で自動で反映される
+            this._model.BouyomiChanIcon = null; 
+            
+                
         }
 
-        private async void Click_DisConnectNicoNicoServer(object sender, RoutedEventArgs e)
+        private void Click_OpenSettingWindow(object sender, RoutedEventArgs e)
         {
-            await this._niconicoCommentGenerator.DisConnectCommentServerAsync();
+            this._menuLogic.OpenSettingWindow(this);
         }
+
     }
 }

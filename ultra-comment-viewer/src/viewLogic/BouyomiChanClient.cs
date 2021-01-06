@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
 using System.Windows;
 using ultra_comment_viewer.src.commons.extends_mothod;
+using ultra_comment_viewer.src.viemodel;
 
 namespace ultra_comment_viewer.src.viewLogic
 {
@@ -24,9 +26,13 @@ namespace ultra_comment_viewer.src.viewLogic
 
         private const Int16 COMMAND = 0x0001;
 
-        public void SendComment(string comment)
+        private readonly BouyomiSettingsModel _boyomiSetting = BouyomiSettingsModel.GetInstance();
+
+        public void SendComment(CommentViewModel model)
         {
-            
+            if (_boyomiSetting.IsNotUsedBouyomi()) return;
+
+            var comment = model.Comment;
 
             using var client = new TcpClient(HOST, PORT);
 
@@ -45,6 +51,21 @@ namespace ultra_comment_viewer.src.viewLogic
             binaryWriter.Write(buffer);
         }
 
+
+        public bool IsBouyomiRunning() => Process.GetProcessesByName("BouyomiChan").Length > 0;
+
+        public void StartRunningBouyomiChan(string path)
+        {
+            try
+            {
+                Process.Start(path);
+            }
+            catch
+            {
+                MessageBox.Show(Messages.FAILD_START_BOUYOMI);
+            }
+
+        }
 
         
                 

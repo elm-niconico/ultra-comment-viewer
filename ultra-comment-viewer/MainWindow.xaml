@@ -10,72 +10,97 @@
         
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
-    Title="MainWindow" Height="1200" Width="800">
+    Title="MainWindow" Height="1200" Width="800" Background="Gainsboro">
     <Window.Resources>
         <converter:BoolToStringConverter x:Key="TestConverter"/>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="4*" MinHeight="20"/>
-            <RowDefinition Height="20*" MinHeight="20"/>
+            <RowDefinition Height="19*" MinHeight="20"/>
             <RowDefinition Height="5"/>
-            <RowDefinition Height="180*" MinHeight="40" />
+            <RowDefinition Height="40*" MinHeight="20"/>
+            
+            <RowDefinition Height="8"/>
+            <RowDefinition Height="339*" MinHeight="40" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="40*" MinWidth="70"/>
+            <ColumnDefinition Width="2*" MinWidth="70"/>
             <ColumnDefinition Width="8"/>
-            <ColumnDefinition Width="600*" MinWidth="200"/>
+            <ColumnDefinition Width="7*" MinWidth="200"/>
         </Grid.ColumnDefinitions>
 
         <!--================== MenuBar =================================-->
         <md:Card
-            Content="Card"
-            Grid.ColumnSpan="3"
             Grid.Row="0"
-            Background="Chocolate"
-            />
+            Grid.ColumnSpan="3"
+            Padding="1"
+            md:ShadowAssist.ShadowDepth="Depth1"
+            >
+            <ToolBarTray
+                Background="WhiteSmoke"
+            >
+                
+                
+            <ToolBar
+                Background="WhiteSmoke"
+                Style="{DynamicResource MaterialDesignToolBar}"
+                ClipToBounds="False">
+                <Button
+                    Click="Click_OpenSettingWindow"
+                    ToolTip="設定を変更"
+                    Content="{md:PackIcon Kind=Gear}"/>
+                    <Separator/>
+                <!-- 棒読みちゃん設定ボタン -->
+                <Button
+                    ToolTip="棒読みちゃんのON/OFFの変更"
+                    VerticalAlignment="Top"
+                    Click="Click_ChangeIsUsedBouyomi"
+                    >
+                    <Image  Height="25" Width="25" Source="{Binding BouyomiChanIcon}"/>
+                </Button>
+                <Separator></Separator>
 
+            </ToolBar>
+        </ToolBarTray>
+
+        </md:Card>
+        
         <!--================== DropZoneArea   ==========================-->
         <md:Card
             Grid.Column="0"
-            Grid.Row="3"
-            Background="Azure"
+            Grid.Row="4"
+  
+            
             >
-            <Grid
-                Margin="10"
-                >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                </Grid.RowDefinitions>
+            <StackPanel>
                 <!-- URLドロップゾーン -->
-                <md:Card
-                    Content="URL#"
+                <ContentControl
+                    Content="{md:PackIcon Kind=Web, Size=160}"
                     Grid.Row="0"
-                    Background="Red"
+                   
                     Margin="5,5,5,5"
                     AllowDrop="True"
                     Drop="EventDrop_OnUrlMark"
                     />
+                <Separator />
                 <!-- URLドロップゾーン -->
-                <md:Card
-                    Content="ユーザー情報"
+                <ContentControl
+                    Content="{md:PackIcon Size=160, Kind=Account}"
                     Grid.Row="1"
-                    Background="Blue"
                     Margin="5,5,5,5"
                     AllowDrop="True"
                     Drop="Drop_OpenUserInfoWindow"
                     />
+                <Separator></Separator>
                 <!-- URLドロップゾーン -->
-                <md:Card
-                    Content="ログコメント#"
+                <ContentControl
+                    Content="{md:PackIcon Size=160,Kind=CommentAccount}"
                     Grid.Row="2"
                     AllowDrop="True"
-                    Drop="EventDrop_OpenLogWindow"
+                    Drop="Drop_OpenLogWindow"
                     Margin="5,5,5,5"
                     />
+                <Separator/>
                 <!-- URLドロップゾーン -->
                 <md:Card
                     Content="ユーザーNG"
@@ -83,14 +108,17 @@
                     Background="Green"
                     Margin="5,5,5,5"
                     />
-            </Grid>
+            </StackPanel>
+            
         </md:Card>
 
         <!--================== URLフォームエリア ========================= -->
         <md:Card
-            Grid.Column="2"
-            Grid.Row="1"
-            Background="AntiqueWhite"
+            
+            Margin="10 0 10 0"
+            Grid.ColumnSpan="3" 
+            Grid.Row="2"
+            md:ShadowAssist.ShadowDepth="Depth1"
             >
             <StackPanel
                 Orientation="Vertical"
@@ -111,6 +139,7 @@
                         
                          />
                     <Button
+                        
                         Content="接続"
                         Width="60"
                         Margin="10 10 0 0"
@@ -125,17 +154,19 @@
                         Background="DeepSkyBlue"
                         BorderBrush="DodgerBlue"
                         Content="切断"
+                        IsEnabled="{Binding IsConnectTwicasLive}"
                         Width="60"
                         Margin="10 10 0 0"
                         Height="25" 
                         Cursor="Hand"
-                        IsEnabled="{Binding IsWriteUrl}"
+                        
                         Click="EventClick_DisconnectionTwicasServer"
                         />
                 </StackPanel>
-                
+
                 <!-- NiconicoUrlForm -->
                 <StackPanel
+
                     Margin="20 3 0 0"
                     Orientation="Horizontal"
                     >
@@ -163,6 +194,7 @@
                         Background="DeepSkyBlue"
                         BorderBrush="DodgerBlue"
                         Content="切断"
+                        IsEnabled="{Binding IsConnectNicoLive}"
                         Width="60"
                         Margin="10 10 0 0"
                         Height="25" 
@@ -176,21 +208,25 @@
         </md:Card>
         <!-- ============ドロップゾーン -*- コメントエリア =================== -->
         <GridSplitter
+            Background="Gainsboro"
+            Foreground="Gainsboro"
             Grid.Column="1"
-            Grid.Row="3"
-            Style="{StaticResource VerticalGridSplitter}"
+            Grid.Row="4"
+            Style="{StaticResource VerticalGridSplitter}" 
             />
         <!-- ================= URLフォーム -*- コメントエリア==============  -->
         <GridSplitter
+            Foreground="Gainsboro"
+            Background="Gainsboro"
             Grid.Column="2"
-            Grid.Row="2"
-            Style="{StaticResource HorizontalGridSplitter}"
+            Grid.Row="3"
+            Style="{StaticResource HorizontalGridSplitter}" 
             />
         <!-- ================= コメントエリア ========================== -->
         <md:Card
-            Background="AliceBlue"         
+            
             Grid.Column="2" 
-            Grid.Row="3" >
+            Grid.Row="4" >
             <ListView 
                 x:Name="CommentList"
                 ScrollViewer.ScrollChanged="EventScrollChanged_UpdateAutoScrollFlag"
@@ -228,7 +264,7 @@
                             <!-- コメント -->
                             <md:Card
                                 Cursor="Hand"
-                                MouseMove="EventMouseMove_CommentDrag"
+                                MouseMove="MouseMove_CommentDrag"
                                 VerticalAlignment="Top"
                                 Width="600"
                                 md:UniformCornerRadius="7"

@@ -24,7 +24,7 @@ namespace ultra_comment_viewer.src.model.parser
             var parser = new HtmlParser();
             var emvedded = parser.ParseDocument(html).Body.QuerySelector("#embedded-data");
 
-            var datapropsJson =  emvedded.GetAttribute("data-props");
+            string datapropsJson =  emvedded.GetAttribute("data-props");
 
             var converter = new NicoNicoJsonConverter();
             this._dataPropsModel = converter.ConverToDataPropsJsonModel(datapropsJson);

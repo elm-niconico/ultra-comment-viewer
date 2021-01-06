@@ -50,5 +50,7 @@ namespace ultra_comment_viewer.src.viewLogic
             userInfoWindow.Show();
         }
 
+        
+
     }
 }

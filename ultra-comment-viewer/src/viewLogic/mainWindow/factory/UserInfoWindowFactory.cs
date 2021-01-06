@@ -4,7 +4,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using ultra_comment_viewer.src.commons.extends_mothod;
 using ultra_comment_viewer.src.model.http;
+using ultra_comment_viewer.src.model.json.model.niconico.user_page;
+using ultra_comment_viewer.src.model.parser;
 using ultra_comment_viewer.src.viemodel;
 using ultra_comment_viewer.src.view.window;
 
@@ -20,12 +23,58 @@ namespace ultra_comment_viewer.src.viewLogic.factory
                     return await CreateTwicasUserInfoWindow(model, window);
 
                 case LiveSiteName.NICONICO:
-                    return new NicoNicoUserInfoWindow();
+                    return await CreateNicoNicoUserInfoWindow(model, window);
                 
                 default:
                     MessageBox.Show(Messages.NOT_SUPPORT_WINDOW_TYPE);
                     throw new NullReferenceException();
             }
+        }
+
+        private async Task<NicoNicoUserInfoWindow> CreateNicoNicoUserInfoWindow(CommentViewModel model, Window window)
+        {
+         
+            var parser = await CreateEnvironmentHtmlParser(model.UserId);
+            
+            var followCount = 0;
+            var followerCount = 0;
+            var description = String.Empty;
+
+            if (parser.NotNull())
+                SetUserDetailInfo(parser, ref followCount, ref followerCount, ref description);
+
+
+            var viewModel = new NicoNicoUserInfoWindowViewModel()
+            {
+                UserId = model.UserId,
+                UserIcon = model.Image,
+                UserName = model.UserName,
+                SupportCount = followCount,
+                SupporterCount = followerCount,
+                ProfileDescription = description
+            };
+
+            return new NicoNicoUserInfoWindow(viewModel)
+            {
+                Owner = window
+            };
+        }
+
+        private void SetUserDetailInfo(NicoNicoHtmlDataEnvironmentParser parser, ref int follow, ref int follower, ref string description)
+        {
+            follow = parser.GetFollowCount();
+            follower = parser.GetFollowerCount();
+            description = parser.GetDescription();
+        }
+
+        private async Task<NicoNicoHtmlDataEnvironmentParser> CreateEnvironmentHtmlParser(string userId)
+        {
+            if (!int.TryParse(userId, out int id)) return null;
+
+            var rest = new NicoNicoRestClient();
+            var html = await rest.LoadUserMyPageHtmlAsync(id);
+
+            return new NicoNicoHtmlDataEnvironmentParser(html);
         }
 
 

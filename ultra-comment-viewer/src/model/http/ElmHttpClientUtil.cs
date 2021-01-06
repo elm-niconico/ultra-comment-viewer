@@ -10,7 +10,7 @@ namespace ultra_comment_viewer.src.model
     {
         private ElmHttpClientUtil() { }
 
-        //TODO  HttpClientを使いまわすか検討
+
 
         private async static Task<string> WrapGetWithHeaderAsync(string api, string accessToken)
         {

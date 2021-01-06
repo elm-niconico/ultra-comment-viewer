@@ -8,6 +8,24 @@
     <StartupObject>ultra_comment_viewer.App</StartupObject>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>x64</PlatformTarget>
+    <WarningLevel>3</WarningLevel>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\bouyomi.png" />
+    <None Remove="Resources\elm_icon.ico" />
+    <None Remove="Resources\guest_nico.jpg" />
+    <None Remove="Resources\not_use_boyomi.png" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.14.0" />
     <PackageReference Include="MaterialDesignColors" Version="1.2.7" />
@@ -20,7 +38,6 @@
     <PackageReference Include="System.Collections.NonGeneric" Version="4.3.0" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.113.7" />
     <PackageReference Include="System.Linq.Async" Version="5.0.0" />
-    <PackageReference Include="System.Reactive.Runtime.Remoting" Version="5.0.0" />
     <PackageReference Include="System.Text.Json" Version="5.0.0" />
     <PackageReference Include="WebSocketSharp-netstandard" Version="1.0.1" />
   </ItemGroup>
@@ -32,6 +49,42 @@
   <ItemGroup>
     <Folder Include="src\viewLogic\mainWindow\parser\" />
     <Folder Include="src\viewLogic\userInfoWindow\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\bouyomi.png" />
+    <Resource Include="Resources\elm_icon.ico" />
+    <Resource Include="Resources\guest_nico.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\not_use_boyomi.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\BoyomiChan.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>BoyomiChan.settings</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\BoyomiChan.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>BoyomiChan.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>

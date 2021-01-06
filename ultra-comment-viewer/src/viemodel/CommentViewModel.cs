@@ -16,6 +16,8 @@ namespace ultra_comment_viewer.src.viemodel
         // 配信サイトの名前
         public LiveSiteName LiveName { get; set; }
 
+        // コメントナンバー
+        public int No { get; set; }
 
 
         public static CommentViewModel BuildDisconnectModel()

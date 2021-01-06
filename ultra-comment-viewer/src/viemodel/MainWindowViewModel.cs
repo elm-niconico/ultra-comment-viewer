@@ -6,22 +6,37 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
+using System.Windows.Media.Imaging;
 
 namespace ultra_comment_viewer.src.viemodel
 {
     public class MainWindowViewModel :BindableBase
     {
+        private BouyomiSettingsModel _bouyomiModel;
+        public MainWindowViewModel()
+        {
+            this._bouyomiModel = BouyomiSettingsModel.GetInstance();
+            this.BouyomiChanIcon = _bouyomiModel.BoyomiIcon;
+        }
          //============================= ツイキャスのViewModel ================================================
 
-        // 放送に接続しているか
         private bool _isConnectTwicasLive = false;
-        //userId
+      
         private string _twicasUserId = String.Empty;
 
         private string _liveUrlWrittenByTwicasForm = String.Empty;
 
 
         private bool _IsWriteUrl;
+
+        private  BitmapImage _boyomiChanIcon;
+
+
+        public BitmapImage BouyomiChanIcon
+        {
+            get => this._boyomiChanIcon;
+            set => SetProperty(ref this._boyomiChanIcon, this._bouyomiModel.BoyomiIcon);
+        }
 
         public string LiveUrlWrittenByTwicasForm
         {
@@ -33,7 +48,7 @@ namespace ultra_comment_viewer.src.viemodel
         public bool IsWriteUrl
         {
             get => this._IsWriteUrl;
-            set => SetProperty(ref _IsWriteUrl, value);
+            set => SetProperty(ref _IsWriteUrl, value && !IsConnectTwicasLive);
         }
 
 
@@ -47,14 +62,17 @@ namespace ultra_comment_viewer.src.viemodel
 
         public bool IsConnectTwicasLive {
             get => this._isConnectTwicasLive;
-            set => SetProperty(ref _isConnectTwicasLive, value);
+            set{
+                SetProperty(ref _isConnectTwicasLive, value);
+                if(value) this.IsWriteUrl = false; 
+            }
         }
 
 
 //====================================== ニコニコ動画のViewModel ==============================================
 
         // 放送に接続しているか
-        private bool _isConnectNicoNicoLive = false;
+        private bool _isConnectNicoLive = false;
         //userId
         private string _niconicoLiveId = String.Empty;
 
@@ -63,10 +81,14 @@ namespace ultra_comment_viewer.src.viemodel
 
         private bool _isWriteNicoNicoUrl;
 
-        public bool IsConnectNicoNicoLive
+        public bool IsConnectNicoLive
         {
-            get => this.IsConnectNicoNicoLive;
-            set => SetProperty(ref _isConnectNicoNicoLive, value);
+            get => this._isConnectNicoLive;
+            set
+            {
+                SetProperty(ref _isConnectNicoLive, value);
+                if(value) this.IsWriteNicoNicoUrl = false;
+            }
         }
 
         public string NiconicoLiveId
@@ -84,7 +106,7 @@ namespace ultra_comment_viewer.src.viemodel
         public bool IsWriteNicoNicoUrl
         {
             get => this._isWriteNicoNicoUrl;
-            set => SetProperty(ref this._isWriteNicoNicoUrl, value);
+            set => SetProperty(ref this._isWriteNicoNicoUrl, value && !IsConnectNicoLive);
         }
 
     }
