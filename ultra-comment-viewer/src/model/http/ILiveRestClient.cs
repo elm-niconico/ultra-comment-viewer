@@ -9,5 +9,7 @@ namespace ultra_comment_viewer.src.model
     {
        
         public Task<string> GetWebSocketUrlAsync(string movieId);
+
+        public Task<string> GetUserLiveHtmlAsync(string id);
     }
 }

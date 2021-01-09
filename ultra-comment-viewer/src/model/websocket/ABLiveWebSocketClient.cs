@@ -12,19 +12,29 @@ namespace ultra_comment_viewer.src.model.websocket
 {
     public abstract class  ABLiveWebSocketClient
     {
+        
+
 
         protected ClientWebSocket webSocketClient = new ClientWebSocket();
+
+        public ABLiveWebSocketClient()
+        {
+            var timeSpan = new TimeSpan(0,01,0);
+            this.webSocketClient.Options.KeepAliveInterval = timeSpan;
+        }
 
         protected WebSocketOperator ItsOpeator;
 
         private DisconnectObserver _observer;
 
-        public async IAsyncEnumerable<string> ReadCommentFromServerAsync(string webSocketUrl, DisconnectObserver observer)
+        public async IAsyncEnumerable<string> ReadCommentFromServerAsync(Func<Task> startUp ,string webSocketUrl, DisconnectObserver observer)
         {
+
             if (this._observer == null) this._observer = observer;
 
             if(await OnStartConnectServer(webSocketUrl))
             {
+                startUp();
                 await foreach(var comment in ReceiveResponse())
                 {
                     yield return comment;
@@ -36,7 +46,8 @@ namespace ultra_comment_viewer.src.model.websocket
 
         public async Task DisconnectServer(WebSocketCloseStatus status, string message)
         {
-            await this.ItsOpeator.DisConnectServer(status, message);
+            if(this.ItsOpeator != null)
+                await this.ItsOpeator.DisConnectServer(status, message);
         }
 
     

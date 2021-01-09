@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using ultra_comment_viewer.src.commons.extends_mothod;
 using ultra_comment_viewer.src.viewLogic.observer;
 
 namespace ultra_comment_viewer.src.commons.util
@@ -38,22 +40,32 @@ namespace ultra_comment_viewer.src.commons.util
             while (IsOpen())
             {
                 var segment = new ArraySegment<byte>(buffer);
-                var response = await this._webSocketClient.ReceiveAsync(segment, CancellationToken.None);
-
-                if (response.MessageType == WebSocketMessageType.Close)
+                WebSocketReceiveResult response = null;
+                try
                 {
-                    if (this._webSocketClient.State != WebSocketState.Closed)
-                        await DisConnectServer(WebSocketCloseStatus.NormalClosure, Messages.CLOSE_SERVER_NORMAL);
-                    yield break;
+                    response = await this._webSocketClient.ReceiveAsync(segment, CancellationToken.None);
+                }catch(Exception e)
+                {
+                    Debug.WriteLine(e.Message);
                 }
-                /*int EndOfMessageCount = await ReadToEndOfMessageAsync(response, buffer);
-                //Messageが長すぎる場合サーバーから切断
-                if (EndOfMessageCount < 0) yield break;
-*/
 
-                yield return Encoding.UTF8.GetString(buffer, 0, response.Count);
+                if (response != null)
+                {
+                    if (response.MessageType == WebSocketMessageType.Close)
+                    {
+                        if (this._webSocketClient.State != WebSocketState.Closed)
+                            await DisConnectServer(WebSocketCloseStatus.NormalClosure, Messages.CLOSE_SERVER_NORMAL);
+                        yield break;
+                    }
+
+                    yield return Encoding.UTF8.GetString(buffer, 0, response.Count);
 
 
+                }
+                else
+                {
+                    yield return null;
+                }
             }
         }
 

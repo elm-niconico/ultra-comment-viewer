@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Media.Imaging;
+using ultra_comment_viewer.src.model.parser;
 using ultra_comment_viewer.src.viewLogic;
 
 namespace ultra_comment_viewer.src.viemodel
@@ -51,13 +52,13 @@ namespace ultra_comment_viewer.src.viemodel
 
         private void CancelAllTask()
         {
-            var client = new BouyomiChanClient();
+            var client = new BouyomiChanClient(new NicoBouyomiChanParser());
             client.CancelAllTask();
         }
 
         private void RunningBouyomiOrNull()
         {
-            var client = new BouyomiChanClient();
+            var client = new BouyomiChanClient(new NicoBouyomiChanParser());
 
             if (client.IsBouyomiRunning()) return;
 

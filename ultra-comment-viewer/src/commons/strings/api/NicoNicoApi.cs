@@ -24,6 +24,8 @@ namespace ultra_comment_viewer.src.commons.strings.api
         //ユーザーのマイページ
         public static string GET_USER_MY_PAGE(int userId) => $"https://www.nicovideo.jp/user/{userId}/mylist?ref=pc_mypage_menu";
 
+        public static string GET_LIVE_HTML(string id) => $"https://live2.nicovideo.jp/watch/{id}";
+
 
         /* 視聴セッションサーバ(WebSocket)からスレッドIDとコメントサーバのURLを求めるためのSENDメッセージ */
         public const string SEND_SESSION_WEB_SOCKET = @"{""type"": ""startWatching"", ""data"": { ""stream"": { ""quality"": ""high"", ""protocol"": ""hls"", ""latency"": ""low"", ""chasePlay"": false }, ""room"": { ""protocol"": ""webSocket"", ""commentable"": true }, ""reconnect"": false},}";
@@ -32,6 +34,7 @@ namespace ultra_comment_viewer.src.commons.strings.api
 
         public const string SEND_SESSION_WEB_SOCKET_AKASIC = @"{""type"": ""getAkashic"", ""data"": { ""chasePlay"" : false }}";
 
+        
        
     }
 }

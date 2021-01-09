@@ -6,16 +6,22 @@
     <RootNamespace>ultra_comment_viewer</RootNamespace>
     <UseWPF>true</UseWPF>
     <StartupObject>ultra_comment_viewer.App</StartupObject>
+    <Nullable>disable</Nullable>
+    <ApplicationIcon>elm_icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
+
+    <PlatformTarget>AnyCPU</PlatformTarget>
+
+    <OutputPath></OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <PlatformTarget>x64</PlatformTarget>
-    <WarningLevel>3</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <WarningLevel>5</WarningLevel>
     <Optimize>false</Optimize>
   </PropertyGroup>
 
@@ -32,7 +38,6 @@
     <PackageReference Include="MaterialDesignThemes" Version="3.2.0" />
     <PackageReference Include="MaterialDesignThemes.MahApps" Version="0.1.5" />
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="5.0.1" />
-    <PackageReference Include="NeoLegends.AsyncLinq" Version="1.3.0" />
     <PackageReference Include="Prism.Unity" Version="8.0.0.1909" />
     <PackageReference Include="ReactiveProperty" Version="7.5.1" />
     <PackageReference Include="System.Collections.NonGeneric" Version="4.3.0" />

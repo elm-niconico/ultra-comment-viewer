@@ -9,6 +9,7 @@ using ultra_comment_viewer.src.commons;
 using ultra_comment_viewer.src.commons.extends_mothod;
 using ultra_comment_viewer.src.model;
 using ultra_comment_viewer.src.model.connection;
+using ultra_comment_viewer.src.model.parser;
 using ultra_comment_viewer.src.viemodel;
 using ultra_comment_viewer.src.view.validater;
 using ultra_comment_viewer.src.viewLogic;
@@ -43,11 +44,18 @@ namespace ultra_comment_viewer
 
             this.DataContext = this._model;
 
+
+            var bouyomi = new BouyomiChanClient(new NicoBouyomiChanParser());
+            var bouyomiSettings = BouyomiSettingsModel.GetInstance();
+
+            if (bouyomiSettings.IsUsedBouyomi())
+                bouyomi.StartRunningBouyomiChan(bouyomiSettings.GetBouyomiPath());
+
             this._twicasCommentGenerator = new CommentGenerator(collection,
-                                                                 new TwicasConnectionCommentServer());
+                                                                 new TwicasConnectionCommentServer(_model));
 
             this._niconicoCommentGenerator = new CommentGenerator(collection,
-                                                      new NicoNicoConnectionCommentServer());
+                                                      new NicoNicoConnectionCommentServer(_model));
             this._menuLogic = new MenuLogic();
 
             this._dropLogic = new DropLogic();

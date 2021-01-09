@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Windows;
 using ultra_comment_viewer.src.commons.extends_mothod;
+using ultra_comment_viewer.src.model.parser.bouyomi;
 using ultra_comment_viewer.src.viemodel;
 
 namespace ultra_comment_viewer.src.viewLogic
@@ -31,17 +32,29 @@ namespace ultra_comment_viewer.src.viewLogic
 
         private readonly BouyomiSettingsModel _boyomiSetting = BouyomiSettingsModel.GetInstance();
 
+        private readonly ABBouyomiChanParser _parser;
+
+        public BouyomiChanClient(ABBouyomiChanParser parser)
+        {
+            this._parser = parser;
+        }
+     
         public void SendComment(CommentViewModel model)
         {
             if (_boyomiSetting.IsNotUsedBouyomi()) return;
 
-            var comment = model.Comment;
+
+            var comment = (_parser.IsNotUserComment(model.Comment)) ?
+                _parser.ParseComment() :
+                model.Comment;
 
             using var client = new TcpClient(HOST, PORT);
 
             using var stream = client.GetStream();
 
             using var binaryWriter = new BinaryWriter(stream);
+
+
 
             var buffer = Encoding.UTF8.GetBytes(comment);
             binaryWriter.Write(COMMAND); //コマンド（ 0:メッセージ読み上げ）
@@ -72,6 +85,8 @@ namespace ultra_comment_viewer.src.viewLogic
 
         public void StartRunningBouyomiChan(string path)
         {
+            if (IsBouyomiRunning()) return;
+
             try
             {
                 Process.Start(path);

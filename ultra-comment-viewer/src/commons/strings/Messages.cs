@@ -21,5 +21,7 @@ namespace ultra_comment_viewer.src
         public const string FAILD_CONNECT_BOUYOMI_CHAN = "棒読みちゃんとの接続に失敗しました";
         
         public const string FAILD_START_BOUYOMI = "棒読みちゃんの軌道に失敗しました";
+        
+        public const string CAN_NOT_EXTRACT_COMMNET = "このコメントは取得できませんでした";
     }
 }

@@ -31,11 +31,12 @@ namespace ultra_comment_viewer.src.model
 
         private readonly TwicasRestClientExtend _extendRest;
 
-     
-        
-        public TwicasConnectionCommentServer() : base(wb: new TwicasWebSocketClient(),
+
+
+        public TwicasConnectionCommentServer(MainWindowViewModel model) : base(wb: new TwicasWebSocketClient(),
                                                        rest: new TwicasRestClient(),
-                                                       converter: new TwicasCommentConverter()
+                                                       converter: new TwicasCommentConverter(),
+                                                       model
                                                        )
         {
             
@@ -66,6 +67,12 @@ namespace ultra_comment_viewer.src.model
             this.ItsWebSocket.DisposeInstance();
             await this.ItsWebSocket.OnStartConnectServer(webSocketUrl);
             this._emptyResponseCount = 0;
+        }
+
+        protected override Task UpdateToLiveInfo()
+        {
+            //TODO ページ更新
+            return null;
         }
     }
 }

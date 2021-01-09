@@ -32,6 +32,18 @@ namespace ultra_comment_viewer.src.viemodel
             };
         }
 
+        public static CommentViewModel BuildCanNotExtractCommentModel()
+        {
+            return new CommentViewModel()
+            {
+                Image = null,
+                UserName = "System",
+                Comment = Messages.CAN_NOT_EXTRACT_COMMNET,
+                CommentColor = new SolidColorBrush(Colors.Yellow),
+
+            };
+        }
+
 
         public override string ToString()
         {

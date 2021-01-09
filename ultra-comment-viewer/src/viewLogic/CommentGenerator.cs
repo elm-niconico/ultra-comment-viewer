@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ultra_comment_viewer.src.model;
 using ultra_comment_viewer.src.model.connection;
+using ultra_comment_viewer.src.model.parser;
 using ultra_comment_viewer.src.viemodel;
 using ultra_comment_viewer.src.viewLogic.log.logger;
 using ultra_comment_viewer.src.viewLogic.observer;
@@ -27,7 +28,7 @@ namespace ultra_comment_viewer.src.viewLogic
             this._collections = collections;
             this._server = server;
             this._observer = new DisconnectObserver(this);
-            this._boyomiChan = new BouyomiChanClient();
+            this._boyomiChan = new BouyomiChanClient(new NicoBouyomiChanParser());
         }
 
         public async Task ConnectCommentServerAsync(string userId, Action scrollChange)

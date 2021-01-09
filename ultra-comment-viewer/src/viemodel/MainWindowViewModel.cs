@@ -110,6 +110,48 @@ namespace ultra_comment_viewer.src.viemodel
 
         private bool _isWriteNicoNicoUrl;
 
+        private string _nicoLiveTitle;
+
+        private string _nicoGiftPoint;
+
+        private string _nicoCommentCount;
+
+        private string _nicoAdPoint;
+
+        private string _nicoViewer;
+
+        public string NicoViewer
+        {
+            get => this._nicoViewer;
+            set => SetProperty(ref _nicoViewer, $"{value}人");
+        }
+
+        public string NicoLiveTitle
+        {
+            get => this._nicoLiveTitle;
+            set => SetProperty(ref _nicoLiveTitle, value);
+        }
+
+        public string NicoGiftPoint
+        {
+            get => this._nicoGiftPoint;
+            set => SetProperty(ref _nicoGiftPoint, $"{value}P");
+        }
+
+        public string NicoCommentCount
+        {
+            get => this._nicoCommentCount;
+            set => SetProperty(ref _nicoCommentCount, value);
+        }
+
+        public string NicoAdPoint
+        {
+            get => this._nicoAdPoint;
+            set => SetProperty(ref _nicoAdPoint, $"{value}P");
+        }
+
+
+
         public bool IsConnectNicoLive
         {
             get => this._isConnectNicoLive;

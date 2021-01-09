@@ -63,7 +63,11 @@ namespace ultra_comment_viewer.src.model.http
 
             return new TwicasJsonConverter().ConvertToSupporterCountModel(response);  
         }
-        
 
+        public Task<string> GetUserLiveHtmlAsync(string id)
+        {
+            //TODO LIVEHTML
+            throw new NotImplementedException();
+        }
     }
 }

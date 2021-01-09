@@ -32,6 +32,8 @@ namespace ultra_comment_viewer.src.model.http
             return connector.FetchCommentServerUrl(webSocketUrl);
         }
 
+        
+
 
 
 
@@ -52,5 +54,9 @@ namespace ultra_comment_viewer.src.model.http
 
         public async Task<string> LoadUserMyPageHtmlAsync(int userId)
             => await ElmHttpClientUtil.WrapGetAsync(NicoNicoApi.GET_USER_MY_PAGE(userId));
+
+        public async Task<string> GetUserLiveHtmlAsync(string id)
+           => await ElmHttpClientUtil.WrapGetAsync(NicoNicoApi.GET_LIVE_HTML(id));
+        
     }
 }

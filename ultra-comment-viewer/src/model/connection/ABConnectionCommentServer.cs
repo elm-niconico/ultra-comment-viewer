@@ -5,6 +5,8 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using ultra_comment_viewer.src.commons;
+using ultra_comment_viewer.src.commons.extends_mothod;
 using ultra_comment_viewer.src.model.json;
 using ultra_comment_viewer.src.model.websocket;
 using ultra_comment_viewer.src.viemodel;
@@ -24,11 +26,14 @@ namespace ultra_comment_viewer.src.model.connection
 
         protected string ItsWebSocketUrl;
 
-        public ABConnectionCommentServer(ABLiveWebSocketClient wb, ILiveRestClient rest, ABLiveInfoConverter converter)
+        protected MainWindowViewModel ItsMainModel;
+
+        public ABConnectionCommentServer(ABLiveWebSocketClient wb, ILiveRestClient rest, ABLiveInfoConverter converter, MainWindowViewModel model)
         {
             this.ItsWebSocket = wb;
             this.ItsConverter = converter;
             this.ItsRest = rest;
+            this.ItsMainModel = model;
         }
 
         public async IAsyncEnumerable<CommentViewModel> FetchCommentAsync(string id, DisconnectObserver observer)
@@ -36,6 +41,7 @@ namespace ultra_comment_viewer.src.model.connection
 
             this.ItsId = id;
             this.ItsWebSocketUrl = await this.ItsRest.GetWebSocketUrlAsync(id);
+            var dateManeger = new LiveDateManager();
 
             if (String.IsNullOrEmpty(this.ItsWebSocketUrl))
             {
@@ -43,8 +49,16 @@ namespace ultra_comment_viewer.src.model.connection
                 yield break;
             }
 
-            await foreach(var response in this.ItsWebSocket.ReadCommentFromServerAsync(ItsWebSocketUrl, observer))
+            await foreach(var response in this.ItsWebSocket.ReadCommentFromServerAsync(UpdateToLiveInfo, ItsWebSocketUrl, observer))
             {
+                if (response.IsNull())
+                {
+                    yield return CommentViewModel.BuildDisconnectModel();
+                    continue;
+                }
+
+                if (dateManeger.HasTimePassed(30)) await UpdateToLiveInfo();
+
                 LiveStatus liveStatus = await CheckConnectionWebSocketAsync(response);
  
                 switch (liveStatus)
@@ -65,6 +79,8 @@ namespace ultra_comment_viewer.src.model.connection
             await this.ItsWebSocket.DisconnectServer(WebSocketCloseStatus.NormalClosure, Messages.CLOSE_SERVER_NORMAL);
         }
         protected abstract Task<LiveStatus> CheckConnectionWebSocketAsync(string reponse);
+
+        protected abstract Task UpdateToLiveInfo();
     }
 }
 
