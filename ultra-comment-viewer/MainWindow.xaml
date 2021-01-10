@@ -7,18 +7,17 @@
         xmlns:converter="clr-namespace:ultra_comment_viewer.src.view.converter"
         xmlns:local="clr-namespace:ultra_comment_viewer"
         xmlns:prism="http://prismlibrary.com/"
-        
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
-    Title="MainWindow" Height="1200" Width="800" Background="Gainsboro">
+        Title="MainWindow" Height="1200" Width="800" Background="Gainsboro">
     <Window.Resources>
         <converter:BoolToStringConverter x:Key="TestConverter"/>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*" MinHeight="20"/>
+            <RowDefinition Height="1*" MinHeight="58"/>
             <RowDefinition Height="3"/>
-            <RowDefinition Height="2*" MinHeight="20"/>
+            <RowDefinition Height="Auto" MinHeight="20"/>
             <RowDefinition Height="8"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="8" />
@@ -40,41 +39,37 @@
             <ToolBarTray
                 Background="WhiteSmoke"
                 >
-                
-                
-            <ToolBar
-                Background="WhiteSmoke"
-                Style="{DynamicResource MaterialDesignToolBar}"
-                ClipToBounds="False">
-                <Button
-                    Click="Click_OpenSettingWindow"
-                    ToolTip="設定を変更"
-                    Content="{md:PackIcon Kind=CogOutline}"/>
+                <ToolBar
+                        Background="WhiteSmoke"
+                        Style="{DynamicResource MaterialDesignToolBar}"
+                        ClipToBounds="False">
+                    <Button
+                        Click="Click_OpenSettingWindow"
+                        ToolTip="設定を変更"
+                        Content="{md:PackIcon Kind=CogOutline}"/>
                     <Separator/>
-                <!-- 棒読みちゃん設定ボタン -->
-                <Button
-                    ToolTip="棒読みちゃんのON/OFFの変更"
-                    VerticalAlignment="Top"
-                    Click="Click_ChangeIsUsedBouyomi"
-                    >
-                    <Image  Height="25"
+                    <!-- 棒読みちゃん設定ボタン -->
+                    <Button
+                        ToolTip="棒読みちゃんのON/OFFの変更"
+                        VerticalAlignment="Top"
+                        Click="Click_ChangeIsUsedBouyomi"
+                        >
+                        <Image
+                            Height="25"
                             Width="25"
                             Source="{Binding BouyomiChanIcon}"
                             />
-                </Button>
-                <Separator></Separator>
-
-            </ToolBar>
-        </ToolBarTray>
-
+                    </Button>
+                    <Separator></Separator>
+                </ToolBar>
+            </ToolBarTray>
         </md:Card>
-        
+
         <!--================== DropZoneArea   ==========================-->
         <md:Card
             Grid.Column="0"
             Grid.Row="4"
             Grid.RowSpan="3"
-            
             >
             <StackPanel>
                 <!-- URLドロップゾーン -->
@@ -125,183 +120,167 @@
                     Margin="5,5,5,5"
                     />
                 <Separator Margin="10"/>
-              
             </StackPanel>
-            
         </md:Card>
 
-        <!--================== URLフォームエリア ========================= -->
-        <md:Card
-            
-            Margin="10 0 10 0"
-            Grid.ColumnSpan="3" 
-            Grid.Row="2"
-            md:ShadowAssist.ShadowDepth="Depth1"
-            >
-            <StackPanel
-                Orientation="Vertical"
+      <!--================== URLフォームエリア ========================= -->
+        <Expander
+                Grid.ColumnSpan="3" 
+                Grid.Row="2"
+                Height="Auto"
+                HorizontalAlignment="Stretch"
+                Header="ニコニコ＆ツイキャスURL"
                 >
+        <StackPanel
+                    Orientation="Vertical"
+                    >
                 <!-- TwicasURlForm -->
                 <StackPanel
-                    Margin="20 3 0 0"
-                    Orientation="Horizontal"
-                    >
+                        Margin="20 3 0 0"
+                        Orientation="Horizontal"
+                        >
                     <TextBox
-                        
                         Width="500"
-                        Text="{Binding LiveUrlWrittenByTwicasForm, UpdateSourceTrigger=PropertyChanged}"                        
+                        Text="{Binding LiveUrlWrittenByTwicasForm, UpdateSourceTrigger=PropertyChanged}"
                         TextChanged="TextChanged_ValidateTwicasLiveUrl"
                         md:HintAssist.Hint="Twicasの放送URlを入力して下さい"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                         VerticalAlignment="Center"
-                        
                          />
                     <Button
-                        
-                        Content="接続"
-                        Width="60"
-                        Margin="10 10 0 0"
-                        Height="25" 
-                        Cursor="Hand"
-                        Background="Crimson"
-                        BorderBrush="Red"
-                        IsEnabled="{Binding IsWriteUrl}"
-                        Click="EventClick_ConnectionTwicasCommentServer"
-                        />
+                            Content="接続"
+                            Width="60"
+                            Margin="10 10 0 0"
+                            Height="25" 
+                            Cursor="Hand"
+                            Background="Crimson"
+                            BorderBrush="Red"
+                            IsEnabled="{Binding IsWriteUrl}"
+                            Click="EventClick_ConnectionTwicasCommentServer"
+                            />
                     <Button
-                        Background="DeepSkyBlue"
-                        BorderBrush="DodgerBlue"
-                        Content="切断"
-                        IsEnabled="{Binding IsConnectTwicasLive}"
-                        Width="60"
-                        Margin="10 10 0 0"
-                        Height="25" 
-                        Cursor="Hand"
-                        
-                        Click="EventClick_DisconnectionTwicasServer"
-                        />
+                            Background="DeepSkyBlue"
+                            BorderBrush="DodgerBlue"
+                            Content="切断"
+                            IsEnabled="{Binding IsConnectTwicasLive}"
+                            Width="60"
+                            Margin="10 10 0 0"
+                            Height="25" 
+                            Cursor="Hand"
+                            Click="EventClick_DisconnectionTwicasServer"
+                            />
                 </StackPanel>
-
                 <!-- NiconicoUrlForm -->
                 <StackPanel
-                
-                    Margin="20 3 0 0"
-                    Orientation="Horizontal"
-                    >
-                    <TextBox
-                        Width="500"
-                        Text="{Binding LiveUrlWrittenByNicoNicoForm, UpdateSourceTrigger=PropertyChanged}"                        
-                        TextChanged="TextChanged_ValidateNicoNicoLiveUrl"
-                        md:HintAssist.Hint="ニコニコの放送URlを入力して下さい"
-                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        VerticalAlignment="Center"
-                        
-                         />
-                    <Button
-                        Content="接続"
-                        Width="60"
-                        Margin="10 10 0 0"
-                        Height="25" 
-                        Cursor="Hand"
-                        Background="Crimson"
-                        BorderBrush="Red"
-                        IsEnabled="{Binding IsWriteNicoNicoUrl}"
-                        Click="Click_ConnectionNicoNicoServer"
-                        />
-                    <Button
-                        Background="DeepSkyBlue"
-                        BorderBrush="DodgerBlue"
-                        Content="切断"
-                        IsEnabled="{Binding IsConnectNicoLive}"
-                        Width="60"
-                        Margin="10 10 0 0"
-                        Height="25" 
-                        Cursor="Hand"
-
-                        Click="Click_DisConnectNicoNicoServer"
-                        />
+                        Margin="20 3 0 0"
+                        Orientation="Horizontal"
+                        >
+                <TextBox
+                    Width="500"
+                    Text="{Binding LiveUrlWrittenByNicoNicoForm, UpdateSourceTrigger=PropertyChanged}"
+                    TextChanged="TextChanged_ValidateNicoNicoLiveUrl"
+                    md:HintAssist.Hint="ニコニコの放送URlを入力して下さい"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    VerticalAlignment="Center"
+                    
+                     />
+                <Button
+                    Content="接続"
+                    Width="60"
+                    Margin="10 10 0 0"
+                    Height="25" 
+                    Cursor="Hand"
+                    Background="Crimson"
+                    BorderBrush="Red"
+                    IsEnabled="{Binding IsWriteNicoNicoUrl}"
+                    Click="Click_ConnectionNicoNicoServer"
+                    />
+                <Button
+                    Background="DeepSkyBlue"
+                    BorderBrush="DodgerBlue"
+                    Content="切断"
+                    IsEnabled="{Binding IsConnectNicoLive}"
+                    Width="60"
+                    Margin="10 10 0 0"
+                    Height="25" 
+                    Cursor="Hand"
+                    Click="Click_DisConnectNicoNicoServer"
+                    />
                 </StackPanel>
-                <StackPanel></StackPanel>
             </StackPanel>
-        </md:Card>
+        </Expander>
         <!-- ============ドロップゾーン -*- コメントエリア =================== -->
         <GridSplitter
-            Background="Gainsboro"
-            Foreground="Gainsboro"
-            Grid.Column="1"
-            Grid.Row="4"
-            Grid.RowSpan="3"
-            Style="{StaticResource VerticalGridSplitter}" 
-            />
+                Background="Gainsboro"
+                Foreground="Gainsboro"
+                Grid.Column="1"
+                Grid.Row="4"
+                Grid.RowSpan="3"
+                Style="{StaticResource VerticalGridSplitter}" 
+                />
         <!-- ================= URLフォーム -*- コメントエリア==============  -->
+        <!-- GridSplitter でサイズを変更できるようにするとおかしくなるのでコメントアウト
         <GridSplitter
-            Foreground="Gainsboro"
-            Background="Gainsboro"
-            Grid.Column="2"
-            Grid.Row="3"
+                Foreground="Gainsboro"
+                Background="Gainsboro"
+                Grid.Column="2"
+                Grid.Row="3"
 
-            Style="{StaticResource HorizontalGridSplitter}" 
-            />
-         <GridSplitter
-            Foreground="Gainsboro"
-            Background="Gainsboro"
-            Grid.Column="2"
-            Grid.Row="5"
-            Style="{StaticResource HorizontalGridSplitter}" 
-            />
+                Style="{StaticResource HorizontalGridSplitter}" 
+                />-->
+        <GridSplitter
+                Foreground="Gainsboro"
+                Background="Gainsboro"
+                Grid.Column="2"
+                Grid.Row="5"
+                Style="{StaticResource HorizontalGridSplitter}" 
+                />
         <!-- コミュティ情報エリア -->
         <md:Card
-            Grid.Row="4"
-            Grid.Column="3"
-            Background="White"
-            >
+                Grid.Row="4"
+                Grid.Column="3"
+                Background="White"
+                >
             <StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="{md:PackIcon Kind=Subtitles,Size=20}"/>
-                    <TextBlock 
-                        TextWrapping="Wrap"
-                        Width="300"
-                        VerticalAlignment="Center"
-                        FontSize="14"
-                        Text="{Binding NicoLiveTitle}"
-                        />
-                    <!-- 視聴者数 -->
-                    <Label Margin="4 0" Content="{md:PackIcon Size=20, Kind=Account}"/>
-                    <TextBlock
+                 <StackPanel Orientation="Horizontal">
+                     <Label Content="{md:PackIcon Kind=Subtitles,Size=20}"/>
+                     <TextBlock 
+                         TextWrapping="Wrap"
+                         Width="300"
+                         VerticalAlignment="Center"
+                         FontSize="14"
+                         Text="{Binding NicoLiveTitle}"
+                         />
+                     <!-- 視聴者数 -->
+                     <Label Margin="4 0" Content="{md:PackIcon Size=20, Kind=Account}"/>
+                     <TextBlock
                          VerticalAlignment="Center"
                          FontSize="13"
                          Text="{Binding NicoViewer}"
                          Width="80"
                          />
-                    
-                    <!-- コメント数 -->
-                    <Label Margin="4 0" Content="{md:PackIcon Kind=Comment,Size=20}"/>
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        FontSize="13"
-                        Text="{Binding NicoCommentCount}"
-                        Width="80"
-                        />
-                    
-                 
-
-                </StackPanel>
-
+                     <!-- コメント数 -->
+                     <Label Margin="4 0" Content="{md:PackIcon Kind=Comment,Size=20}"/>
+                     <TextBlock
+                         VerticalAlignment="Center"
+                         FontSize="13"
+                         Text="{Binding NicoCommentCount}"
+                         Width="80"
+                         />
+                 </StackPanel>
             </StackPanel>
-            
         </md:Card>
-        
+
         <!-- ================= コメントエリア ========================== -->
         <md:Card
-            
-            Grid.Column="2" 
-            Grid.Row="6" >
+                Grid.Column="2" 
+                Grid.Row="6" >
             <ListView 
-                x:Name="CommentList"
-                ScrollViewer.ScrollChanged="EventScrollChanged_UpdateAutoScrollFlag"
-                VirtualizingPanel.IsVirtualizing="True"
-                VirtualizingPanel.VirtualizationMode="Recycling"
-                >
+                      x:Name="CommentList"
+                      ScrollViewer.ScrollChanged="EventScrollChanged_UpdateAutoScrollFlag"
+                      VirtualizingPanel.IsVirtualizing="True"
+                      VirtualizingPanel.VirtualizationMode="Recycling"
+                      >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel
@@ -320,16 +299,15 @@
                                     Source="{Binding Image}"
                                     Grid.Row="0"
                                     Grid.Column="0"
-                                   />
+                                    />
                                 <!-- ユーザーネーム -->
-                                <TextBlock                                    
+                                <TextBlock
                                     TextWrapping="Wrap"
                                     Text="{Binding UserName}"
                                     FontSize="8"
                                     VerticalAlignment="Center"
                                     />
                             </StackPanel>
-
                             <!-- コメント -->
                             <md:Card
                                 Cursor="Hand"
@@ -340,18 +318,16 @@
                                 Background="{Binding CommentColor}"
                                 >
                                 <TextBlock
-                                    Margin="15"
-                                    HorizontalAlignment="Left"
-                                    FontSize="10"
-                                    Text="{Binding Comment}"
-                                />
+                                     Margin="15"
+                                     HorizontalAlignment="Left"
+                                     FontSize="10"
+                                     Text="{Binding Comment}"
+                                     />
                             </md:Card>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
         </md:Card>
-
-
     </Grid>
 </Window>
