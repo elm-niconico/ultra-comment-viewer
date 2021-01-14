@@ -46,17 +46,19 @@ namespace ultra_comment_viewer
             this.DataContext = this._model;
 
 
-            var bouyomi = new BouyomiChanClient(new NicoBouyomiChanParser());
+            var bouyomi = new BouyomiChanClient();
             var bouyomiSettings = BouyomiSettingsModel.GetInstance();
 
             if (bouyomiSettings.IsUsedBouyomi())
                 bouyomi.StartRunningBouyomiChan(bouyomiSettings.GetBouyomiPath());
 
             this._twicasCommentGenerator = new CommentGenerator(collection,
-                                                                 new TwicasConnectionCommentServer(_model));
+                                                               
+                                                                server: new TwicasConnectionCommentServer(_model));
 
             this._niconicoCommentGenerator = new CommentGenerator(collection,
-                                                      new NicoConnectionCommentServer(_model));
+                                                                  
+                                                                  server: new NicoConnectionCommentServer(_model));
             this._menuLogic = new MenuLogic();
 
             this._dropLogic = new DropLogic();
@@ -153,9 +155,6 @@ namespace ultra_comment_viewer
         {
             return (CommentViewModel)e.Data.GetData(typeof(CommentViewModel));
         }
-
-
-
 
         private void TextChanged_ValidateTwicasLiveUrl(object sender, TextChangedEventArgs e)
         {

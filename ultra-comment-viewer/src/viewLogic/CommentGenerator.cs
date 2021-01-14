@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ultra_comment_viewer.src.model;
 using ultra_comment_viewer.src.model.connection;
 using ultra_comment_viewer.src.model.parser;
+using ultra_comment_viewer.src.model.parser.bouyomi;
 using ultra_comment_viewer.src.viemodel;
 using ultra_comment_viewer.src.viewLogic.log.logger;
 using ultra_comment_viewer.src.viewLogic.observer;
@@ -22,13 +23,16 @@ namespace ultra_comment_viewer.src.viewLogic
 
         private readonly BouyomiChanClient _boyomiChan;
 
+
         public CommentGenerator(ObservableCollection<CommentViewModel> collections,
-                                 ABConnectionCommentServer server)
+                                 ABConnectionCommentServer server
+                                
+                                 )
         {
             this._collections = collections;
             this._server = server;
             this._observer = new IDisconnectObserver(this);
-            this._boyomiChan = new BouyomiChanClient(new NicoBouyomiChanParser());
+            this._boyomiChan = new BouyomiChanClient();
         }
 
         public async Task ConnectCommentServerAsync(string userId, Action scrollChange)
@@ -38,7 +42,8 @@ namespace ultra_comment_viewer.src.viewLogic
 
             await foreach(var commentModel in _server.FetchCommentAsync(userId, this._observer))
             {
-                this._boyomiChan.SendComment(commentModel);
+
+                this._boyomiChan.SendComment(commentModel.Comment);
                 logger.PushLog(commentModel);
                 _collections.Add(commentModel);
                 scrollChange();

@@ -52,8 +52,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="src\viewLogic\mainWindow\observer\" />
-    <Folder Include="src\viewLogic\mainWindow\parser\" />
     <Folder Include="src\viewLogic\userInfoWindow\" />
   </ItemGroup>
 

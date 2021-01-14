@@ -28,5 +28,8 @@ namespace ultra_comment_viewer.src.model.json.converter
 
         public NicoLiveDataJsonModel ConvertToDataJsonModel(string json)
             => JsonSerializer.Deserialize<NicoLiveDataJsonModel>(json);
+
+        public T ConvertToJsonModel<T>(string json)
+            => JsonSerializer.Deserialize<T>(json);
     }
 }

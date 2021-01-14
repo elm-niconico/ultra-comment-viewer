@@ -26,6 +26,8 @@ namespace ultra_comment_viewer.src.model.connection
             
             var roomJson = _client.ExtractResponseMessage();
 
+            if (String.IsNullOrEmpty(roomJson)) return null;
+
             var converter = new NicoJsonConverter();
             var model = converter.ConverToLiveRoomJsonModel(roomJson);
 

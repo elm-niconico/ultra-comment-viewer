@@ -10,9 +10,7 @@
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
         Title="MainWindow" Height="1200" Width="800" Background="Gainsboro">
-    <Window.Resources>
-        <converter:BoolToStringConverter x:Key="TestConverter"/>
-    </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" MinHeight="58"/>

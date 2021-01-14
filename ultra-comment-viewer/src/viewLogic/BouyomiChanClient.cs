@@ -32,21 +32,11 @@ namespace ultra_comment_viewer.src.viewLogic
 
         private readonly BouyomiSettingsModel _boyomiSetting = BouyomiSettingsModel.GetInstance();
 
-        private readonly ABBouyomiChanParser _parser;
-
-        public BouyomiChanClient(ABBouyomiChanParser parser)
-        {
-            this._parser = parser;
-        }
-     
-        public void SendComment(CommentViewModel model)
+        
+        public void SendComment(string comment)
         {
             if (_boyomiSetting.IsNotUsedBouyomi()) return;
 
-
-            var comment = (_parser.IsNotUserComment(model.Comment)) ?
-                _parser.ParseComment() :
-                model.Comment;
 
             using var client = new TcpClient(HOST, PORT);
 

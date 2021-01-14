@@ -52,13 +52,13 @@ namespace ultra_comment_viewer.src.viemodel
 
         private void CancelAllTask()
         {
-            var client = new BouyomiChanClient(new NicoBouyomiChanParser());
+            var client = new BouyomiChanClient();
             client.CancelAllTask();
         }
 
         private void RunningBouyomiOrNull()
         {
-            var client = new BouyomiChanClient(new NicoBouyomiChanParser());
+            var client = new BouyomiChanClient();
 
             if (client.IsBouyomiRunning()) return;
 

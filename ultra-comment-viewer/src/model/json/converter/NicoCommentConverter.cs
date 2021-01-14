@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using ultra_comment_viewer.src.commons.extends_mothod;
 using ultra_comment_viewer.src.commons.strings.api;
 using ultra_comment_viewer.src.model.http;
+using ultra_comment_viewer.src.model.parser;
 using ultra_comment_viewer.src.model.xml.converter;
 using ultra_comment_viewer.src.viemodel;
 
@@ -28,6 +29,10 @@ namespace ultra_comment_viewer.src.model.json.converter
             
             var userId = model.chat.user_id;
 
+
+            var parser = new NicoCommentParser();
+            var comment = parser.ParseComment(model.chat.content);
+
             string nickName = ExtractUserNickName(userId);
 
             var userIcon = ExtractUserIcon(userId);
@@ -36,7 +41,7 @@ namespace ultra_comment_viewer.src.model.json.converter
             {
                 UserId = model.chat.user_id,
                 UserName = nickName,
-                Comment = model.chat.content,
+                Comment = comment,
                 CommentColor = new SolidColorBrush(Colors.Violet),
                 LiveName = LiveSiteName.NICONICO,
                 Image = userIcon
