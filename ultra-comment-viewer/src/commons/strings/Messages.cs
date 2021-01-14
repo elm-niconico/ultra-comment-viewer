@@ -25,5 +25,7 @@ namespace ultra_comment_viewer.src
         public const string CAN_NOT_EXTRACT_COMMNET = "このコメントは取得できませんでした";
         
         public const string NOT_VALID_LIVE_URL = "正しいURLを入力してください";
+        
+        public const string NOT_CONNECT_SEVER = "サーバに接続されていません" ;
     }
 }

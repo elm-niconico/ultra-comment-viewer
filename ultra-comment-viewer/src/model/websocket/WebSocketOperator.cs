@@ -5,6 +5,7 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using ultra_comment_viewer.src.commons.extends_mothod;
 using ultra_comment_viewer.src.viewLogic.observer;
 
@@ -35,7 +36,7 @@ namespace ultra_comment_viewer.src.commons.util
             return IsOpen();
         }
 
-        private bool IsOpen() => this._webSocketClient.State == WebSocketState.Open; 
+        private bool IsOpen() => this._webSocketClient.NotNull() && this._webSocketClient.State == WebSocketState.Open; 
 
         public async IAsyncEnumerable<string> ReceiveResponseAsync()
         {
@@ -75,6 +76,13 @@ namespace ultra_comment_viewer.src.commons.util
 
         public async Task DisConnectServer(WebSocketCloseStatus status, string message)
         {
+            var wc = this._webSocketClient;
+            if(wc.IsNull() || wc.State == WebSocketState.Closed)
+            {
+                MessageBox.Show(Messages.NOT_CONNECT_SEVER);
+                return;
+            }
+
             await this._webSocketClient.CloseAsync(status, message, CancellationToken.None);
             DisposeInstance();
         }

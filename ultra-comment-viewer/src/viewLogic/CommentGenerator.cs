@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using ultra_comment_viewer.src.commons.extends_mothod;
 using ultra_comment_viewer.src.model;
 using ultra_comment_viewer.src.model.connection;
 using ultra_comment_viewer.src.model.parser;
@@ -15,7 +17,7 @@ namespace ultra_comment_viewer.src.viewLogic
 {
     public class CommentGenerator
     {
-        private readonly ABConnectionCommentServer _server;
+        private ABConnectionCommentServer _server;
 
         private readonly ObservableCollection<CommentViewModel> _collections;
 
@@ -24,19 +26,17 @@ namespace ultra_comment_viewer.src.viewLogic
         private readonly BouyomiChanClient _boyomiChan;
 
 
-        public CommentGenerator(ObservableCollection<CommentViewModel> collections,
-                                 ABConnectionCommentServer server
-                                
-                                 )
+        public CommentGenerator(ObservableCollection<CommentViewModel> collections)
         {
             this._collections = collections;
-            this._server = server;
+            
             this._observer = new IDisconnectObserver(this);
             this._boyomiChan = new BouyomiChanClient();
         }
 
-        public async Task ConnectCommentServerAsync(string userId, Action scrollChange)
+        public async Task ConnectCommentServerAsync(string userId, Action scrollChange,ABConnectionCommentServer server) 
         {
+            this._server = server;
             var logger = new Logger();
 
 
@@ -52,12 +52,19 @@ namespace ultra_comment_viewer.src.viewLogic
 
         public async Task DisConnectCommentServerAsync()
         {
+            if (this._server.IsNull())
+            {
+                MessageBox.Show(Messages.NOT_CONNECT_SEVER);
+                return;
+            }
             await this._server.DisconnectServerASync();
         }
 
         public void AddDisconnectComment()
         {
-            this._collections.Add(CommentViewModel.BuildDisconnectModel());
+            var disconnectComment = CommentViewModel.BuildDisconnectModel();
+            this._boyomiChan.SendComment(disconnectComment.Comment);
+            this._collections.Add(disconnectComment);
         }
 
 

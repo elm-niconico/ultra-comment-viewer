@@ -54,8 +54,6 @@ namespace ultra_comment_viewer.src.model.connection
                     continue;
                 }
 
-              
-
                 LiveStatus liveStatus = await CheckConnectionWebSocketAsync(response);
  
                 switch (liveStatus)
@@ -66,6 +64,7 @@ namespace ultra_comment_viewer.src.model.connection
                     case LiveStatus.SKIP_THIS_COMMENT:
                         break;
                     case LiveStatus.EXIT:
+                        await DisconnectServerASync();
                         yield break;           
                 }
             }

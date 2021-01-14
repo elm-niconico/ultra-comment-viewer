@@ -9,6 +9,7 @@ using ultra_comment_viewer.src.commons;
 using ultra_comment_viewer.src.commons.extends_mothod;
 using ultra_comment_viewer.src.commons.strings.api;
 using ultra_comment_viewer.src.commons.util;
+using ultra_comment_viewer.src.model.connection;
 using ultra_comment_viewer.src.model.http;
 
 namespace ultra_comment_viewer.src.model.websocket.niconico

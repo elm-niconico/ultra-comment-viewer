@@ -52,13 +52,11 @@ namespace ultra_comment_viewer
             if (bouyomiSettings.IsUsedBouyomi())
                 bouyomi.StartRunningBouyomiChan(bouyomiSettings.GetBouyomiPath());
 
-            this._twicasCommentGenerator = new CommentGenerator(collection,
-                                                               
-                                                                server: new TwicasConnectionCommentServer(_model));
+            this._twicasCommentGenerator = new CommentGenerator(collection);
 
-            this._niconicoCommentGenerator = new CommentGenerator(collection,
+            this._niconicoCommentGenerator = new CommentGenerator(collection);
                                                                   
-                                                                  server: new NicoConnectionCommentServer(_model));
+                                                                  
             this._menuLogic = new MenuLogic();
 
             this._dropLogic = new DropLogic();
@@ -80,7 +78,7 @@ namespace ultra_comment_viewer
         {
       
             this._model.IsNotConnectTwicasLive = true;
-            await this._twicasCommentGenerator.ConnectCommentServerAsync(_model.TwicasUserId, this.ScrollCommentView);
+            await this._twicasCommentGenerator.ConnectCommentServerAsync(_model.TwicasUserId, this.ScrollCommentView, new TwicasConnectionCommentServer(_model));
             
         }
 
@@ -93,7 +91,7 @@ namespace ultra_comment_viewer
             if (isNotLiveUrl) return;
 
             this._model.IsNotConnectNicoLive = false;
-            await this._niconicoCommentGenerator.ConnectCommentServerAsync(this._model.NiconicoLiveId, this.ScrollCommentView);
+            await this._niconicoCommentGenerator.ConnectCommentServerAsync(this._model.NiconicoLiveId, this.ScrollCommentView, new NicoConnectionCommentServer(_model));
             
         }
 
