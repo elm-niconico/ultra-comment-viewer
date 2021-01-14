@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ultra_comment_viewer.src.commons.extends_mothod;
 using ultra_comment_viewer.src.model.http;
 using ultra_comment_viewer.src.model.json.converter;
+using ultra_comment_viewer.src.model.observer.niconico;
 using ultra_comment_viewer.src.model.parser;
 using ultra_comment_viewer.src.model.websocket.niconico;
 using ultra_comment_viewer.src.viemodel;
@@ -14,7 +15,7 @@ namespace ultra_comment_viewer.src.model.connection
 {
    
 
-    public class NicoNicoConnectionCommentServer : ABConnectionCommentServer
+    public class NicoConnectionCommentServer : ABConnectionCommentServer
     {
         private readonly Regex commentRegex = new Regex("^{\"chat\":.+$");
 
@@ -31,15 +32,12 @@ namespace ultra_comment_viewer.src.model.connection
 
 
 
-        public NicoNicoConnectionCommentServer(MainWindowViewModel model) :
-            base(
-                    wb: new NicoNicoWebSocketClient(),
-                    rest: new NicoNicoRestClient(),
-                    converter: new NicoNicoCommentConverter(),
-                    model: model
-                    
-                )
+        public NicoConnectionCommentServer(MainWindowViewModel model) : base(model)
         {
+
+            ItsRest = new NicoRestClient(new NicoLiveVisiter(this));
+            ItsConverter = new NicoCommentConverter();
+            ItsWebSocket = new NicoWebSocketClient((NicoRestClient)ItsRest);
 
         }
 
@@ -56,15 +54,14 @@ namespace ultra_comment_viewer.src.model.connection
 
             if (this._didOverPasLog) return Task.FromResult(LiveStatus.SUCCESS_CONNECT);
 
-            
-
-            return IsPastComment(response)? Task.FromResult(LiveStatus.SKIP_THIS_COMMENT) :  Task.FromResult(LiveStatus.SUCCESS_CONNECT);
+            return IsPastComment(response)? Task.FromResult(LiveStatus.SKIP_THIS_COMMENT) :
+                                            Task.FromResult(LiveStatus.SUCCESS_CONNECT);
         }
 
 
         private bool IsPastComment(string response)
         {
-            var converter = new NicoNicoJsonConverter();
+            var converter = new NicoJsonConverter();
             var model = converter.ConverToCommentJsonModel(response);
 
             return model.chat.no < this._lastRes;
@@ -73,23 +70,23 @@ namespace ultra_comment_viewer.src.model.connection
 
         private void ExtractServerTime(string response)
         {
-            var converter = new NicoNicoJsonConverter();
+            var converter = new NicoJsonConverter();
             var model = converter.ConvertToServerJsonModel(response);
+            
             this._lastRes = model.thread.last_res;
+
             _hasNotLastRes = false;
         }
 
-        protected async override Task UpdateToLiveInfo()
+        public void UpdateToLiveInfo(string json)
         {
-            var liveHtml = await ItsRest.GetUserLiveHtmlAsync(ItsId);
-      
-            var parser = new NicoNicoLiveHtmlParser(liveHtml);
-      
-            var viewer = parser.GetViewr();
-            ItsMainModel.NicoViewer = viewer;
-            ItsMainModel.NicoCommentCount = parser.GetCommentCount();
-            ItsMainModel.NicoLiveTitle = parser.Title;
+            var parser = new NicoJsonConverter();
+            var data = parser.ConvertToDataJsonModel(json);
 
+            ItsMainModel.NicoViewer =  data.data.viewers.ToString();
+            ItsMainModel.NicoCommentCount = data.data.comments.ToString();
+            ItsMainModel.NicoGiftPoint = data.data.giftPoints.ToString();
+            ItsMainModel.NicoAdPoint = data.data.adPoints.ToString();
         }
     }
 }

@@ -14,10 +14,14 @@ namespace ultra_comment_viewer.src.commons.util
     {
         private ClientWebSocket _webSocketClient;
 
-        private readonly DisconnectObserver _observer;
+        
+        
+        private readonly IDisconnectObserver _observer;
+
+
        
 
-        public WebSocketOperator(ClientWebSocket client, DisconnectObserver observer)
+        public WebSocketOperator(ClientWebSocket client, IDisconnectObserver observer)
         {
             this._webSocketClient = client;
             this._observer = observer;

@@ -7,12 +7,12 @@ using System.Text.RegularExpressions;
 
 namespace ultra_comment_viewer.src.model.parser
 {
-    class NicoNicoLiveHtmlParser
+    class NicoLiveHtmlParser
     {
         private readonly IHtmlCollection<IElement> _collection;
 
         public readonly string Title;
-        public NicoNicoLiveHtmlParser(string html)
+        public NicoLiveHtmlParser(string html)
         {
             var parser = new HtmlParser();
             var doc = parser.ParseDocument(html);

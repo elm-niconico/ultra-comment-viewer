@@ -14,7 +14,7 @@ using ultra_comment_viewer.src.viemodel;
 
 namespace ultra_comment_viewer.src.model.json.converter
 {
-    public class NicoNicoCommentConverter : ABLiveInfoConverter
+    public class NicoCommentConverter : ABLiveInfoConverter
     {
         private readonly Regex _not184Regex = new Regex("^[0-9]+$");
 
@@ -23,7 +23,7 @@ namespace ultra_comment_viewer.src.model.json.converter
 
         public  override CommentViewModel CovertToCommentViewModel(string responseJson)
         {
-            var jsonConverter = new NicoNicoJsonConverter();
+            var jsonConverter = new NicoJsonConverter();
             var model = jsonConverter.ConverToCommentJsonModel(responseJson);
             
             var userId = model.chat.user_id;
@@ -66,7 +66,7 @@ namespace ultra_comment_viewer.src.model.json.converter
         {
             if (this._not184Regex.IsNotMatch(userId)) return userId;
 
-            var rest = new NicoNicoRestClient();
+            var rest = new NicoRestClient();
             string xml = null;
             Task.Run(() =>
             {

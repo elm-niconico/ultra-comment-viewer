@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ultra_comment_viewer.src.viemodel;
 
 namespace ultra_comment_viewer.src.view.validater
 {
@@ -9,10 +10,10 @@ namespace ultra_comment_viewer.src.view.validater
 
         public TwiacasLiveUrlValidater() : base(@"(?<=https:\/\/twitcasting\.tv\/)[^\/]*") { }
 
-
-        protected override string ExtractMatchRegexUrl(string url)
+        public override bool IsValidUrl(MainWindowViewModel model)
         {
-            return this.regex.Match(url).Value;
+            //TODO Twicasのバリデーション処理
+            throw new NotImplementedException();
         }
     }
 }

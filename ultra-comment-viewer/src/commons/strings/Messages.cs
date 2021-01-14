@@ -23,5 +23,7 @@ namespace ultra_comment_viewer.src
         public const string FAILD_START_BOUYOMI = "棒読みちゃんの軌道に失敗しました";
         
         public const string CAN_NOT_EXTRACT_COMMNET = "このコメントは取得できませんでした";
+        
+        public const string NOT_VALID_LIVE_URL = "正しいURLを入力してください";
     }
 }

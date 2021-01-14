@@ -4,11 +4,11 @@ using System.Text;
 
 namespace ultra_comment_viewer.src.viewLogic.observer
 {
-    public class DisconnectObserver
+    public class IDisconnectObserver
     {
         private readonly CommentGenerator _generator;
 
-        public DisconnectObserver(CommentGenerator generator)
+        public IDisconnectObserver(CommentGenerator generator)
         {
             this._generator = generator;
         }

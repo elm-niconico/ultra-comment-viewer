@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ultra-comment-viewer", "ult
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ultra-comment-viewer-test", "ultra-comment-viewer-test\ultra-comment-viewer-test.csproj", "{8C28A286-85BF-4981-9FD9-4CA3467B9721}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup1", "Setup1\Setup1.vdproj", "{EFE63D4D-9F66-4D37-BF49-DE333694021B}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,8 +21,6 @@ Global
 		{8C28A286-85BF-4981-9FD9-4CA3467B9721}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C28A286-85BF-4981-9FD9-4CA3467B9721}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C28A286-85BF-4981-9FD9-4CA3467B9721}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EFE63D4D-9F66-4D37-BF49-DE333694021B}.Debug|Any CPU.ActiveCfg = Debug
-		{EFE63D4D-9F66-4D37-BF49-DE333694021B}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

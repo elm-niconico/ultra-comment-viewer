@@ -25,16 +25,16 @@ namespace ultra_comment_viewer.src.model.websocket
 
         protected WebSocketOperator ItsOpeator;
 
-        private DisconnectObserver _observer;
+        private IDisconnectObserver _observer;
 
-        public async IAsyncEnumerable<string> ReadCommentFromServerAsync(Func<Task> startUp ,string webSocketUrl, DisconnectObserver observer)
+        public async IAsyncEnumerable<string> ReadCommentFromServerAsync(string webSocketUrl, IDisconnectObserver observer)
         {
 
             if (this._observer == null) this._observer = observer;
 
             if(await OnStartConnectServer(webSocketUrl))
             {
-                startUp();
+              
                 await foreach(var comment in ReceiveResponse())
                 {
                     yield return comment;
@@ -44,11 +44,7 @@ namespace ultra_comment_viewer.src.model.websocket
 
 
 
-        public async Task DisconnectServer(WebSocketCloseStatus status, string message)
-        {
-            if(this.ItsOpeator != null)
-                await this.ItsOpeator.DisConnectServer(status, message);
-        }
+        public abstract Task DisconnectServer(WebSocketCloseStatus status, string message);
 
     
         public bool IsNotOpenConnection()

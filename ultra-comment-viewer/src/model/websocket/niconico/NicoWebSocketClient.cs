@@ -6,15 +6,20 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ultra_comment_viewer.src.commons;
+using ultra_comment_viewer.src.commons.extends_mothod;
 using ultra_comment_viewer.src.commons.strings.api;
 using ultra_comment_viewer.src.commons.util;
+using ultra_comment_viewer.src.model.http;
 
 namespace ultra_comment_viewer.src.model.websocket.niconico
 {
-    class NicoNicoWebSocketClient : ABLiveWebSocketClient
+    class NicoWebSocketClient : ABLiveWebSocketClient
     {
-        public NicoNicoWebSocketClient()
+        private readonly NicoRestClient _rest;
+
+        public NicoWebSocketClient(NicoRestClient client)
         {
+            this._rest = client;
             this.webSocketClient.Options.SetRequestHeader("Sec-WebSocket-Extensions", "permessage-deflate; client_max_window_bits");
             this.webSocketClient.Options.SetRequestHeader("Sec-WebSocket-Protocol", "msg.nicovideo.jp#json");
         }
@@ -64,6 +69,16 @@ namespace ultra_comment_viewer.src.model.websocket.niconico
                                            CancellationToken.None);
         }
 
+        public override async Task DisconnectServer(WebSocketCloseStatus status, string message)
+        {
 
+            if (this.ItsOpeator.NotNull())
+            {
+                this._rest.DisConnectSessionServer();
+                await this.ItsOpeator.DisConnectServer(status, message);
+
+            }
+               
+        }
     }
 }

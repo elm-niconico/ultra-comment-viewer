@@ -8,27 +8,15 @@ namespace ultra_comment_viewer.src.view.validater
 {
     public abstract class ABUrlValidater
     {
-        public string UserId { get; set; }
 
-        protected Regex regex;
+        protected Regex ItsRegex;
 
         public ABUrlValidater(string pattern)
         {
-            this.regex = new Regex(pattern);
+            this.ItsRegex = new Regex(pattern);
         }
 
-        public bool IsValidUrl(MainWindowViewModel model)
-        {
-            var userId = ExtractMatchRegexUrl(model.LiveUrlWrittenByTwicasForm);
-            if (String.IsNullOrEmpty(userId)) return false;
-
-            model.TwicasUserId = userId;
-            return true;
-
-        }
-
-        abstract protected string ExtractMatchRegexUrl(string url);
-
+        public abstract bool IsValidUrl(MainWindowViewModel model);
 
     }
 }

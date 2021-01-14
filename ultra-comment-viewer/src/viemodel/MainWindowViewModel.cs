@@ -77,7 +77,7 @@ namespace ultra_comment_viewer.src.viemodel
         public bool IsWriteUrl
         {
             get => this._IsWriteUrl;
-            set => SetProperty(ref _IsWriteUrl, value && !IsConnectTwicasLive);
+            set => SetProperty(ref _IsWriteUrl, value && !IsNotConnectTwicasLive);
         }
 
 
@@ -89,7 +89,8 @@ namespace ultra_comment_viewer.src.viemodel
 
 
 
-        public bool IsConnectTwicasLive {
+
+        public bool IsNotConnectTwicasLive {
             get => this._isConnectTwicasLive;
             set{
                 SetProperty(ref _isConnectTwicasLive, value);
@@ -101,7 +102,7 @@ namespace ultra_comment_viewer.src.viemodel
 //====================================== ニコニコ動画のViewModel ==============================================
 
         // 放送に接続しているか
-        private bool _isConnectNicoLive = false;
+        private bool _isNotConnectNicoLive = true;
         //userId
         private string _niconicoLiveId = String.Empty;
 
@@ -152,13 +153,12 @@ namespace ultra_comment_viewer.src.viemodel
 
 
 
-        public bool IsConnectNicoLive
+        public bool IsNotConnectNicoLive
         {
-            get => this._isConnectNicoLive;
+            get => this._isNotConnectNicoLive;
             set
             {
-                SetProperty(ref _isConnectNicoLive, value);
-                if(value) this.IsWriteNicoNicoUrl = false;
+                SetProperty(ref _isNotConnectNicoLive, value);
             }
         }
 
@@ -177,7 +177,7 @@ namespace ultra_comment_viewer.src.viemodel
         public bool IsWriteNicoNicoUrl
         {
             get => this._isWriteNicoNicoUrl;
-            set => SetProperty(ref this._isWriteNicoNicoUrl, value && !IsConnectNicoLive);
+            set => SetProperty(ref this._isWriteNicoNicoUrl, value && !IsNotConnectNicoLive);
         }
 
     }

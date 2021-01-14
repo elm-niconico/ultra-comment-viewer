@@ -71,7 +71,7 @@ namespace ultra_comment_viewer.src.viewLogic.factory
         {
             if (!int.TryParse(userId, out int id)) return null;
 
-            var rest = new NicoNicoRestClient();
+            var rest = new NicoRestClient();
             var html = await rest.LoadUserMyPageHtmlAsync(id);
 
             return new NicoNicoHtmlDataEnvironmentParser(html);

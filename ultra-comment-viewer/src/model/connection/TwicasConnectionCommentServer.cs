@@ -33,11 +33,7 @@ namespace ultra_comment_viewer.src.model
 
 
 
-        public TwicasConnectionCommentServer(MainWindowViewModel model) : base(wb: new TwicasWebSocketClient(),
-                                                       rest: new TwicasRestClient(),
-                                                       converter: new TwicasCommentConverter(),
-                                                       model
-                                                       )
+        public TwicasConnectionCommentServer(MainWindowViewModel model) : base(model)
         {
             
             this._extendRest = new TwicasRestClientExtend(baseClient: (TwicasRestClient)this.ItsRest);
@@ -69,10 +65,6 @@ namespace ultra_comment_viewer.src.model
             this._emptyResponseCount = 0;
         }
 
-        protected override Task UpdateToLiveInfo()
-        {
-            //TODO ページ更新
-            return null;
-        }
+
     }
 }

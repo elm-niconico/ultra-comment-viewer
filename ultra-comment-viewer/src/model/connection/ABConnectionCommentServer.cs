@@ -28,20 +28,17 @@ namespace ultra_comment_viewer.src.model.connection
 
         protected MainWindowViewModel ItsMainModel;
 
-        public ABConnectionCommentServer(ABLiveWebSocketClient wb, ILiveRestClient rest, ABLiveInfoConverter converter, MainWindowViewModel model)
+        public ABConnectionCommentServer (MainWindowViewModel model)
         {
-            this.ItsWebSocket = wb;
-            this.ItsConverter = converter;
-            this.ItsRest = rest;
+
             this.ItsMainModel = model;
         }
 
-        public async IAsyncEnumerable<CommentViewModel> FetchCommentAsync(string id, DisconnectObserver observer)
+        public async IAsyncEnumerable<CommentViewModel> FetchCommentAsync(string id, IDisconnectObserver observer)
         {
 
             this.ItsId = id;
             this.ItsWebSocketUrl = await this.ItsRest.GetWebSocketUrlAsync(id);
-            var dateManeger = new LiveDateManager();
 
             if (String.IsNullOrEmpty(this.ItsWebSocketUrl))
             {
@@ -49,7 +46,7 @@ namespace ultra_comment_viewer.src.model.connection
                 yield break;
             }
 
-            await foreach(var response in this.ItsWebSocket.ReadCommentFromServerAsync(UpdateToLiveInfo, ItsWebSocketUrl, observer))
+            await foreach(var response in this.ItsWebSocket.ReadCommentFromServerAsync(ItsWebSocketUrl, observer))
             {
                 if (response.IsNull())
                 {
@@ -57,7 +54,7 @@ namespace ultra_comment_viewer.src.model.connection
                     continue;
                 }
 
-                if (dateManeger.HasTimePassed(30)) await UpdateToLiveInfo();
+              
 
                 LiveStatus liveStatus = await CheckConnectionWebSocketAsync(response);
  
@@ -80,7 +77,7 @@ namespace ultra_comment_viewer.src.model.connection
         }
         protected abstract Task<LiveStatus> CheckConnectionWebSocketAsync(string reponse);
 
-        protected abstract Task UpdateToLiveInfo();
+        
     }
 }
 

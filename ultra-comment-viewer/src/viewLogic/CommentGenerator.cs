@@ -18,7 +18,7 @@ namespace ultra_comment_viewer.src.viewLogic
 
         private readonly ObservableCollection<CommentViewModel> _collections;
 
-        private readonly DisconnectObserver _observer;
+        private readonly IDisconnectObserver _observer;
 
         private readonly BouyomiChanClient _boyomiChan;
 
@@ -27,7 +27,7 @@ namespace ultra_comment_viewer.src.viewLogic
         {
             this._collections = collections;
             this._server = server;
-            this._observer = new DisconnectObserver(this);
+            this._observer = new IDisconnectObserver(this);
             this._boyomiChan = new BouyomiChanClient(new NicoBouyomiChanParser());
         }
 
@@ -38,7 +38,6 @@ namespace ultra_comment_viewer.src.viewLogic
 
             await foreach(var commentModel in _server.FetchCommentAsync(userId, this._observer))
             {
-               
                 this._boyomiChan.SendComment(commentModel);
                 logger.PushLog(commentModel);
                 _collections.Add(commentModel);

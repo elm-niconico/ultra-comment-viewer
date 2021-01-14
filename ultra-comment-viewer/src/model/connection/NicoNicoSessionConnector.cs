@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ultra_comment_viewer.src.commons.util;
 using ultra_comment_viewer.src.model.json.converter;
 using ultra_comment_viewer.src.model.json.model.niconico;
+using ultra_comment_viewer.src.model.observer.niconico;
 using ultra_comment_viewer.src.model.websocket;
 
 namespace ultra_comment_viewer.src.model.connection
@@ -13,18 +14,29 @@ namespace ultra_comment_viewer.src.model.connection
     {
         public DataPropsJsonModel ItsDataProps { get; private set; }
 
+        private readonly NicoSessionWebSocketClient _client;
 
-        public string FetchCommentServerUrl(string webSocketUrl)
+        public NicoNicoSessionConnector(string webSocketUrl, NicoLiveVisiter visitor)
         {
-            var webSocket = new NicoNicoSessionWebSocketClient(webSocketUrl);
-            var roomJson = webSocket.ExtractResponseMessage();
+            _client = new NicoSessionWebSocketClient(webSocketUrl, visitor);
+        }
 
-            var converter = new NicoNicoJsonConverter();
+        public string FetchCommentServerUrl()
+        {
+            
+            var roomJson = _client.ExtractResponseMessage();
+
+            var converter = new NicoJsonConverter();
             var model = converter.ConverToLiveRoomJsonModel(roomJson);
 
             NicoNicoLiveRoomInfo.NewCreateRoomInfo(model);
 
             return model.data.messageServer.uri;
+        }
+
+        public void DisconnectSessionServer()
+        {
+            _client.Disconnect();
         }
     }
 }

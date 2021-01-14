@@ -6,25 +6,24 @@ using ultra_comment_viewer.src.viemodel;
 
 namespace ultra_comment_viewer.src.view.validater
 {
-    public class NicoNicoLiveUrlValidater
+    public class NicoNicoLiveUrlValidater : ABUrlValidater
     {
+        public NicoNicoLiveUrlValidater() : base("lv[0-9]{9}") { }
 
-        private readonly Regex _regexValidLiveId = new Regex("lv[0-9]{9}");
-
-        public bool ValidateLiveUrl(MainWindowViewModel model)
+        public override bool IsValidUrl(MainWindowViewModel model)
         {
             var liveId = ExtractMatchRegexUrl(model.LiveUrlWrittenByNicoNicoForm);
 
             if (String.IsNullOrEmpty(liveId)) return false;
 
             model.NiconicoLiveId = liveId;
-            
+
             return true;
         }
 
         private string ExtractMatchRegexUrl(string url)
         {
-            return this._regexValidLiveId.Match(url).Value;
+            return this.ItsRegex.Match(url).Value;
         }
     }
 }

@@ -155,7 +155,7 @@
                             Cursor="Hand"
                             Background="Crimson"
                             BorderBrush="Red"
-                            IsEnabled="{Binding IsWriteUrl}"
+
                             Click="EventClick_ConnectionTwicasCommentServer"
                             />
                     <Button
@@ -178,7 +178,6 @@
                 <TextBox
                     Width="500"
                     Text="{Binding LiveUrlWrittenByNicoNicoForm, UpdateSourceTrigger=PropertyChanged}"
-                    TextChanged="TextChanged_ValidateNicoNicoLiveUrl"
                     md:HintAssist.Hint="ニコニコの放送URlを入力して下さい"
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                     VerticalAlignment="Center"
@@ -191,8 +190,8 @@
                     Height="25" 
                     Cursor="Hand"
                     Background="Crimson"
+                    IsEnabled="{Binding IsNotConnectNicoLive}"
                     BorderBrush="Red"
-                    IsEnabled="{Binding IsWriteNicoNicoUrl}"
                     Click="Click_ConnectionNicoNicoServer"
                     />
                 <Button
@@ -242,22 +241,25 @@
                 Background="White"
                 >
             <StackPanel>
-                 <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Vertical">
                      <Label Content="{md:PackIcon Kind=Subtitles,Size=20}"/>
                      <TextBlock 
                          TextWrapping="Wrap"
-                         Width="300"
+                         Width="200"
+                         
                          VerticalAlignment="Center"
-                         FontSize="14"
+                         FontSize="13"
                          Text="{Binding NicoLiveTitle}"
                          />
+                     <StackPanel Orientation="Horizontal">
+                    
                      <!-- 視聴者数 -->
-                     <Label Margin="4 0" Content="{md:PackIcon Size=20, Kind=Account}"/>
+                     <Label  Content="{md:PackIcon Size=20, Kind=Account}"/>
                      <TextBlock
                          VerticalAlignment="Center"
                          FontSize="13"
                          Text="{Binding NicoViewer}"
-                         Width="80"
+                         Width="60"
                          />
                      <!-- コメント数 -->
                      <Label Margin="4 0" Content="{md:PackIcon Kind=Comment,Size=20}"/>
@@ -265,9 +267,28 @@
                          VerticalAlignment="Center"
                          FontSize="13"
                          Text="{Binding NicoCommentCount}"
-                         Width="80"
+                         Width="60"
+                         />
+                     <!-- ニコニ広告ポイント数 -->
+                     <Label Margin="4 0" Content="{md:PackIcon Kind=Comment,Size=20}"/>
+                     <TextBlock
+                         VerticalAlignment="Center"
+                         FontSize="13"
+                         Text="{Binding NicoAdPoint}"
+                         
+                         Width="60"
+                         />
+                       <!-- コメント数 -->
+                     <Label Margin="4 0" Content="{md:PackIcon Kind=Comment,Size=20}"/>
+                     <TextBlock
+                         VerticalAlignment="Center"
+                         FontSize="13"
+                         Text="{Binding NicoGiftPoint}"
+                         Width="60"
                          />
                  </StackPanel>
+                </StackPanel>
+              
             </StackPanel>
         </md:Card>
 

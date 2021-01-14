@@ -8,7 +8,7 @@ using ultra_comment_viewer.src.model.json.model.niconico.user_page;
 
 namespace ultra_comment_viewer.src.model.json.converter
 {
-    public class NicoNicoJsonConverter
+    public class NicoJsonConverter
     {
         
         public DataPropsJsonModel ConverToDataPropsJsonModel(string json)
@@ -25,5 +25,8 @@ namespace ultra_comment_viewer.src.model.json.converter
 
         public ServerTimeJsonModel ConvertToServerJsonModel(string json)
             => JsonSerializer.Deserialize<ServerTimeJsonModel>(json);
+
+        public NicoLiveDataJsonModel ConvertToDataJsonModel(string json)
+            => JsonSerializer.Deserialize<NicoLiveDataJsonModel>(json);
     }
 }

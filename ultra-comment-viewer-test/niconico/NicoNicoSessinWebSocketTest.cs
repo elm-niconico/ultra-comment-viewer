@@ -14,7 +14,7 @@ namespace ultra_comment_viewer_test.niconico
         //[Test]
         public async Task TestConsoleExtractResponseMessage()
         {
-            var client = new NicoNicoRestClient();
+            var client = new NicoRestClient();
           
             TestContext.WriteLine(await client.GetWebSocketUrlAsync("lv329828386"));
         }

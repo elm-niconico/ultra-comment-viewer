@@ -21,7 +21,7 @@ namespace ultra_comment_viewer.src.viewLogic
         public async Task DoStart(Action scrollChange)
         {
 
-            if (_model.IsConnectTwicasLive)
+            if (_model.IsNotConnectTwicasLive)
             {
                 SwitchConnect();
                 await this._generator.DisConnectCommentServerAsync();
@@ -36,7 +36,7 @@ namespace ultra_comment_viewer.src.viewLogic
 
         private void SwitchConnect()
         {
-            this._model.IsConnectTwicasLive = !this._model.IsConnectTwicasLive;
+            this._model.IsNotConnectTwicasLive = !this._model.IsNotConnectTwicasLive;
         }
     }
 }
