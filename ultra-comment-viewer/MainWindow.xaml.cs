@@ -171,10 +171,7 @@ namespace ultra_comment_viewer
 
             setting.SetIsUsedBouyomi(!useFlag);
             //セッターの中で自動で反映される
-            this._model.BouyomiChanIcon = null;
-            
-            
-            
+            this._model.BouyomiChanIcon = null;       
                 
         }
 
