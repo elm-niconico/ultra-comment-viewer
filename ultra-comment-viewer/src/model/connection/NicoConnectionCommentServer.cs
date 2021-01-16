@@ -28,7 +28,7 @@ namespace ultra_comment_viewer.src.model.connection
         public NicoConnectionCommentServer(MainWindowViewModel model) : base(model)
         {
 
-            ItsRest = new NicoRestClient(new NicoLiveVisiter(this));
+            ItsRest = new NicoRestClient(new NicoLiveVisiter(this), model);
             ItsConverter = new NicoCommentConverter();
             ItsWebSocket = new NicoWebSocketClient((NicoRestClient)ItsRest);
         }

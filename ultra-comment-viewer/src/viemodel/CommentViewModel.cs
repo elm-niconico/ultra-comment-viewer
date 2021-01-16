@@ -15,6 +15,10 @@ namespace ultra_comment_viewer.src.viemodel
         public string Comment    { get; set; }
         public SolidColorBrush CommentColor { get; set; }
         public string UserId { get; set; }
+        
+        //コメントのツールバーに使用する
+        public string CommentPopup { get; set; }
+
         // 配信サイトの名前
         public LiveSiteName LiveName { get; set; }
 

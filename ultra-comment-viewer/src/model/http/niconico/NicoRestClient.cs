@@ -12,6 +12,7 @@ using ultra_comment_viewer.src.model.json.model.niconico;
 using ultra_comment_viewer.src.model.observer.niconico;
 using ultra_comment_viewer.src.model.parser;
 using ultra_comment_viewer.src.model.websocket;
+using ultra_comment_viewer.src.viemodel;
 
 namespace ultra_comment_viewer.src.model.http
 {
@@ -23,22 +24,25 @@ namespace ultra_comment_viewer.src.model.http
 
         private NicoNicoSessionConnector _connector;
 
+        private MainWindowViewModel _model;
         public NicoRestClient()
         {
 
         }
 
-        public NicoRestClient(NicoLiveVisiter visiter)
+        public NicoRestClient(NicoLiveVisiter visiter, MainWindowViewModel model)
         {
             this._visiter = visiter;
+            this._model = model;
         }
 
         public async Task<string> GetWebSocketUrlAsync(string liveId)
         {
             var html = await LoadUserLiveHtmlAsync(liveId);
             var parser = new NicoNicoHtmlDataPropsParser(html);
-            
-            
+
+            _model.NicoLiveTitle = new NicoLiveHtmlParser(html).Title;
+
             var webSocketUrl = parser.GetWebSocketUrl();
             // 限定配信は視聴セッションのWebSocektUrlが空文字になる
             if (String.IsNullOrEmpty(webSocketUrl)) return null;

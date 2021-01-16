@@ -68,7 +68,7 @@ namespace ultra_comment_viewer.src.viemodel
             set => SetProperty(ref this._clipColor, value);
         }
 
-
+ 
         public BitmapImage BouyomiChanIcon
         {
             get => this._boyomiChanIcon;

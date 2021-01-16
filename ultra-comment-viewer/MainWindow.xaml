@@ -181,8 +181,6 @@
                             Click="EventClick_ConnectionTwicasCommentServer"
                             />
                     <Button
- 
- 
                             BorderBrush="DodgerBlue"
                             Content="切断"
                             IsEnabled="{Binding IsConnectTwicasLive}"
@@ -265,52 +263,67 @@
             Background="White"
             >
             <StackPanel>
-                <StackPanel Orientation="Vertical">
-                     <Label Content="{md:PackIcon Kind=Subtitles,Size=20}"/>
-                     <TextBlock 
-                         TextWrapping="Wrap"
-                         Width="200"
-                         
-                         VerticalAlignment="Center"
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="{md:PackIcon Kind=Subtitles,Size=20}"/>
+                     <TextBlock
+                         FontWeight="SemiBold"
                          FontSize="13"
+                         VerticalAlignment="Center"
+                         TextWrapping="Wrap"          
                          Text="{Binding NicoLiveTitle}"
                          />
-                     <StackPanel Orientation="Horizontal">
+                </StackPanel>
+                <StackPanel 
+                         Orientation="Horizontal">
                     
                      <!-- 視聴者数 -->
-                     <Label  Content="{md:PackIcon Size=20, Kind=Account}"/>
-                     <TextBlock
+                     <Label  
                          VerticalAlignment="Center"
-                         FontSize="13"
+                         Content="{md:PackIcon Size=17,
+                         Kind=Account}"/>
+                     <TextBlock
+                         FontSize="12"
+                         VerticalAlignment="Center"
                          Text="{Binding NicoViewer}"
                          Width="60"
                          />
                      <!-- コメント数 -->
-                     <Label Margin="4 0" Content="{md:PackIcon Kind=Comment,Size=20}"/>
+                     <Label 
+                         Margin="4 0" 
+                         Content="{md:PackIcon Kind=Comment,Size=17}"
+                         VerticalAlignment="Center"
+                         />
                      <TextBlock
                          VerticalAlignment="Center"
-                         FontSize="13"
+                         FontSize="12"
                          Text="{Binding NicoCommentCount}"
                          Width="60"
                          />
                      <!-- ニコニ広告ポイント数 -->
-                     <Label Margin="4 0" Content="{md:PackIcon Kind=Comment,Size=20}"/>
+                     <Label 
+                         Margin="4 0"
+                         Content="{md:PackIcon Kind=Comment,Size=17}"
+                         VerticalAlignment="Center"
+                         />
                      <TextBlock
                          VerticalAlignment="Center"
-                         FontSize="13"
+                         FontSize="12"
                          Text="{Binding NicoAdPoint}"
-                         
                          Width="60"
                          />
                        <!-- コメント数 -->
-                     <Label Margin="4 0" Content="{md:PackIcon Kind=Comment,Size=20}"/>
+                     <Label 
+                         Margin="4 0" 
+                         Content="{md:PackIcon Kind=Comment,Size=17}"
+                         VerticalAlignment="Center"
+                         />
                      <TextBlock
                          VerticalAlignment="Center"
-                         FontSize="13"
+                         FontSize="12"
                          Text="{Binding NicoGiftPoint}"
                          Width="60"
                          />
-                 </StackPanel>
+                 
                 </StackPanel>
               
             </StackPanel>
@@ -362,12 +375,14 @@
                                 MouseMove="MouseMove_CommentDrag"
                                 VerticalAlignment="Top"
                                 Width="450"
+                                ToolTip="{Binding Comment}"
                                 md:UniformCornerRadius="7"
                                 Background="{Binding CommentColor}"
                                 >
                                 <TextBlock 
                                     FontWeight="DemiBold"
                                     Margin="15"
+                                     
                                     HorizontalAlignment="Left"
                                     FontSize="12"
                                     Text="{Binding Comment}"
