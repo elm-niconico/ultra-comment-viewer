@@ -5,7 +5,7 @@ using System.Windows.Media.Imaging;
 
 namespace ultra_comment_viewer.src.viemodel
 {
-    public class NicoNicoUserInfoWindowViewModel
+    public class NicoUserInfoWindowViewModel
     {
         public string UserId { get; set; }
 
@@ -30,5 +30,9 @@ namespace ultra_comment_viewer.src.viemodel
         public Uri LiveUrl { get; set; }
 
         public int Level { get; set; }
+
+        public BitmapImage MyListThumbnail { get; set; }
+
+        public string MyListName { get; set; }
     }
 }

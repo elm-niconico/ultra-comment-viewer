@@ -6,86 +6,51 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using ultra_comment_viewer.src.commons;
 using ultra_comment_viewer.src.commons.extends_mothod;
 using ultra_comment_viewer.src.commons.strings.api;
 using ultra_comment_viewer.src.model.http;
+using ultra_comment_viewer.src.model.json.model.niconico;
 using ultra_comment_viewer.src.model.parser;
 using ultra_comment_viewer.src.model.xml.converter;
+using ultra_comment_viewer.src.model.xml.model;
 using ultra_comment_viewer.src.viemodel;
+using ultra_comment_viewer.src.viemodel.status;
+
+
 
 namespace ultra_comment_viewer.src.model.json.converter
 {
     public class NicoCommentConverter : ABLiveInfoConverter
     {
-        private readonly Regex _not184Regex = new Regex("^[0-9]+$");
-
-        private readonly BitmapImage defaultUserIcon = new BitmapImage(new Uri("Resources\\guest_nico.jpg", UriKind.Relative));
-
-
-        public  override CommentViewModel CovertToCommentViewModel(string responseJson)
+      
+        public override CommentViewModel CovertToCommentViewModel(string responseJson)
         {
             var jsonConverter = new NicoJsonConverter();
             var model = jsonConverter.ConverToCommentJsonModel(responseJson);
-            
-            var userId = model.chat.user_id;
-
 
             var parser = new NicoCommentParser();
-            var comment = parser.ParseComment(model.chat.content);
 
-            string nickName = ExtractUserNickName(userId);
+            var commentAndKind = parser.ParseComment(model.chat.content);
+            ChatKind commentKind = commentAndKind.Item1;
+            string comment = commentAndKind.Item2;
 
-            var userIcon = ExtractUserIcon(userId);
+            var userId = model.chat.user_id;
+
+            var style = NicoCommentStyle.BuildCommentStyle(commentKind, userId);
+
 
             return new CommentViewModel()
             {
-                UserId = model.chat.user_id,
-                UserName = nickName,
+                UserId = userId,
+                UserName = style.NickName,
                 Comment = comment,
-                CommentColor = new SolidColorBrush(Colors.Violet),
+                CommentColor = style.CommentColor,
                 LiveName = LiveSiteName.NICONICO,
-                Image = userIcon
-                
+                ChatKind = commentKind,
+                Image = style.UserIcon
             };
         }
 
-        public BitmapImage ExtractUserIcon(string userId)
-        {
-            var is184 = !int.TryParse(userId, out int id);
-
-            if (is184) return new BitmapImage(new Uri("Resources\\guest_nico.jpg", UriKind.Relative));
-               
-            
-            try
-            {
-                return new BitmapImage(new Uri(NicoNicoApi.GET_USER_ICON(id)));
-
-            }
-            catch(Exception)
-            {
-                return this.defaultUserIcon;
-            }
-        }
-
-        public string ExtractUserNickName(string userId)
-        {
-            if (this._not184Regex.IsNotMatch(userId)) return userId;
-
-            var rest = new NicoRestClient();
-            string xml = null;
-            Task.Run(() =>
-            {
-                 var task = rest.ExtractUseNickNameXmlAsync(userId);
-                 task.Wait();
-                 xml = task.Result;
-            }).Wait();
-            
-            var converter = new NicoNicoXmlConverter();
-            
-            var user = converter.ConvertToNickNameModel(xml).User;
-            if (user == null) return "ゲスト";
-
-            return user.Nickname;
-        }
     }
 }

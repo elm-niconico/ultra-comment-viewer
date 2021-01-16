@@ -61,7 +61,7 @@ namespace ultra_comment_viewer.src.model.websocket.niconico
         {
             var liveRoom = NicoNicoLiveRoomInfo.GetInstance();
 
-            var sendMessage = NicoNicoApi.GET_SEND_MESSAGE_TO_COMMENT_SERVER(liveRoom.GetThreadId());
+            var sendMessage = NicoApi.GET_SEND_MESSAGE_TO_COMMENT_SERVER(liveRoom.GetThreadId());
             var segment = new ArraySegment<byte>(Encoding.UTF8.GetBytes(sendMessage));
 
             await this.webSocketClient.SendAsync(segment,

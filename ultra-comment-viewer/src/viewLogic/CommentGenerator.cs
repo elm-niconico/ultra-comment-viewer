@@ -39,10 +39,8 @@ namespace ultra_comment_viewer.src.viewLogic
             this._server = server;
             var logger = new Logger();
 
-
             await foreach(var commentModel in _server.FetchCommentAsync(userId, this._observer))
             {
-
                 this._boyomiChan.SendComment(commentModel.Comment);
                 logger.PushLog(commentModel);
                 _collections.Add(commentModel);
@@ -66,8 +64,5 @@ namespace ultra_comment_viewer.src.viewLogic
             this._boyomiChan.SendComment(disconnectComment.Comment);
             this._collections.Add(disconnectComment);
         }
-
-
-
     }
 }

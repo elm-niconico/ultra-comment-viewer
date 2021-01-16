@@ -70,6 +70,9 @@ namespace ultra_comment_viewer.src.viewLogic
                 case "Log":
                     model.LogColor = brush;
                     break;
+                case "Clip":
+                    model.ClipColor = brush;
+                    break;
                 default:
                     return;
 
@@ -97,13 +100,19 @@ namespace ultra_comment_viewer.src.viewLogic
                     if (model.LogColor == gray) return;
                     model.LogColor = gray;
                     break;
+                case "Clip":
+                    if (model.ClipColor == gray) return;
+                    model.ClipColor = gray;
+                    break;
                 default:
                     return;
 
             }
         }
 
-
-
+        public void ClipCommentText(CommentViewModel model)
+        {
+            Clipboard.SetData(DataFormats.Text, model.Comment);
+        }
     }
 }

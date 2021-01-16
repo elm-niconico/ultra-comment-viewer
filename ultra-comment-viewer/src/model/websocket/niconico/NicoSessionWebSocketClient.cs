@@ -78,7 +78,7 @@ namespace ultra_comment_viewer.src.model.websocket
 
         private void SendMessage()
         {
-            this._webSocketClient.Send(NicoNicoApi.TEST); 
+            this._webSocketClient.Send(NicoApi.TEST); 
         }
 
         public void Disconnect()

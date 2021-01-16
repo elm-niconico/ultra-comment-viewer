@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
@@ -8,6 +9,8 @@ using ultra_comment_viewer.src.commons.extends_mothod;
 using ultra_comment_viewer.src.model.http;
 using ultra_comment_viewer.src.model.json.model.niconico.user_page;
 using ultra_comment_viewer.src.model.parser;
+using ultra_comment_viewer.src.model.xml.converter;
+using ultra_comment_viewer.src.model.xml.model;
 using ultra_comment_viewer.src.viemodel;
 using ultra_comment_viewer.src.view.window;
 
@@ -40,18 +43,22 @@ namespace ultra_comment_viewer.src.viewLogic.factory
             var followerCount = 0;
             var description = String.Empty;
 
+            var myListInfo = await CreateMyListModelAsync(model.UserId);
+
             if (parser.NotNull())
                 SetUserDetailInfo(parser, ref followCount, ref followerCount, ref description);
 
 
-            var viewModel = new NicoNicoUserInfoWindowViewModel()
+            var viewModel = new NicoUserInfoWindowViewModel()
             {
                 UserId = model.UserId,
                 UserIcon = model.Image,
                 UserName = model.UserName,
                 SupportCount = followCount,
                 SupporterCount = followerCount,
-                ProfileDescription = description
+                ProfileDescription = description,
+                MyListName = myListInfo.ExtractMyListName(),
+                MyListThumbnail = CreateThumbnail(myListInfo.ExtractMyListThumbnail())
             };
 
             return new NicoNicoUserInfoWindow(viewModel)
@@ -77,6 +84,13 @@ namespace ultra_comment_viewer.src.viewLogic.factory
             return new NicoNicoHtmlDataEnvironmentParser(html);
         }
 
+        private async Task<MylistXmlConverter> CreateMyListModelAsync(string userId)
+        {
+            var rest = new NicoRestClient();
+            var xml = await rest.GetUserMyList(userId);
+
+            return new MylistXmlConverter(xml);
+        }
 
         private async Task<TwicasUserInfoWindow> CreateTwicasUserInfoWindow(CommentViewModel model, Window window)
         {

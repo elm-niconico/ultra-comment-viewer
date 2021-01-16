@@ -4,15 +4,18 @@
              xmlns:local="clr-namespace:ultra_comment_viewer"
              xmlns:prism="http://prismlibrary.com/"
              StartupUri="MainWindow.xaml"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              >
     <Application.Resources>
+
        <ResourceDictionary>
+
            <!--================== マテリアルデザイン =======================-->
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Pink.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Blue.xaml" />
             </ResourceDictionary.MergedDictionaries>
              <!--================= GridSplitterの設定 ======================-->
             <Style x:Key="HorizontalGridSplitter" TargetType="{x:Type GridSplitter}">
@@ -23,6 +26,8 @@
                 <Setter Property="HorizontalAlignment" Value="Stretch" />
                 <Setter Property="Width" Value="5" />
             </Style>
+            <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">20</sys:Double>
+            <sys:Double x:Key="{x:Static SystemParameters.HorizontalScrollBarHeightKey}">20</sys:Double>
         </ResourceDictionary>
         
             

@@ -196,5 +196,13 @@ namespace ultra_comment_viewer
             MessageBox.Show(Messages.NOT_VALID_LIVE_URL);
             return false;
         }
+
+        private void Drop_ClipCommentText(object sender, DragEventArgs e)
+        {
+            var commentModel = CastToCommentModelOrNull(e);
+            if (commentModel == null) return;
+
+            this._dropLogic.ClipCommentText(commentModel);
+        }
     }
 }

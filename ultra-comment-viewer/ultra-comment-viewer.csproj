@@ -30,6 +30,10 @@
     <None Remove="Resources\elm_icon.ico" />
     <None Remove="Resources\guest_nico.jpg" />
     <None Remove="Resources\not_use_boyomi.png" />
+    <None Remove="Resources\ニコニテレビ君-blue.png" />
+    <None Remove="Resources\ニコニテレビ君-gray.png" />
+    <None Remove="Resources\ニコニテレビ君-green.png" />
+    <None Remove="Resources\ニコニテレビ君-orange.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,16 +56,24 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="src\viewLogic\userInfoWindow\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Resources\bouyomi.png" />
     <Resource Include="Resources\elm_icon.ico" />
     <Resource Include="Resources\guest_nico.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\not_use_boyomi.png" />
+    <Resource Include="Resources\ニコニテレビ君-blue.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\ニコニテレビ君-gray.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\ニコニテレビ君-green.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\ニコニテレビ君-orange.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>

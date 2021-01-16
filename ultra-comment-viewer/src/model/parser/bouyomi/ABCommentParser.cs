@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using ultra_comment_viewer.src.commons.extends_mothod;
+using ultra_comment_viewer.src.viemodel.status;
 
 namespace ultra_comment_viewer.src.model.parser.bouyomi
 {
@@ -17,7 +18,7 @@ namespace ultra_comment_viewer.src.model.parser.bouyomi
             this.ItsRegex = new Regex(regex);
         }
 
-        public abstract string ParseComment(string comment);
+        public abstract (ChatKind, string) ParseComment(string comment);
 
         
 

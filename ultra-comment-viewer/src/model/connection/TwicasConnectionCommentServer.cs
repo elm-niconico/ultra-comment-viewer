@@ -23,15 +23,9 @@ namespace ultra_comment_viewer.src.model
     {
         private readonly Regex _responseEmpty = new Regex("^\\[\\]$");
 
-
         private int _emptyResponseCount = 0;
 
-
-       
-
         private readonly TwicasRestClientExtend _extendRest;
-
-
 
         public TwicasConnectionCommentServer(MainWindowViewModel model) : base(model)
         {

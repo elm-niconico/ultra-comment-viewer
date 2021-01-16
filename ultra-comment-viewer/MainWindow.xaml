@@ -7,10 +7,10 @@
         xmlns:converter="clr-namespace:ultra_comment_viewer.src.view.converter"
         xmlns:local="clr-namespace:ultra_comment_viewer"
         xmlns:prism="http://prismlibrary.com/"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
-        Title="MainWindow" Height="1200" Width="800" Background="Gainsboro">
-
+        Title="MainWindow" Height="1000" Width="800" Background="Gainsboro">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" MinHeight="58"/>
@@ -64,65 +64,90 @@
         </md:Card>
 
         <!--================== DropZoneArea   ==========================-->
-        <md:Card
+        <ScrollViewer
+            Margin="0 0 0 7"
             Grid.Column="0"
             Grid.Row="4"
             Grid.RowSpan="3"
+
             >
-            <StackPanel>
-                <!-- URLドロップゾーン -->
-                <md:Card
-                    md:ShadowAssist.ShadowDepth="Depth0"
-                    Background="{Binding WebColor}"
-                    x:Name="Web"
-                    MouseMove="MouseMove_ChangeAccountBackGround"
-                    MouseLeave="MouseLeave_ChangeAccountBackground"
-                    Content="{md:PackIcon Kind=Web, Size=160}"
-                    Grid.Row="0"
-                    Width="160"
-                    Height="160"
-                    Margin="5,5,5,5"
-                    AllowDrop="True"
-                    Drop="EventDrop_OnUrlMark"
-                    />
-                <Separator Margin="10" />
-                <!-- URLドロップゾーン -->
-                <md:Card
-                    x:Name="User"
-                    Height="160"
-                    Width="160"
-                    Background="{Binding AccountColor}"
-                    md:ShadowAssist.ShadowDepth="Depth0"
-                    MouseMove="MouseMove_ChangeAccountBackGround"
-                    MouseLeave="MouseLeave_ChangeAccountBackground"
-                    Content="{md:PackIcon Size=160, Kind=Account}"
-                    Grid.Row="1"
-                    Margin="5,5,5,5"
-                    AllowDrop="True"
-                    Drop="Drop_OpenUserInfoWindow"
-                    />
-                <Separator Margin="10"></Separator>
-                <!-- URLドロップゾーン -->
-                <md:Card
-                    md:ShadowAssist.ShadowDepth="Depth0"
-                    Background="{Binding LogColor}"
-                    x:Name="Log"
-                    MouseLeave="MouseLeave_ChangeAccountBackground"
-                    MouseMove="MouseMove_ChangeAccountBackGround"
-                    Width="160"
-                    Height="160"
-                    Content="{md:PackIcon Size=160,Kind=CommentAccount}"
-                    Grid.Row="2"
-                    AllowDrop="True"
-                    Drop="Drop_OpenLogWindow"
-                    Margin="5,5,5,5"
-                    />
-                <Separator Margin="10"/>
-            </StackPanel>
-        </md:Card>
+             <ScrollViewer.Resources>
+                    <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">10</sys:Double>
+             </ScrollViewer.Resources>
+            <md:Card>
+                <StackPanel>
+                    <!-- URLドロップゾーン -->
+                    <md:Card
+                        md:ShadowAssist.ShadowDepth="Depth0"
+                        Background="{Binding WebColor}"
+                        x:Name="Web"
+                        MouseMove="MouseMove_ChangeAccountBackGround"
+                        MouseLeave="MouseLeave_ChangeAccountBackground"
+                        Content="{md:PackIcon Kind=Web, Size=140}"
+                        Grid.Row="0"
+                        Width="140"
+                        Height="140"
+                        Margin="5,5,5,5"
+                        AllowDrop="True"
+                        Drop="EventDrop_OnUrlMark"
+                        />
+                    <Separator Margin="10" />
+                    <!-- ユーザー情報ドロップゾーン -->
+                    <md:Card
+                        x:Name="User"
+                        Height="140"
+                        Width="140"
+                        Background="{Binding AccountColor}"
+                        md:ShadowAssist.ShadowDepth="Depth0"
+                        MouseMove="MouseMove_ChangeAccountBackGround"
+                        MouseLeave="MouseLeave_ChangeAccountBackground"
+                        Content="{md:PackIcon Size=140, Kind=Account}"
+                        Grid.Row="1"
+                        Margin="5,5,5,5"
+                        AllowDrop="True"
+                        Drop="Drop_OpenUserInfoWindow"
+                        />
+                    <Separator Margin="10"></Separator>
+                    <!-- ログコメントドロップゾーン -->
+                    <md:Card
+                        md:ShadowAssist.ShadowDepth="Depth0"
+                        Background="{Binding LogColor}"
+                        x:Name="Log"
+                        MouseLeave="MouseLeave_ChangeAccountBackground"
+                        MouseMove="MouseMove_ChangeAccountBackGround"
+                        Width="140"
+                        Height="140"
+                        Content="{md:PackIcon Size=140,Kind=CommentAccount}"
+                        Grid.Row="2"
+                        AllowDrop="True"
+                        Drop="Drop_OpenLogWindow"
+                        Margin="5,5,5,5"
+                        />
+                    <Separator Margin="10"/>
+                    <!-- クリップドロップゾーン -->
+                    <md:Card
+                        md:ShadowAssist.ShadowDepth="Depth0"
+                        Background="{Binding ClipColor}"
+                        x:Name="Clip"
+                        MouseLeave="MouseLeave_ChangeAccountBackground"
+                        MouseMove="MouseMove_ChangeAccountBackGround"
+                        Width="140"
+                        Height="140"
+                        Content="{md:PackIcon Size=140,Kind=Attachment}"
+                        Grid.Row="2"
+                        AllowDrop="True"
+                        Drop="Drop_ClipCommentText"
+                        Margin="5,5,5,5"
+                        />
+                    <Separator Margin="10"/>
+                </StackPanel>
+            </md:Card>
+        </ScrollViewer>
+        
 
       <!--================== URLフォームエリア ========================= -->
         <Expander
+            Margin="7 0"
                 Grid.ColumnSpan="3" 
                 Grid.Row="2"
                 Height="Auto"
@@ -157,7 +182,8 @@
                             Click="EventClick_ConnectionTwicasCommentServer"
                             />
                     <Button
-                            Background="DeepSkyBlue"
+ 
+ 
                             BorderBrush="DodgerBlue"
                             Content="切断"
                             IsEnabled="{Binding IsConnectTwicasLive}"
@@ -234,10 +260,11 @@
                 />
         <!-- コミュティ情報エリア -->
         <md:Card
-                Grid.Row="4"
-                Grid.Column="3"
-                Background="White"
-                >
+            Margin="0 0 7 0"
+            Grid.Row="4"
+            Grid.Column="3"
+            Background="White"
+            >
             <StackPanel>
                 <StackPanel Orientation="Vertical">
                      <Label Content="{md:PackIcon Kind=Subtitles,Size=20}"/>
@@ -292,14 +319,16 @@
 
         <!-- ================= コメントエリア ========================== -->
         <md:Card
+            Margin="0 0 7 7"
                 Grid.Column="2" 
                 Grid.Row="6" >
-            <ListView 
-                      x:Name="CommentList"
-                      ScrollViewer.ScrollChanged="EventScrollChanged_UpdateAutoScrollFlag"
-                      VirtualizingPanel.IsVirtualizing="True"
-                      VirtualizingPanel.VirtualizationMode="Recycling"
-                      >
+            <ListView
+                x:Name="CommentList"
+                ScrollViewer.ScrollChanged="EventScrollChanged_UpdateAutoScrollFlag"
+                VirtualizingPanel.IsVirtualizing="True"
+                VirtualizingPanel.VirtualizationMode="Recycling"
+                >
+                
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel
@@ -312,9 +341,9 @@
                                 Margin="0 0 20 0"
                                 >
                                 <!-- ユーザーアイコン -->
-                                <Image 
-                                    Height="30"
-                                    Width="30"
+                                <Image
+                                    Height="40"
+                                    Width="40"
                                     Source="{Binding Image}"
                                     Grid.Row="0"
                                     Grid.Column="0"

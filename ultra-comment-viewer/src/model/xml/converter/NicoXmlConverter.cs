@@ -6,10 +6,10 @@ using ultra_comment_viewer.src.model.xml.model;
 
 namespace ultra_comment_viewer.src.model.xml.converter
 {
-    public class NicoNicoXmlConverter
+    public class NicoXmlConverter
     {
 
-        public UserNickNameXmlModel ConvertToNickNameModel(string xml)
+        public T ConvertToNickNameModel<T>(string xml)
         {
             using var memory = new MemoryStream();
 
@@ -17,7 +17,7 @@ namespace ultra_comment_viewer.src.model.xml.converter
 
             var serialize = new System.Xml.Serialization.XmlSerializer(typeof(UserNickNameXmlModel));
 
-            return (UserNickNameXmlModel)serialize.Deserialize(memory);
+            return (T)serialize.Deserialize(memory);
         }
 
         private void WriteXmlBinary(string xml, MemoryStream memory)

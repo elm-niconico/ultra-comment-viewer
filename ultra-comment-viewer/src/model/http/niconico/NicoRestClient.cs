@@ -57,7 +57,7 @@ namespace ultra_comment_viewer.src.model.http
 
         private async Task<string> LoadUserLiveHtmlAsync(string liveId)
         {
-            return await ElmHttpClientUtil.WrapBaseWithHeaderAsync(api: NicoNicoApi.GET_USER_LIVE_ID(liveId),
+            return await ElmHttpClientUtil.WrapBaseWithHeaderAsync(api: NicoApi.GET_USER_LIVE_ID(liveId),
                                                                    method: HttpMethod.Get,
                                                                    headerKey: "Cookie",
                                                                    headerValue: "player_version=leo");
@@ -65,16 +65,19 @@ namespace ultra_comment_viewer.src.model.http
 
 
         public async Task<string> ExtractUseNickNameXmlAsync(string userId) 
-           => await ElmHttpClientUtil.WrapGetAsync(NicoNicoApi.GET_USER_NICKNAME_API(userId));
+           => await ElmHttpClientUtil.WrapGetAsync(NicoApi.GET_USER_NICKNAME_API(userId));
 
         public async Task<string> ExtractUserIconAsync(int userId)
-            => await ElmHttpClientUtil.WrapGetAsync(NicoNicoApi.GET_USER_ICON(userId));
+            => await ElmHttpClientUtil.WrapGetAsync(NicoApi.GET_USER_ICON(userId));
 
         public async Task<string> LoadUserMyPageHtmlAsync(int userId)
-            => await ElmHttpClientUtil.WrapGetAsync(NicoNicoApi.GET_USER_MY_PAGE(userId));
+            => await ElmHttpClientUtil.WrapGetAsync(NicoApi.GET_USER_MY_PAGE(userId));
 
         public async Task<string> GetUserLiveHtmlAsync(string id)
-           => await ElmHttpClientUtil.WrapGetAsync(NicoNicoApi.GET_LIVE_HTML(id));
+           => await ElmHttpClientUtil.WrapGetAsync(NicoApi.GET_LIVE_HTML(id));
+
+        public async Task<string> GetUserMyList(string userId)
+            => await ElmHttpClientUtil.WrapGetAsync(NicoApi.GET_USER_MYLIST(userId));
         
     }
 }

@@ -19,7 +19,7 @@ namespace ultra_comment_viewer.src.view.window
     /// </summary>
     public partial class NicoNicoUserInfoWindow : Window
     {
-        public NicoNicoUserInfoWindow(NicoNicoUserInfoWindowViewModel model)
+        public NicoNicoUserInfoWindow(NicoUserInfoWindowViewModel model)
         {
             InitializeComponent();
             this.DataContext = model;

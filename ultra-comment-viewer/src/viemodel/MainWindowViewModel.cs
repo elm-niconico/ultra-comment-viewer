@@ -37,9 +37,11 @@ namespace ultra_comment_viewer.src.viemodel
 
         private Brush _accountColor = ElmBackgroundUtil.WHITE;
 
-        private Brush _userColor = ElmBackgroundUtil.WHITE;
+        private Brush _logColor = ElmBackgroundUtil.WHITE;
 
         private Brush _webColor = ElmBackgroundUtil.WHITE;
+
+        private Brush _clipColor = ElmBackgroundUtil.WHITE;
 
         public Brush AccountColor
         {
@@ -56,8 +58,14 @@ namespace ultra_comment_viewer.src.viemodel
 
         public Brush LogColor
         {
-            get => this._userColor;
-            set => SetProperty(ref this._userColor, value);
+            get => this._logColor;
+            set => SetProperty(ref this._logColor, value);
+        }
+
+        public Brush ClipColor
+        {
+            get => this._clipColor;
+            set => SetProperty(ref this._clipColor, value);
         }
 
 

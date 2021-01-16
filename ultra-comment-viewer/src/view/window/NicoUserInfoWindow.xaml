@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:ultra_comment_viewer.src.view.window"
         xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="NicoNicoUserInfoWindow" Height="500" Width="600">
+        Title="NicoNicoUserInfoWindow" Height="700" Width="600">
     <StackPanel>
 
-        <StackPanel Height="500" Width="400"
+        <StackPanel Height="600" Width="400"
             >
             <Grid
                 Width="400"
@@ -124,14 +124,59 @@
                 </ScrollViewer>
                 
             </Border>
-           
-                
+            
+            <!-- マイリストエリア -->
             <TextBlock
-                HorizontalAlignment="Left"
-                Foreground="Blue"                
-                Margin="0 5 0 0"
-                Cursor="Hand"
-                Text="ユーザーページ"/>
+                Margin="0 20 0 0"
+                Text="マイリスト"
+                FontSize="14"
+                FontWeight="SemiBold"/>
+            <Border
+                Width="500"
+                Height="100"
+                >
+                 <StackPanel Orientation="Horizontal"
+                             Width="auto"
+                             Height="auto"
+
+                             >
+                    <Image 
+                        Source="{Binding MyListThumbnail}"
+                        Width="150"
+                        Height="70"
+                        />
+                    <StackPanel
+                        Margin="20 0"
+                        Height="80"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Width="200"
+
+                        >
+                        <TextBlock
+                            Text="{Binding MyListName}"
+                            Width="200"
+                            Height="40"
+
+                            />
+                    </StackPanel>
+
+                </StackPanel>
+                
+            </Border>
+            <md:Badged
+                HorizontalAlignment="Right"
+                Margin="0 15 0 0"
+                Badge="{md:PackIcon Heart}"
+                BadgeForeground="White"
+                BadgeColorZoneMode="PrimaryLight">
+                <Button
+                    Foreground="GhostWhite"
+                    BorderBrush="LightCyan"
+                    Background="DodgerBlue"
+                    Content="フォロー" Cursor="Hand" />
+            </md:Badged>
+                   
             
          
         </StackPanel>
