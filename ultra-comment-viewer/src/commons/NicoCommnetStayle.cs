@@ -30,15 +30,14 @@ namespace ultra_comment_viewer.src.commons
             UserIcon = icon;
             CommentColor = color;
         }
-        private readonly static Regex NOT_184_REGEX;
+        private readonly static Regex NOT_184_REGEX= new Regex("^[0-9]+$");
 
-        private readonly static BitmapImage DEFAULT_USER_ICON;
+        private readonly static BitmapImage DEFAULT_USER_ICON = new BitmapImage(new Uri("Resources\\guest_nico.jpg", UriKind.Relative));
 
-        static NicoCommentStyle()
-        {
-            NOT_184_REGEX = new Regex("^[0-9]+$");
-            DEFAULT_USER_ICON = new BitmapImage(new Uri("Resources\\guest_nico.jpg", UriKind.Relative));
-        }
+
+        private readonly static NicoCommentStyle SYSTEM_STYLE = new NicoCommentStyle(SYSTEM, SYSTEM_IMAGE, SYSTEM_COLOR);
+
+      
 
         //============= システムユーザー名 ===============
         private const string AD = "ニコニコ広告";
@@ -49,6 +48,10 @@ namespace ultra_comment_viewer.src.commons
 
         private const string GIFT = "ギフト";
 
+        private const string QUOTE = "引用";
+
+        private const string SYSTEM = "システム";
+
         //============= システムアイコン ===================
         private readonly static BitmapImage AD_IMAGE = new BitmapImage(new Uri("Resources\\ニコニテレビ君-orange.png", UriKind.Relative));
 
@@ -57,6 +60,10 @@ namespace ultra_comment_viewer.src.commons
         private readonly static BitmapImage INFO_IMAGE = new BitmapImage(new Uri("Resources\\ニコニテレビ君-blue.png", UriKind.Relative));
 
         private readonly static BitmapImage GIFT_IMAGE = new BitmapImage(new Uri("Resources\\ニコニテレビ君-gray.png", UriKind.Relative));
+
+        private readonly static BitmapImage QUOTE_IMAGE = new BitmapImage(new Uri("Resources\\ニコニテレビ君-pink.png", UriKind.Relative));
+        
+        private readonly static BitmapImage SYSTEM_IMAGE = new BitmapImage(new Uri("Resources\\ニコニテレビ君-red.png", UriKind.Relative));
 
         //============ コメントカラー ======================
         private readonly static SolidColorBrush CHAT_COLOR = new SolidColorBrush(Colors.Violet);
@@ -67,7 +74,11 @@ namespace ultra_comment_viewer.src.commons
 
         private readonly static SolidColorBrush GIFT_COLOR = new SolidColorBrush(Colors.Gray);
 
-         private readonly static SolidColorBrush EMOTION_COLOR = new SolidColorBrush(Colors.YellowGreen);
+        private readonly static SolidColorBrush EMOTION_COLOR = new SolidColorBrush(Colors.YellowGreen);
+        
+        private readonly static SolidColorBrush QUOTE_COLOR = new SolidColorBrush(Colors.Pink);
+
+        private readonly static SolidColorBrush SYSTEM_COLOR = new SolidColorBrush(Colors.Red);
 
         public static NicoCommentStyle BuildAdCommentSyle()
             => new NicoCommentStyle(AD, AD_IMAGE, AD_COLOR);
@@ -88,19 +99,32 @@ namespace ultra_comment_viewer.src.commons
             {
                 case ChatKind.CHAT:
                     return new NicoCommentStyle(ExtractUserNickName(userId), await ExtractUserIconAsync(userId), CHAT_COLOR);
+                
                 case ChatKind.AD:
                     return BuildAdCommentSyle();
+
                 case ChatKind.EMOTION:
                     return BuildEmotionCommentSyle();
+                
                 case ChatKind.INFO:
                     return BuildInfoCommentSyle();
-                case ChatKind.SYSTEM:
-                    return BuildInfoCommentSyle();
+                
+                case ChatKind.QUOTE:
+                    return BuildQuoteCommentStyle();
+
+                case ChatKind.EXIT:
+                    return BuildExitCommentStyle();
                 default:
-                    return BuildInfoCommentSyle();
+                    return SYSTEM_STYLE;
             }
         }
+            
 
+        private static NicoCommentStyle BuildQuoteCommentStyle()
+            => new NicoCommentStyle(QUOTE, QUOTE_IMAGE, CHAT_COLOR);
+
+        private static NicoCommentStyle BuildExitCommentStyle()
+            =>  new NicoCommentStyle(SYSTEM, SYSTEM_IMAGE, SYSTEM_COLOR);
 
         private static async Task<BitmapImage> ExtractUserIconAsync(string userId)
         {

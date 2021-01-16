@@ -12,5 +12,6 @@ namespace ultra_comment_viewer.src.model.json
     {
 
         public abstract Task<CommentViewModel> CovertToCommentViewModel(string responseJson);
+
     }
 }

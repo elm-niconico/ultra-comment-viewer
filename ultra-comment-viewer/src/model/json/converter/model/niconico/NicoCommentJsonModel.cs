@@ -17,7 +17,8 @@ namespace ultra_comment_viewer.src.model.json.model.niconico
         //エモーションの場合 先頭に/emotionがセットされる
         public string content { get; set; }
         
-        //プレミアムの場合 3がセットされる
+        //プレミアムの場合
+        //配信者か/ で始まるコメントの場合3が入れられる
         public int premium { get; set; }
         
         // 184ユーザーなら184がセットされる
@@ -29,7 +30,7 @@ namespace ultra_comment_viewer.src.model.json.model.niconico
        
     }
 
-    public class NicoNicoCommentJsonModel
+    public class NicoCommentJsonModel
     {
         public Chat chat { get; set; }
     }

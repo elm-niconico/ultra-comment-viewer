@@ -17,8 +17,8 @@ namespace ultra_comment_viewer.src.model.json.converter
         public LiveRoomJsonModel ConverToLiveRoomJsonModel(string json)
             => JsonSerializer.Deserialize<LiveRoomJsonModel>(json);
         
-        public NicoNicoCommentJsonModel ConverToCommentJsonModel(string json)
-            => JsonSerializer.Deserialize<NicoNicoCommentJsonModel>(json);
+        public NicoCommentJsonModel ConverToCommentJsonModel(string json)
+            => JsonSerializer.Deserialize<NicoCommentJsonModel>(json);
 
         public DataEnvironmentJsonModel ConverToDataEnvironmentModel(string json)
             => JsonSerializer.Deserialize<DataEnvironmentJsonModel>(json);

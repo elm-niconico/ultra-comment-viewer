@@ -326,12 +326,13 @@
                 ScrollViewer.ScrollChanged="EventScrollChanged_UpdateAutoScrollFlag"
                 VirtualizingPanel.IsVirtualizing="True"
                 VirtualizingPanel.VirtualizationMode="Recycling"
+                
                 >
                 
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel
-                            Margin="20 0 20 0"
+                            Margin="20 0 0 0"
                             Orientation="Horizontal"
                             Height="50"
                             >
@@ -360,7 +361,7 @@
                                 Cursor="Hand"
                                 MouseMove="MouseMove_CommentDrag"
                                 VerticalAlignment="Top"
-                                Width="600"
+                                Width="450"
                                 md:UniformCornerRadius="7"
                                 Background="{Binding CommentColor}"
                                 >

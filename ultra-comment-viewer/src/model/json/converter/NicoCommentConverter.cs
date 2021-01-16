@@ -29,7 +29,7 @@ namespace ultra_comment_viewer.src.model.json.converter
             var jsonConverter = new NicoJsonConverter();
             var model = jsonConverter.ConverToCommentJsonModel(responseJson);
 
-            var parser = new NicoCommentParser();
+            var parser = new NicoCommentParser(model.chat.premium);
 
             var commentAndKind = parser.ParseComment(model.chat.content);
             ChatKind commentKind = commentAndKind.Item1;

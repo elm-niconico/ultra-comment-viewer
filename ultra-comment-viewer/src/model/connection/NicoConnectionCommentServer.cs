@@ -33,6 +33,18 @@ namespace ultra_comment_viewer.src.model.connection
             ItsWebSocket = new NicoWebSocketClient((NicoRestClient)ItsRest);
         }
 
+        public void UpdateToLiveInfo(string json)
+        {
+            var parser = new NicoJsonConverter();
+            var data = parser.ConvertToDataJsonModel(json);
+
+            ItsMainModel.NicoViewer = data.data.viewers.ToString();
+            ItsMainModel.NicoCommentCount = data.data.comments.ToString();
+            ItsMainModel.NicoGiftPoint = data.data.giftPoints.ToString();
+            ItsMainModel.NicoAdPoint = data.data.adPoints.ToString();
+        }
+
+
         protected override Task<LiveStatus> CheckConnectionWebSocketAsync(string response)
         {
             if (_isPastChat)
@@ -40,14 +52,28 @@ namespace ultra_comment_viewer.src.model.connection
                 CheckPastChat(response);
                 return Task.FromResult(LiveStatus.SKIP_THIS_COMMENT);
             }
-            if (commentRegex.IsNotMatch(response) ) return Task.FromResult(LiveStatus.SKIP_THIS_COMMENT);
+            if (IsNotUserChat(response)) return Task.FromResult(LiveStatus.SKIP_THIS_COMMENT);
 
-            if (_exitLiveRegex.IsMatch(response)) return Task.FromResult(LiveStatus.EXIT);
+            if (_exitLiveRegex.IsMatch(response))
+            {
+                if(IsExitComment(response))
+                    return Task.FromResult(LiveStatus.EXIT);
+            }
 
             return Task.FromResult(LiveStatus.SUCCESS_CONNECT);
 
             
         }
+
+        private bool IsExitComment(string response)
+        {
+            var json = new NicoJsonConverter();
+            var model = json.ConverToCommentJsonModel(response);
+            return model.chat.premium == 2;
+        }
+
+        private bool IsNotUserChat(string response)
+            => !response.StartsWith("{\"chat\":", StringComparison.Ordinal);
 
 
         private void CheckPastChat(string response)
@@ -59,17 +85,10 @@ namespace ultra_comment_viewer.src.model.connection
                 this._isPastChat = false;
         }
 
+   
 
 
-        public void UpdateToLiveInfo(string json)
-        {
-            var parser = new NicoJsonConverter();
-            var data = parser.ConvertToDataJsonModel(json);
 
-            ItsMainModel.NicoViewer =  data.data.viewers.ToString();
-            ItsMainModel.NicoCommentCount = data.data.comments.ToString();
-            ItsMainModel.NicoGiftPoint = data.data.giftPoints.ToString();
-            ItsMainModel.NicoAdPoint = data.data.adPoints.ToString();
-        }
+
     }
 }

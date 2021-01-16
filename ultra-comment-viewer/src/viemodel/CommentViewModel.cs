@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using ultra_comment_viewer.src.commons;
 using ultra_comment_viewer.src.viemodel.status;
 
 namespace ultra_comment_viewer.src.viemodel
