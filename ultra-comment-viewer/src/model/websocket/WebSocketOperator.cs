@@ -85,6 +85,7 @@ namespace ultra_comment_viewer.src.commons.util
 
             await this._webSocketClient.CloseAsync(status, message, CancellationToken.None);
             DisposeInstance();
+
         }
 
         public void DisposeInstance()

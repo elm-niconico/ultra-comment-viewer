@@ -19,8 +19,8 @@ namespace ultra_comment_viewer.src.model.connection
     {
         private readonly Regex commentRegex = new Regex("^{\"chat\":.+$");
 
-        private readonly Regex _exitLiveRegex = new Regex("^/disconnect$");
-
+        private readonly Regex _exitLiveRegex = new Regex("{\\\"chat\\\":{\\\"thread\\\".+\\\"content\\\":\\\"/disconnect\\\"}}");
+        
         private bool _isPastChat = true;
 
         private byte _pingStack = 0;
