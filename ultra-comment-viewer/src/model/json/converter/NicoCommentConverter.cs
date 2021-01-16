@@ -24,7 +24,7 @@ namespace ultra_comment_viewer.src.model.json.converter
     public class NicoCommentConverter : ABLiveInfoConverter
     {
       
-        public override CommentViewModel CovertToCommentViewModel(string responseJson)
+        public override async Task<CommentViewModel> CovertToCommentViewModel(string responseJson)
         {
             var jsonConverter = new NicoJsonConverter();
             var model = jsonConverter.ConverToCommentJsonModel(responseJson);
@@ -37,7 +37,7 @@ namespace ultra_comment_viewer.src.model.json.converter
 
             var userId = model.chat.user_id;
 
-            var style = NicoCommentStyle.BuildCommentStyle(commentKind, userId);
+            var style = await NicoCommentStyle.BuildCommentStyle(commentKind, userId);
 
 
             return new CommentViewModel()

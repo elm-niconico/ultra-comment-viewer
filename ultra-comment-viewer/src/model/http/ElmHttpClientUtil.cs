@@ -20,7 +20,11 @@ namespace ultra_comment_viewer.src.model
                                                  headerValue: $"Bearer {accessToken}");
         }
 
-       
+        public async static Task<HttpResponseMessage> WrapGetResponseMessageAsync(string api)
+        {
+            using var client = new HttpClient();
+            return await client.GetAsync(api);
+        }
 
 
         public async static Task<string>  WrapGetAsync(string api)

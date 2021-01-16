@@ -82,12 +82,12 @@ namespace ultra_comment_viewer.src.commons
             => new NicoCommentStyle(EMOTION, EMOTION_IMAGE, EMOTION_COLOR);
 
 
-        public static NicoCommentStyle BuildCommentStyle(ChatKind commentKind, string userId)
+        public async static Task<NicoCommentStyle> BuildCommentStyle(ChatKind commentKind, string userId)
         {
             switch (commentKind)
             {
                 case ChatKind.CHAT:
-                    return new NicoCommentStyle(ExtractUserNickName(userId), ExtractUserIcon(userId), CHAT_COLOR);
+                    return new NicoCommentStyle(ExtractUserNickName(userId), await ExtractUserIconAsync(userId), CHAT_COLOR);
                 case ChatKind.AD:
                     return BuildAdCommentSyle();
                 case ChatKind.EMOTION:
@@ -102,21 +102,18 @@ namespace ultra_comment_viewer.src.commons
         }
 
 
-        private static BitmapImage ExtractUserIcon(string userId)
+        private static async Task<BitmapImage> ExtractUserIconAsync(string userId)
         {
-            var is184 = !int.TryParse(userId, out int id);
+            var rest = new NicoRestClient();
 
-            if (is184) return new BitmapImage(new Uri("Resources\\guest_nico.jpg", UriKind.Relative));
-
-
-            try
+            if (await rest.IsExsitsUserIcon(userId))
             {
-                return new BitmapImage(new Uri(NicoApi.GET_USER_ICON(id)));
-
+                return new BitmapImage(new Uri(NicoApi.GET_USER_ICON(int.Parse(userId))));
             }
-            catch (Exception)
+            else
             {
                 return DEFAULT_USER_ICON;
+
             }
         }
 

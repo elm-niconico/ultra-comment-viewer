@@ -178,7 +178,6 @@
                             Cursor="Hand"
                             Background="Crimson"
                             BorderBrush="Red"
-
                             Click="EventClick_ConnectionTwicasCommentServer"
                             />
                     <Button
@@ -365,11 +364,12 @@
                                 md:UniformCornerRadius="7"
                                 Background="{Binding CommentColor}"
                                 >
-                                <TextBlock
-                                     Margin="15"
-                                     HorizontalAlignment="Left"
-                                     FontSize="10"
-                                     Text="{Binding Comment}"
+                                <TextBlock 
+                                    FontWeight="DemiBold"
+                                    Margin="15"
+                                    HorizontalAlignment="Left"
+                                    FontSize="12"
+                                    Text="{Binding Comment}"
                                      />
                             </md:Card>
                         </StackPanel>

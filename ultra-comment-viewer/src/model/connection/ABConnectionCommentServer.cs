@@ -59,7 +59,7 @@ namespace ultra_comment_viewer.src.model.connection
                 switch (liveStatus)
                 {
                     case LiveStatus.SUCCESS_CONNECT:
-                        yield return this.ItsConverter.CovertToCommentViewModel(response);
+                        yield return await this.ItsConverter.CovertToCommentViewModel(response);
                         break;
                     case LiveStatus.SKIP_THIS_COMMENT:
                         break;

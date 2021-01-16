@@ -78,6 +78,15 @@ namespace ultra_comment_viewer.src.model.http
 
         public async Task<string> GetUserMyList(string userId)
             => await ElmHttpClientUtil.WrapGetAsync(NicoApi.GET_USER_MYLIST(userId));
-        
+
+        public async Task<bool> IsExsitsUserIcon(string userId)
+        {
+
+            if (!int.TryParse(userId, out int id)) return false;
+
+            var reponse = await ElmHttpClientUtil.WrapGetResponseMessageAsync(NicoApi.GET_USER_ICON(id));
+
+            return reponse.IsSuccessStatusCode;
+        }
     }
 }
