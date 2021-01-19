@@ -15,19 +15,19 @@ namespace ultra_comment_viewer.src.model.websocket
         
 
 
-        protected ClientWebSocket webSocketClient = new ClientWebSocket();
+        protected ClientWebSocket ItswebSocketClient = new ClientWebSocket();
 
         public ABLiveWebSocketClient()
         {
             var timeSpan = new TimeSpan(0,01,0);
-            this.webSocketClient.Options.KeepAliveInterval = timeSpan;
+            this.ItswebSocketClient.Options.KeepAliveInterval = timeSpan;
         }
 
         protected WebSocketOperator ItsOpeator;
 
-        private IDisconnectObserver _observer;
+        private ABDisconnectObserver _observer;
 
-        public async IAsyncEnumerable<string> ReadCommentFromServerAsync(string webSocketUrl, IDisconnectObserver observer)
+        public async IAsyncEnumerable<string> ReadCommentFromServerAsync(string webSocketUrl, ABDisconnectObserver observer)
         {
 
             if (this._observer == null) this._observer = observer;
@@ -49,24 +49,24 @@ namespace ultra_comment_viewer.src.model.websocket
     
         public bool IsNotOpenConnection()
         {
-            return this.webSocketClient.State != WebSocketState.Open;
+            return this.ItswebSocketClient.State != WebSocketState.Open;
         }
 
         public async Task<bool> OnStartConnectServer(string webSocketUrl)
         {
             await DisconnectBeforeLive();
 
-            this.webSocketClient = new ClientWebSocket();
-            this.ItsOpeator = new WebSocketOperator(this.webSocketClient, this._observer);
+            this.ItswebSocketClient = new ClientWebSocket();
+            this.ItsOpeator = new WebSocketOperator(this.ItswebSocketClient, this._observer);
 
             return await this.ItsOpeator.StartConnectServer(webSocketUrl);
         }
 
         private async Task DisconnectBeforeLive()
         {
-            if (this.webSocketClient ==  null || this.webSocketClient.State != WebSocketState.Open) return;
+            if (this.ItswebSocketClient ==  null || this.ItswebSocketClient.State != WebSocketState.Open) return;
 
-            var ope = new WebSocketOperator(this.webSocketClient, this._observer);
+            var ope = new WebSocketOperator(this.ItswebSocketClient, this._observer);
             await ope.DisConnectServer(WebSocketCloseStatus.NormalClosure, Messages.CLOSE_SERVER_NORMAL);
         }
 

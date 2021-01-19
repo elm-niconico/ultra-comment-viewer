@@ -10,6 +10,7 @@ using ultra_comment_viewer.src.commons;
 using ultra_comment_viewer.src.commons.extends_mothod;
 using ultra_comment_viewer.src.model;
 using ultra_comment_viewer.src.model.connection;
+using ultra_comment_viewer.src.model.observer.niconico;
 using ultra_comment_viewer.src.model.parser;
 using ultra_comment_viewer.src.viemodel;
 using ultra_comment_viewer.src.view.validater;
@@ -24,9 +25,9 @@ namespace ultra_comment_viewer
     {
         private MainWindowViewModel _model;
 
-        private readonly CommentGenerator _twicasCommentGenerator;
+        private readonly CommentGenerator _punrectCommentGenerator;
 
-         private readonly CommentGenerator _niconicoCommentGenerator;
+        private readonly CommentGenerator _niconicoCommentGenerator;
 
         private bool _autoScrollFlag;
 
@@ -52,9 +53,9 @@ namespace ultra_comment_viewer
             if (bouyomiSettings.IsUsedBouyomi())
                 bouyomi.StartRunningBouyomiChan(bouyomiSettings.GetBouyomiPath());
 
-            this._twicasCommentGenerator = new CommentGenerator(collection);
+            _punrectCommentGenerator = new CommentGenerator(collection, new NicoDisconnectObserver(_model));
 
-            this._niconicoCommentGenerator = new CommentGenerator(collection);
+            this._niconicoCommentGenerator = new CommentGenerator(collection, new NicoDisconnectObserver(_model));
                                                                   
                                                                   
             this._menuLogic = new MenuLogic();
@@ -73,36 +74,40 @@ namespace ultra_comment_viewer
             }
         }
 
+        // ============================　ライブコネクション　===============================================
+ 
 
-        private async void EventClick_ConnectionTwicasCommentServer(object sender, RoutedEventArgs e)
-        {
-      
-            this._model.IsNotConnectTwicasLive = true;
-            await this._twicasCommentGenerator.ConnectCommentServerAsync(_model.TwicasUserId, this.ScrollCommentView, new TwicasConnectionCommentServer(_model));
-            
-        }
-
-        private async void Click_ConnectionNicoNicoServer(object sender, RoutedEventArgs e)
+        private async void Click_ConnectionNicoServer(object sender, RoutedEventArgs e)
         {
 
-            var validater = new NicoNicoLiveUrlValidater();
-            var isNotLiveUrl = !CheckLiveUrl(validater);
+            var validater = new NicoLiveUrlValidater();
+            (bool,string) result = validater.IsValidUrl(NicoUrlText.Text);
 
+            bool isNotLiveUrl = !result.Item1;
             if (isNotLiveUrl) return;
 
+            string liveId = result.Item2;
             this._model.IsNotConnectNicoLive = false;
-            await this._niconicoCommentGenerator.ConnectCommentServerAsync(this._model.NiconicoLiveId, this.ScrollCommentView, new NicoConnectionCommentServer(_model));
-            
+            await this._niconicoCommentGenerator.ConnectCommentServerAsync(liveId, this.ScrollCommentView, new NicoConnectionCommentServer(_model));
         }
 
-        private async void EventClick_DisconnectionTwicasServer(object sender, RoutedEventArgs e)
+
+        private async void Click_ConnectionPunrecServer(object sender, RoutedEventArgs e)
         {
-            this._model.IsNotConnectTwicasLive = false;
-            await this._twicasCommentGenerator.DisConnectCommentServerAsync();
-            
-            
+            var validater = new PunrecUrlValidater();
+            (bool, string) result = validater.IsValidUrl(PunrecUrlText.Text);
+
+            bool isNotLiveUrl = !result.Item1;
+            if (isNotLiveUrl) return;
+
+            string channelId = result.Item2;
+            await _punrectCommentGenerator.ConnectCommentServerAsync(channelId, ScrollCommentView, new PunrecConnectionCommentServer(_model));
+          
         }
 
+        // ========================== END Connection ======================================================================================
+
+        
         private async void Click_DisConnectNicoNicoServer(object sender, RoutedEventArgs e)
         {
              this._model.IsNotConnectNicoLive = true;
@@ -154,12 +159,6 @@ namespace ultra_comment_viewer
             return (CommentViewModel)e.Data.GetData(typeof(CommentViewModel));
         }
 
-        private void TextChanged_ValidateTwicasLiveUrl(object sender, TextChangedEventArgs e)
-        {
-            var validater = new TwiacasLiveUrlValidater();
-            _model.IsWriteUrl = validater.IsValidUrl(_model);
-
-        }
 
         private void Click_ChangeIsUsedBouyomi(object sender, RoutedEventArgs e)
         {
@@ -188,14 +187,6 @@ namespace ultra_comment_viewer
             this._dropLogic.ChangeGrayColor((Card)sender, _model);
         }
 
-        private bool CheckLiveUrl(ABUrlValidater validater)
-        {
-            var isLiveUrl = validater.IsValidUrl(this._model);
-            if (isLiveUrl) return true;
-
-            MessageBox.Show(Messages.NOT_VALID_LIVE_URL);
-            return false;
-        }
 
         private void Drop_ClipCommentText(object sender, DragEventArgs e)
         {
@@ -203,6 +194,8 @@ namespace ultra_comment_viewer
             if (commentModel == null) return;
 
             this._dropLogic.ClipCommentText(commentModel);
+            this.ClipCommentSnackbar.MessageQueue.Enqueue($"Copy : [{commentModel.Comment}]");
         }
+
     }
 }

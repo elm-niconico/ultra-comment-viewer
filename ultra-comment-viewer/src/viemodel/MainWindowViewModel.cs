@@ -188,5 +188,39 @@ namespace ultra_comment_viewer.src.viemodel
             set => SetProperty(ref this._isWriteNicoNicoUrl, value && !IsNotConnectNicoLive);
         }
 
+
+    //================ オープンレックのモデル ==============================
+        private string _punrecLiveTitle;
+
+        private string _punrecViewers;
+
+        private string _punrectTotalViewers = "test";
+
+        private BitmapImage _punrecThumbnail;
+
+        public BitmapImage PunrecThumbnail
+        {
+            get => _punrecThumbnail;
+            set => SetProperty(ref _punrecThumbnail, value);
+        }
+
+        public string PunrecLiveTitle
+        {
+            get => this._punrecLiveTitle;
+            set => SetProperty(ref _punrecLiveTitle, value);
+        }
+
+        public string PunrecViewers
+        {
+            get => _punrecViewers;
+            set => SetProperty(ref _punrecViewers, value);
+        }
+
+        public string PunrecTotalViewers
+        {
+            get => _punrectTotalViewers;
+            set => SetProperty(ref _punrectTotalViewers, value);
+        }
+
     }
 }

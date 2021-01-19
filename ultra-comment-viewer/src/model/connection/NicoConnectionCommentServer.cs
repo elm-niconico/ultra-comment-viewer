@@ -35,7 +35,7 @@ namespace ultra_comment_viewer.src.model.connection
 
         public void UpdateToLiveInfo(string json)
         {
-            var parser = new NicoJsonConverter();
+            var parser = new ElmJsonConverter();
             var data = parser.ConvertToDataJsonModel(json);
 
             ItsMainModel.NicoViewer = data.data.viewers.ToString();
@@ -61,13 +61,11 @@ namespace ultra_comment_viewer.src.model.connection
             }
 
             return Task.FromResult(LiveStatus.SUCCESS_CONNECT);
-
-            
         }
 
         private bool IsExitComment(string response)
         {
-            var json = new NicoJsonConverter();
+            var json = new ElmJsonConverter();
             var model = json.ConverToCommentJsonModel(response);
             return model.chat.premium == 2;
         }

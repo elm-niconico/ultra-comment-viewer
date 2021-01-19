@@ -29,7 +29,7 @@ namespace ultra_comment_viewer.src.model.parser
 
             string datapropsJson =  emvedded.GetAttribute("data-props");
 
-            var converter = new NicoJsonConverter();
+            var converter = new ElmJsonConverter();
             this._dataPropsModel = converter.ConverToDataPropsJsonModel(datapropsJson);
         }
 

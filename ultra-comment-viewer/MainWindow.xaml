@@ -26,7 +26,7 @@
             <ColumnDefinition Width="8"/>
             <ColumnDefinition Width="7*" MinWidth="200"/>
         </Grid.ColumnDefinitions>
-
+        
         <!--================== MenuBar =================================-->
         <md:Card
             Grid.Row="0"
@@ -78,6 +78,7 @@
                 <StackPanel>
                     <!-- URLドロップゾーン -->
                     <md:Card
+                        ToolTip="コメント中のURLに遷移またはコメントをクエリとして検索します"
                         md:ShadowAssist.ShadowDepth="Depth0"
                         Background="{Binding WebColor}"
                         x:Name="Web"
@@ -94,6 +95,7 @@
                     <Separator Margin="10" />
                     <!-- ユーザー情報ドロップゾーン -->
                     <md:Card
+                        ToolTip="コメントユーザーの詳細情報を表示します"
                         x:Name="User"
                         Height="140"
                         Width="140"
@@ -110,6 +112,7 @@
                     <Separator Margin="10"></Separator>
                     <!-- ログコメントドロップゾーン -->
                     <md:Card
+                        ToolTip="コメントユーザーの過去ログを確認できます"
                         md:ShadowAssist.ShadowDepth="Depth0"
                         Background="{Binding LogColor}"
                         x:Name="Log"
@@ -133,6 +136,7 @@
                         MouseMove="MouseMove_ChangeAccountBackGround"
                         Width="140"
                         Height="140"
+                        ToolTip="コメントをクリップボードにコピーします"
                         Content="{md:PackIcon Size=140,Kind=Attachment}"
                         Grid.Row="2"
                         AllowDrop="True"
@@ -140,11 +144,11 @@
                         Margin="5,5,5,5"
                         />
                     <Separator Margin="10"/>
+                    
                 </StackPanel>
             </md:Card>
         </ScrollViewer>
-        
-
+      
       <!--================== URLフォームエリア ========================= -->
         <Expander
             Margin="7 0"
@@ -152,23 +156,25 @@
                 Grid.Row="2"
                 Height="Auto"
                 HorizontalAlignment="Stretch"
-                Header="ニコニコ＆ツイキャスURL"
+                Header="ニコニコ＆ツイキャス＆OPENREC URL"
                 >
         <StackPanel
-                    Orientation="Vertical"
-                    >
-                <!-- TwicasURlForm -->
-                <StackPanel
-                        Margin="20 3 0 0"
-                        Orientation="Horizontal"
-                        >
+            Orientation="Vertical"
+            >
+            
+           <!-- OpenrecURlForm -->
+           <StackPanel
+               Margin="20 3 0 0"
+               Orientation="Horizontal"
+                >
                     <TextBox
+                        
+                        x:Name="PunrecUrlText"
                         Width="500"
-                        Text="{Binding LiveUrlWrittenByTwicasForm, UpdateSourceTrigger=PropertyChanged}"
-                        TextChanged="TextChanged_ValidateTwicasLiveUrl"
-                        md:HintAssist.Hint="Twicasの放送URlを入力して下さい"
+                      
+                        md:HintAssist.Hint="Openrecの放送URlを入力して下さい"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        VerticalAlignment="Center"
+                        VerticalAlignment="Top"
                          />
                     <Button
                             Content="接続"
@@ -178,18 +184,19 @@
                             Cursor="Hand"
                             Background="Crimson"
                             BorderBrush="Red"
-                            Click="EventClick_ConnectionTwicasCommentServer"
+                            Click="Click_ConnectionPunrecServer"
                             />
                     <Button
-                            BorderBrush="DodgerBlue"
-                            Content="切断"
-                            IsEnabled="{Binding IsConnectTwicasLive}"
-                            Width="60"
-                            Margin="10 10 0 0"
-                            Height="25" 
-                            Cursor="Hand"
-                            Click="EventClick_DisconnectionTwicasServer"
-                            />
+                        BorderBrush="DodgerBlue"
+                        Background="DeepSkyBlue"
+                        Content="切断"
+
+                        Width="60"
+                        Margin="10 10 0 0"
+                        Height="25" 
+                        Cursor="Hand"
+                       
+                        />
                 </StackPanel>
                 <!-- NiconicoUrlForm -->
                 <StackPanel
@@ -197,6 +204,7 @@
                         Orientation="Horizontal"
                         >
                 <TextBox
+                    x:Name="NicoUrlText"
                     Width="500"
                     Text="{Binding LiveUrlWrittenByNicoNicoForm, UpdateSourceTrigger=PropertyChanged}"
                     md:HintAssist.Hint="ニコニコの放送URlを入力して下さい"
@@ -213,7 +221,7 @@
                     Background="Crimson"
                     IsEnabled="{Binding IsNotConnectNicoLive}"
                     BorderBrush="Red"
-                    Click="Click_ConnectionNicoNicoServer"
+                    Click="Click_ConnectionNicoServer"
                     />
                 <Button
                     Background="DeepSkyBlue"
@@ -255,7 +263,7 @@
                 Grid.Row="5"
                 Style="{StaticResource HorizontalGridSplitter}" 
                 />
-        <!-- コミュティ情報エリア -->
+        <!-- ==================== コミュティ情報エリア ========================-->
         <md:Card
             Margin="0 0 7 0"
             Grid.Row="4"
@@ -263,70 +271,206 @@
             Background="White"
             >
             <StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="{md:PackIcon Kind=Subtitles,Size=20}"/>
-                     <TextBlock
-                         FontWeight="SemiBold"
-                         FontSize="13"
-                         VerticalAlignment="Center"
-                         TextWrapping="Wrap"          
-                         Text="{Binding NicoLiveTitle}"
-                         />
+                <Border
+                Margin="5"
+                VerticalAlignment="Top"
+                Height="100"
+                BorderThickness="1"
+                BorderBrush="DimGray"
+                >
+
+                <StackPanel>
+                    <StackPanel
+                        Orientation="Horizontal">
+                        <Image
+                            Width="37"
+                            Height="37"
+                            />
+                        <Label
+                            Margin="0 6 0 0"
+                            Content="{md:PackIcon Kind=Subtitles,Size=20}"
+                            />
+                         <TextBlock
+                             FontWeight="SemiBold"
+                             FontSize="15"
+                             VerticalAlignment="Center"
+                             TextWrapping="Wrap"          
+                             Text="{Binding NicoLiveTitle}"
+                             />
+                    </StackPanel>
+
+                    <Separator Margin="10 3"/>
+                    <StackPanel 
+                        Orientation="Horizontal">
+                        <StackPanel
+                            Width="330"
+                            >
+                            
+                        </StackPanel>
+                        <Rectangle VerticalAlignment="Stretch" Width="1" Margin="8" Stroke="Gray" />
+
+                        
+                        <StackPanel
+
+                            Width="100"
+                            Orientation="Vertical"
+                            >
+                            <StackPanel
+                                Orientation="Horizontal">
+                                 <!-- 視聴者数 -->
+                                 <Label
+                                     VerticalAlignment="Center"
+                                     Content="{md:PackIcon Size=17,
+                                     Kind=Account}"
+                                     />
+                                <TextBlock
+                                     FontSize="12"
+                                     VerticalAlignment="Center"
+                                     Text="{Binding NicoViewer}"
+                                     Width="60"
+                                 />
+                            </StackPanel>
+                            <!-- コメント数 -->
+                                <StackPanel Orientation="Horizontal">
+                                    <Label
+                                        Content="{md:PackIcon Kind=Comment,Size=17}"
+                                        VerticalAlignment="Center"
+                                        />
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontSize="12"
+                                        Text="{Binding NicoCommentCount}"
+                                        Width="60"
+                                        />
+                                </StackPanel>
+                            </StackPanel>
+                        <Rectangle VerticalAlignment="Stretch" Width="1" Margin="8" Stroke="Gray" />
+                        <StackPanel
+                            Width="100"
+                            >
+                            <!-- ニコニ広告ポイント数 -->
+                            <StackPanel Orientation="Horizontal">
+                                <Label
+                                    Content="{md:PackIcon Kind=ExclamationThick,Size=17}"
+                                    VerticalAlignment="Center"
+                                    />
+                                    <TextBlock
+                                     VerticalAlignment="Center"
+                                     FontSize="12"
+                                     Text="{Binding NicoAdPoint}"
+                                     Width="60"
+                                     /> 
+                            </StackPanel>
+                            
+                            <!-- ギフトポイント -->
+                            <StackPanel Orientation="Horizontal">
+                                <Label
+                                     Content="{md:PackIcon Kind=Gift,Size=17}"
+                                     VerticalAlignment="Center"
+                                     />
+                                <TextBlock
+                                     VerticalAlignment="Center"
+                                     FontSize="12"
+                                     Text="{Binding NicoGiftPoint}"
+                                     Width="60"
+                                     /> 
+                            </StackPanel>
+                        </StackPanel>
+                       
+                        
+                        
+
+                    </StackPanel>
                 </StackPanel>
-                <StackPanel 
-                         Orientation="Horizontal">
+               
+                </Border>
+                
+                <!-- ==================== Openrec放送情報 ==================== -->
+                <Border
+                    BorderBrush="DimGray"
+                    BorderThickness="1"
+                    Height="80"
+                    Margin="5"
+                    >
+                    <StackPanel Orientation="Horizontal"
+                                >
+                         <Image
+                             HorizontalAlignment="Left"
+                             Source="{Binding PunrecThumbnail}"
+                             Width="140"
+                             />       
+                        <StackPanel
+                            Width="440"
+                            HorizontalAlignment="Left"
+                            >
+                            <StackPanel 
+                                Orientation="Horizontal"
+                                >
+                                
+                                <Label
+                                    Margin="0 0 10 0"
+                                    Content="{md:PackIcon Kind=Subtitles,Size=30}"
+                                    />
+                                <TextBlock
+                                    FontSize="15"
+                                
+                                    VerticalAlignment="Center"
+                                    FontWeight="SemiBold"
+                                    Text="{Binding PunrecLiveTitle}"
+                                    />
+                            </StackPanel>
+                            <Separator Margin="10 0"/>
+                            
+                            <StackPanel
+                                
+                                Orientation="Horizontal"
+
+                                >
+                     
+                          
+                                <StackPanel
+                                    Orientation="Horizontal"
+                                    Width="100"
+                                    >
+                                    <Label
+                                        VerticalAlignment="Center"
+                                         Content="{md:PackIcon Kind=Account,Size=25}"
+                                        />
+                                    <TextBlock
+                                        TextWrapping="Wrap"
+                                        FontSize="13px"
+                                        VerticalAlignment="Center"
+                                        Text="{Binding PunrecViewers}"
+                                        />
+                                </StackPanel>
+                                <Rectangle  VerticalAlignment="Stretch" Width="1" Margin="8" Stroke="Gray"/>
+                                <StackPanel
+                                    Width="100"
+                                    Orientation="Horizontal"
+                                    >
+                                    <Label
+                                        VerticalAlignment="Center"
+                                        Content="{md:PackIcon Kind=AccountMultiple,Size=25}"
+                                        />
+                                    <TextBlock
+                                        TextWrapping="Wrap"
+                                        FontSize="13"
+                                        VerticalAlignment="Center"
+                                        Text="{Binding PunrecTotalViewers}"
+                                        />
+                                </StackPanel>
+                        </StackPanel>
+
+                        </StackPanel>
+                        
+                    </StackPanel>
                     
-                     <!-- 視聴者数 -->
-                     <Label  
-                         VerticalAlignment="Center"
-                         Content="{md:PackIcon Size=17,
-                         Kind=Account}"/>
-                     <TextBlock
-                         FontSize="12"
-                         VerticalAlignment="Center"
-                         Text="{Binding NicoViewer}"
-                         Width="60"
-                         />
-                     <!-- コメント数 -->
-                     <Label 
-                         Margin="4 0" 
-                         Content="{md:PackIcon Kind=Comment,Size=17}"
-                         VerticalAlignment="Center"
-                         />
-                     <TextBlock
-                         VerticalAlignment="Center"
-                         FontSize="12"
-                         Text="{Binding NicoCommentCount}"
-                         Width="60"
-                         />
-                     <!-- ニコニ広告ポイント数 -->
-                     <Label 
-                         Margin="4 0"
-                         Content="{md:PackIcon Kind=Comment,Size=17}"
-                         VerticalAlignment="Center"
-                         />
-                     <TextBlock
-                         VerticalAlignment="Center"
-                         FontSize="12"
-                         Text="{Binding NicoAdPoint}"
-                         Width="60"
-                         />
-                       <!-- コメント数 -->
-                     <Label 
-                         Margin="4 0" 
-                         Content="{md:PackIcon Kind=Comment,Size=17}"
-                         VerticalAlignment="Center"
-                         />
-                     <TextBlock
-                         VerticalAlignment="Center"
-                         FontSize="12"
-                         Text="{Binding NicoGiftPoint}"
-                         Width="60"
-                         />
-                 
-                </StackPanel>
-              
+                </Border>
             </StackPanel>
+            
+            
+
+
         </md:Card>
 
         <!-- ================= コメントエリア ========================== -->
@@ -339,7 +483,6 @@
                 ScrollViewer.ScrollChanged="EventScrollChanged_UpdateAutoScrollFlag"
                 VirtualizingPanel.IsVirtualizing="True"
                 VirtualizingPanel.VirtualizationMode="Recycling"
-                
                 >
                 
                 <ListView.ItemTemplate>
@@ -382,10 +525,9 @@
                                 <TextBlock 
                                     FontWeight="DemiBold"
                                     Margin="15"
-                                     
                                     HorizontalAlignment="Left"
                                     FontSize="12"
-                                    Text="{Binding Comment}"
+                                    Text="{Binding Comment}"      
                                      />
                             </md:Card>
                         </StackPanel>
@@ -393,5 +535,18 @@
                 </ListView.ItemTemplate>
             </ListView>
         </md:Card>
+         <!-- コメントがクリップボードにコピーされたら表示 -->
+        <md:Snackbar
+           Grid.Row="6"
+            Height="50"
+            Margin="20 0 0 30"
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            Grid.ColumnSpan="3"
+            Background="MediumVioletRed"
+            x:Name="ClipCommentSnackbar"
+            MessageQueue="{md:MessageQueue}"
+            />
+
     </Grid>
 </Window>

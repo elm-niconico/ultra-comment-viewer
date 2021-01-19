@@ -21,8 +21,8 @@ namespace ultra_comment_viewer.src.model.websocket.niconico
         public NicoWebSocketClient(NicoRestClient client)
         {
             this._rest = client;
-            this.webSocketClient.Options.SetRequestHeader("Sec-WebSocket-Extensions", "permessage-deflate; client_max_window_bits");
-            this.webSocketClient.Options.SetRequestHeader("Sec-WebSocket-Protocol", "msg.nicovideo.jp#json");
+            this.ItswebSocketClient.Options.SetRequestHeader("Sec-WebSocket-Extensions", "permessage-deflate; client_max_window_bits");
+            this.ItswebSocketClient.Options.SetRequestHeader("Sec-WebSocket-Protocol", "msg.nicovideo.jp#json");
         }
 
 
@@ -47,7 +47,7 @@ namespace ultra_comment_viewer.src.model.websocket.niconico
             {
                 var segment = new ArraySegment<byte>(Encoding.UTF8.GetBytes(""));
 
-                this.webSocketClient.SendAsync(segment, WebSocketMessageType.Text, true, CancellationToken.None);
+                this.ItswebSocketClient.SendAsync(segment, WebSocketMessageType.Text, true, CancellationToken.None);
             }
         }
 
@@ -64,7 +64,7 @@ namespace ultra_comment_viewer.src.model.websocket.niconico
             var sendMessage = NicoApi.GET_SEND_MESSAGE_TO_COMMENT_SERVER(liveRoom.GetThreadId());
             var segment = new ArraySegment<byte>(Encoding.UTF8.GetBytes(sendMessage));
 
-            await this.webSocketClient.SendAsync(segment,
+            await this.ItswebSocketClient.SendAsync(segment,
                                            WebSocketMessageType.Text,
                                            endOfMessage: true,
                                            CancellationToken.None);

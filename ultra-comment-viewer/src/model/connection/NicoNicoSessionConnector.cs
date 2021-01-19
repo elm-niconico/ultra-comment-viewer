@@ -28,7 +28,7 @@ namespace ultra_comment_viewer.src.model.connection
 
             if (String.IsNullOrEmpty(roomJson)) return null;
 
-            var converter = new NicoJsonConverter();
+            var converter = new ElmJsonConverter();
             var model = converter.ConverToLiveRoomJsonModel(roomJson);
 
             NicoNicoLiveRoomInfo.NewCreateRoomInfo(model);

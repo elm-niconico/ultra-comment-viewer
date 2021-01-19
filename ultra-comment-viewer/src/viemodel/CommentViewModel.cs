@@ -16,9 +16,7 @@ namespace ultra_comment_viewer.src.viemodel
         public SolidColorBrush CommentColor { get; set; }
         public string UserId { get; set; }
         
-        //コメントのツールバーに使用する
-        public string CommentPopup { get; set; }
-
+        
         // 配信サイトの名前
         public LiveSiteName LiveName { get; set; }
 
@@ -28,6 +26,11 @@ namespace ultra_comment_viewer.src.viemodel
         // コメントナンバー
         public int No { get; set; }
 
+        //投稿日時
+        public DateTime PostTime { get; set; }
+
+        //ユーザーのステータス(プレミアムや一般)
+        public ListenerStatus Status { get; set; }
 
         public static CommentViewModel BuildDisconnectModel()
         {

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using ultra_comment_viewer.src.commons.extends_mothod;
 using ultra_comment_viewer.src.model;
+using ultra_comment_viewer.src.model.connect_onother_app;
 using ultra_comment_viewer.src.model.connection;
 using ultra_comment_viewer.src.model.parser;
 using ultra_comment_viewer.src.model.parser.bouyomi;
@@ -21,16 +22,18 @@ namespace ultra_comment_viewer.src.viewLogic
 
         private readonly ObservableCollection<CommentViewModel> _collections;
 
-        private readonly IDisconnectObserver _observer;
+        private readonly ABDisconnectObserver _observer;
 
         private readonly BouyomiChanClient _boyomiChan;
 
 
-        public CommentGenerator(ObservableCollection<CommentViewModel> collections)
+        public CommentGenerator(ObservableCollection<CommentViewModel> collections, ABDisconnectObserver observer)
         {
             this._collections = collections;
-            
-            this._observer = new IDisconnectObserver(this);
+
+            this._observer = observer;
+            this._observer.Generator = this;
+
             this._boyomiChan = new BouyomiChanClient();
         }
 
@@ -38,11 +41,13 @@ namespace ultra_comment_viewer.src.viewLogic
         {
             this._server = server;
             var logger = new Logger();
+           // var comegene = await ComeGeneWebSocketClient.BuildAsync("ws://127.0.0.1:5001");
 
             await foreach(var commentModel in _server.FetchCommentAsync(userId, this._observer))
             {
                 this._boyomiChan.SendComment(commentModel.Comment);
-                logger.PushLog(commentModel);
+                //await comegene.SendMessage(commentModel);
+                //logger.PushLog(commentModel);
                 _collections.Add(commentModel);
                 scrollChange();
             }

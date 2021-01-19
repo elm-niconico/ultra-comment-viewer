@@ -20,7 +20,7 @@ namespace ultra_comment_viewer.src.model.parser
 
         private readonly int _premium;
         
-        public NicoCommentParser(int premium): base("(?<=^(/info [0-9]) ).+$") 
+        public NicoCommentParser(int premium): base("(?<=^(/info [0-9]+) ).+$") 
         {
             this._premium = premium;
         }
@@ -44,7 +44,7 @@ namespace ultra_comment_viewer.src.model.parser
             if (comment.StartsWith("/nicoad ", System.StringComparison.Ordinal))
             {
                 var nicoAd = _adRegex.Match(comment).Value;
-                var converter = new NicoJsonConverter();
+                var converter = new ElmJsonConverter();
                 var adMessage = converter.ConvertToJsonModel<CommentFormatJsonModel>(nicoAd).message;
                 return (ChatKind.AD, adMessage);
             }

@@ -24,6 +24,11 @@ namespace ultra_comment_viewer.src.commons
             return true;
         }
 
+        public DateTime FromUnixTime(long unixTime)
+        {
+            return DateTimeOffset.FromUnixTimeSeconds(unixTime).LocalDateTime;
+        }
+
 
     }
 }

@@ -24,9 +24,12 @@ namespace ultra_comment_viewer.src.viewLogic
             if (String.IsNullOrEmpty(comment)) return;
 
             var parser = new UrlParser();
-            var url = parser.ParseUrl(comment);
-            ProcessSupport.OpenBrowser(url);
+            var url = parser.ParseUrlOrEmpty(comment);
 
+            if (string.IsNullOrEmpty(url))
+                ProcessSupport.OpenBrowserSearch(comment);
+            else
+                ProcessSupport.OpenBrowser(url);
         }
 
 

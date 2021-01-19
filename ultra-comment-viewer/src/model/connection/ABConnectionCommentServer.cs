@@ -34,7 +34,7 @@ namespace ultra_comment_viewer.src.model.connection
             this.ItsMainModel = model;
         }
 
-        public async IAsyncEnumerable<CommentViewModel> FetchCommentAsync(string id, IDisconnectObserver observer)
+        public async IAsyncEnumerable<CommentViewModel> FetchCommentAsync(string id, ABDisconnectObserver observer)
         {
 
             this.ItsId = id;

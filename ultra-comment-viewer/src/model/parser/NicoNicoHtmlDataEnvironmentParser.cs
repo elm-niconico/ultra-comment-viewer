@@ -30,7 +30,7 @@ namespace ultra_comment_viewer.src.model.parser
 
             string dataInitialData = document.GetAttribute("data-initial-data");
 
-            var converter = new NicoJsonConverter();
+            var converter = new ElmJsonConverter();
             return converter.ConverToDataEnvironmentModel(dataInitialData);
 
         }

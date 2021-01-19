@@ -17,12 +17,12 @@ namespace ultra_comment_viewer.src.commons.util
 
         
         
-        private readonly IDisconnectObserver _observer;
+        private readonly ABDisconnectObserver _observer;
 
 
        
 
-        public WebSocketOperator(ClientWebSocket client, IDisconnectObserver observer)
+        public WebSocketOperator(ClientWebSocket client, ABDisconnectObserver observer)
         {
             this._webSocketClient = client;
             this._observer = observer;

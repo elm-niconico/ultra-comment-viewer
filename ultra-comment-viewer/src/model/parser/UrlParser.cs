@@ -9,7 +9,7 @@ namespace ultra_comment_viewer.src.viewLogic.parser
     {
         private readonly Regex _urlRegex = new Regex("https?://[\\w/:%#\\$&\\?\\(\\)~\\.=\\+\\-]+");
 
-         public string ParseUrl(string comment)
+         public string ParseUrlOrEmpty(string comment)
         {
             return this._urlRegex.Match(comment).Value;
         }

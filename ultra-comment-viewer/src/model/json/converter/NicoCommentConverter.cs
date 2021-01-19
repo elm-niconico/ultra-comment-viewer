@@ -23,10 +23,11 @@ namespace ultra_comment_viewer.src.model.json.converter
 {
     public class NicoCommentConverter : ABLiveInfoConverter
     {
-      
+        private readonly LiveDateManager _manager = new LiveDateManager();
+
         public override async Task<CommentViewModel> CovertToCommentViewModel(string responseJson)
         {
-            var jsonConverter = new NicoJsonConverter();
+            var jsonConverter = new ElmJsonConverter();
             var model = jsonConverter.ConverToCommentJsonModel(responseJson);
 
             var parser = new NicoCommentParser(model.chat.premium);
@@ -48,8 +49,18 @@ namespace ultra_comment_viewer.src.model.json.converter
                 CommentColor = style.CommentColor,
                 LiveName = LiveSiteName.NICONICO,
                 ChatKind = commentKind,
-                Image = style.UserIcon
+                Image = style.UserIcon,
+                No = model.chat.no,
+                PostTime = _manager.FromUnixTime(model.chat.date),
+                Status = GetStatus(model.chat.premium),
             };
+        }
+
+        private ListenerStatus GetStatus(int status)
+        {
+            if (status == 0) return ListenerStatus.GENERAL;
+            else if (status == 1) return ListenerStatus.PREMIUM;
+            else return ListenerStatus.GENERAL;
         }
 
     }
