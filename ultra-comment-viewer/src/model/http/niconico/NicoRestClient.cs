@@ -1,10 +1,12 @@
 ﻿using AngleSharp.Html.Parser;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using ultra_comment_viewer.src.commons;
 using ultra_comment_viewer.src.commons.strings.api;
 using ultra_comment_viewer.src.model.connection;
 using ultra_comment_viewer.src.model.json.converter;
@@ -39,9 +41,9 @@ namespace ultra_comment_viewer.src.model.http
         public async Task<string> GetWebSocketUrlAsync(string liveId)
         {
             var html = await LoadUserLiveHtmlAsync(liveId);
-            var parser = new NicoNicoHtmlDataPropsParser(html);
+            var parser = new NicoHtmlDataPropsParser(html);
 
-            _model.NicoLiveTitle = new NicoLiveHtmlParser(html).Title;
+            SetLiveInfo(html, parser);
 
             var webSocketUrl = parser.GetWebSocketUrl();
             // 限定配信は視聴セッションのWebSocektUrlが空文字になる
@@ -51,7 +53,21 @@ namespace ultra_comment_viewer.src.model.http
            
             return _connector.FetchCommentServerUrl();
         }
-        
+
+        private void SetLiveInfo(string html, NicoHtmlDataPropsParser parser)
+        {
+            var info =  new NicoLiveHtmlParser(html);
+            _model.NicoLiveTitle = info.Title;
+            _model.NicoLiveThumbnail = parser.ExtractComunityThumbnail();
+            _model.NicoLiveStartTime = info.LiveStartTime;
+            
+            var dm = new LiveDateManager();
+            var time = dm.FromUnixTime(parser.GetBeginTime());
+            _model.NicoLiveStartDateTime = time;
+            _model.NicoLiveStartTime = $"{time.ToLongDateString()} {time.ToLongTimeString()}";
+
+        }
+
         public void DisConnectSessionServer()
         {
             this._connector.DisconnectSessionServer();

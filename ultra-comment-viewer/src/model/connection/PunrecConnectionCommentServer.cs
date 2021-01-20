@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using ultra_comment_viewer.src.commons;
 using ultra_comment_viewer.src.model.http.openrec;
 using ultra_comment_viewer.src.model.json.converter;
 using ultra_comment_viewer.src.model.json.model.openrec;
@@ -40,6 +41,9 @@ namespace ultra_comment_viewer.src.model.connection
 
             ItsMainModel.PunrecViewers = viewer.data.live_viewers + "人";
             ItsMainModel.PunrecTotalViewers = viewer.data.viewers + "人";
+
+            var dm = new LiveDateManager();
+            ItsMainModel.PunrecUpdateTime = dm.ExtractPassStringTime(ItsMainModel.PunrecStartDateTime);
         }
     }
 }

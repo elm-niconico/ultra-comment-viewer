@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using ultra_comment_viewer.src.commons;
 using ultra_comment_viewer.src.commons.extends_mothod;
 using ultra_comment_viewer.src.model.http;
 using ultra_comment_viewer.src.model.json.converter;
@@ -42,6 +43,9 @@ namespace ultra_comment_viewer.src.model.connection
             ItsMainModel.NicoCommentCount = data.data.comments.ToString();
             ItsMainModel.NicoGiftPoint = data.data.giftPoints.ToString();
             ItsMainModel.NicoAdPoint = data.data.adPoints.ToString();
+
+            var dm = new LiveDateManager();
+            ItsMainModel.NicoUpdateTime = dm.ExtractPassStringTime(ItsMainModel.NicoLiveStartDateTime);
         }
 
 

@@ -2,18 +2,19 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Media.Imaging;
 using ultra_comment_viewer.src.commons.extends_mothod;
 using ultra_comment_viewer.src.model.json.converter;
 using ultra_comment_viewer.src.model.json.model.niconico;
 
 namespace ultra_comment_viewer.src.model.parser
 {
-    public class NicoNicoHtmlDataPropsParser
+    public class NicoHtmlDataPropsParser
     {
 
         private DataPropsJsonModel _dataPropsModel;
 
-        public NicoNicoHtmlDataPropsParser(string html)
+        public NicoHtmlDataPropsParser(string html)
         {
             ParseDataPropsValue(html);
         }
@@ -38,6 +39,23 @@ namespace ultra_comment_viewer.src.model.parser
             if (_dataPropsModel.IsNull()) return null;
 
             return this._dataPropsModel.site.relive.webSocketUrl;
+        }
+
+        public BitmapImage ExtractComunityThumbnail()
+        {
+            try
+            {
+                return new BitmapImage(new Uri(_dataPropsModel.socialGroup.thumbnailImageUrl));
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public int GetBeginTime()
+        {
+            return _dataPropsModel.program.beginTime;
         }
 
     }

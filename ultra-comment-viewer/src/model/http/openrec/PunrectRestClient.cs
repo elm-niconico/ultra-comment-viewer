@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using ultra_comment_viewer.src.commons;
 using ultra_comment_viewer.src.commons.strings.api;
 using ultra_comment_viewer.src.model.json.converter;
 using ultra_comment_viewer.src.model.json.model.openrec.channel;
@@ -52,11 +53,20 @@ namespace ultra_comment_viewer.src.model.http.openrec
             {
                 _model.PunrecThumbnail = punrecDefaultIcon;
             }
+            var time = _channelInfo.started_at.ToLocalTime();
+            _model.PunrecStartTime = $"{time.ToLongDateString()} {time.ToLongTimeString()}";
+            _model.PunrecStartDateTime = time;
+
+            var dm = new LiveDateManager();
+            _model.PunrecUpdateTime = dm.ExtractPassStringTime(time);
         }
 
 
         public string GetUserLiveThumbnail() => _channelInfo.s_thumbnail_url;
 
         public string GetUserCoverUrl() => _channelInfo.cover_image_url as string;
+
+
+
     }
 }

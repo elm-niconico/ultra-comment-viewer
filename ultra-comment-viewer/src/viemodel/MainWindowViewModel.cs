@@ -129,6 +129,34 @@ namespace ultra_comment_viewer.src.viemodel
 
         private string _nicoViewer;
 
+        private BitmapImage _nicoLiveThumbnail;
+
+        private string _nicoLiveStartTime;
+
+        public DateTime NicoLiveStartDateTime;
+
+        private string _nicoUpdateTime;
+
+        public string NicoUpdateTime
+        {
+            get => $"{_nicoUpdateTime} 経過";
+            set => SetProperty(ref _nicoUpdateTime, value);
+        }
+
+        public BitmapImage NicoLiveThumbnail
+        { 
+            get => _nicoLiveThumbnail;
+            set => SetProperty(ref _nicoLiveThumbnail, value);
+        }
+        
+        
+        public string NicoLiveStartTime 
+        { 
+            get => $"{_nicoLiveStartTime} 開始";
+            set => SetProperty(ref _nicoLiveStartTime, value); 
+        }
+
+
         public string NicoViewer
         {
             get => this._nicoViewer;
@@ -194,10 +222,16 @@ namespace ultra_comment_viewer.src.viemodel
 
         private string _punrecViewers;
 
-        private string _punrectTotalViewers = "test";
+        private string _punrectTotalViewers;
 
         private BitmapImage _punrecThumbnail;
 
+        private string _punStartTime;
+
+        private string _updateTime;
+
+        public DateTime PunrecStartDateTime { get; set; }
+        
         public BitmapImage PunrecThumbnail
         {
             get => _punrecThumbnail;
@@ -220,6 +254,20 @@ namespace ultra_comment_viewer.src.viemodel
         {
             get => _punrectTotalViewers;
             set => SetProperty(ref _punrectTotalViewers, value);
+        }
+
+
+
+        public string PunrecStartTime 
+        { 
+            get => $"開始時間 : {_punStartTime}";
+            set => SetProperty(ref _punStartTime, value);
+        }
+
+        public string PunrecUpdateTime
+        {
+            get => _updateTime;
+            set => SetProperty(ref _updateTime, value);
         }
 
     }
