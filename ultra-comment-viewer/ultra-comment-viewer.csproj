@@ -111,4 +111,8 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="src\viewLogic\mainWindow\factory\" />
+  </ItemGroup>
+
 </Project>

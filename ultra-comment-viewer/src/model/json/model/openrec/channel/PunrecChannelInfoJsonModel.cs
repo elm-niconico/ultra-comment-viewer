@@ -100,8 +100,8 @@ namespace ultra_comment_viewer.src.model.json.model.openrec.channel
     }
 
     public class Stats    {
-        public object live_views { get; set; } 
-        public object movie_count { get; set; } 
+        public object? live_views { get; set; } 
+        public object? movie_count { get; set; } 
         public object total_views { get; set; } 
         public object creator_count { get; set; } 
         public object last_update_at { get; set; } 
@@ -162,8 +162,8 @@ namespace ultra_comment_viewer.src.model.json.model.openrec.channel
         public SpriteImage sprite_image { get; set; } 
         public object cover_image_url { get; set; } 
         public bool is_cover_image_icon { get; set; } 
-        public int live_views { get; set; } 
-        public int total_views { get; set; } 
+        public int? live_views { get; set; } 
+        public int? total_views { get; set; } 
         public int total_yells { get; set; } 
         public bool is_mobile { get; set; } 
         public bool is_low_latency { get; set; } 

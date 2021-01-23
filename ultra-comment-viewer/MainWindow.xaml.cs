@@ -11,6 +11,7 @@ using ultra_comment_viewer.src.commons.extends_mothod;
 using ultra_comment_viewer.src.model;
 using ultra_comment_viewer.src.model.connection;
 using ultra_comment_viewer.src.model.observer.niconico;
+using ultra_comment_viewer.src.model.observer.openrec;
 using ultra_comment_viewer.src.model.parser;
 using ultra_comment_viewer.src.viemodel;
 using ultra_comment_viewer.src.view.validater;
@@ -53,7 +54,7 @@ namespace ultra_comment_viewer
             if (bouyomiSettings.IsUsedBouyomi())
                 bouyomi.StartRunningBouyomiChan(bouyomiSettings.GetBouyomiPath());
 
-            _punrectCommentGenerator = new CommentGenerator(collection, new NicoDisconnectObserver(_model));
+            _punrectCommentGenerator = new CommentGenerator(collection, new PunrecDicsocnnectObserver(_model));
 
             this._niconicoCommentGenerator = new CommentGenerator(collection, new NicoDisconnectObserver(_model));
                                                                   
@@ -101,17 +102,24 @@ namespace ultra_comment_viewer
             if (isNotLiveUrl) return;
 
             string channelId = result.Item2;
+            this._model.IsNotConnectPunrecLive = false;
             await _punrectCommentGenerator.ConnectCommentServerAsync(channelId, ScrollCommentView, new PunrecConnectionCommentServer(_model));
           
         }
 
+        private async void Click_DisconnectPunrecServer(object sender, RoutedEventArgs e)
+        {
+
+            await _punrectCommentGenerator.DisConnectCommentServerAsync();
+        }
+
         // ========================== END Connection ======================================================================================
 
-        
+
         private async void Click_DisConnectNicoNicoServer(object sender, RoutedEventArgs e)
         {
              this._model.IsNotConnectNicoLive = true;
-            await this._niconicoCommentGenerator.DisConnectCommentServerAsync();
+             await this._niconicoCommentGenerator.DisConnectCommentServerAsync();
            
         }
 
@@ -197,5 +205,16 @@ namespace ultra_comment_viewer
             this.ClipCommentSnackbar.MessageQueue.Enqueue($"Copy : [{commentModel.Comment}]");
         }
 
+
+        //================= URLFORM削除 ========================================
+        private void Click_ClearPunrecUrlText(object sender, RoutedEventArgs e)
+        {
+            PunrecUrlText.Text = string.Empty;
+        }
+
+        private void Click_ClearNicoUrlText(object sender, RoutedEventArgs e)
+        {
+            NicoUrlText.Text = string.Empty;
+        }
     }
 }

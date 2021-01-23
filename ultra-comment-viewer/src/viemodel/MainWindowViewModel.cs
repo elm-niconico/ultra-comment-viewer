@@ -230,7 +230,16 @@ namespace ultra_comment_viewer.src.viemodel
 
         private string _updateTime;
 
+        private bool _punNotConnect = true;
+
         public DateTime PunrecStartDateTime { get; set; }
+
+        public bool IsNotConnectPunrecLive 
+        { 
+            get => _punNotConnect;
+            set => SetProperty(ref _punNotConnect, value); 
+        }
+
         
         public BitmapImage PunrecThumbnail
         {
@@ -269,6 +278,6 @@ namespace ultra_comment_viewer.src.viemodel
             get => _updateTime;
             set => SetProperty(ref _updateTime, value);
         }
-
+        
     }
 }

@@ -18,7 +18,7 @@ namespace ultra_comment_viewer.src.model.websocket.niconico
     {
         private readonly NicoRestClient _rest;
 
-        public NicoWebSocketClient(NicoRestClient client)
+        public NicoWebSocketClient(NicoRestClient client) : base(new TimeSpan(0,1,0))
         {
             this._rest = client;
             this.ItswebSocketClient.Options.SetRequestHeader("Sec-WebSocket-Extensions", "permessage-deflate; client_max_window_bits");
@@ -31,25 +31,14 @@ namespace ultra_comment_viewer.src.model.websocket.niconico
         {
   
             await SendMessageToCommentServerAsync();
-            var dateManager = new LiveDateManager();
-            await foreach(var response in this.ItsOpeator.ReceiveResponseAsync())
+            await foreach(var response in this.ItsOpeator.ReceiveResponseAsync(interval: 60,message:""))
             {
-                SendPing(dateManager);
                 yield return response;
 
             }
         }
 
-        private void SendPing(LiveDateManager manager)
-        {
-          
-            if (manager.HasTimePassed(60))
-            {
-                var segment = new ArraySegment<byte>(Encoding.UTF8.GetBytes(""));
 
-                this.ItswebSocketClient.SendAsync(segment, WebSocketMessageType.Text, true, CancellationToken.None);
-            }
-        }
 
         private long ExtractCurrentTime()
         {

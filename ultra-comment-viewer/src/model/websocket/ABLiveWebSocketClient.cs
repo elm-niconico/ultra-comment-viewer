@@ -17,9 +17,8 @@ namespace ultra_comment_viewer.src.model.websocket
 
         protected ClientWebSocket ItswebSocketClient = new ClientWebSocket();
 
-        public ABLiveWebSocketClient()
+        public ABLiveWebSocketClient(TimeSpan timeSpan)
         {
-            var timeSpan = new TimeSpan(0,01,0);
             this.ItswebSocketClient.Options.KeepAliveInterval = timeSpan;
         }
 

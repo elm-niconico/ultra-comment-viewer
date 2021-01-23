@@ -1,4 +1,4 @@
-﻿<Window x:Class="ultra_comment_viewer.src.view.window.NicoNicoUserInfoWindow"
+﻿<Window x:Class="ultra_comment_viewer.src.view.window.PunrecUserInfoWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:ultra_comment_viewer.src.view.window"
         xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="NicoNicoUserInfoWindow" Height="700" Width="600">
-    <StackPanel>
+        Title="PunrecUserInfoWindow" Height="700" Width="600">
+     <StackPanel>
 
         <StackPanel Height="600" Width="400"
             >
@@ -28,8 +28,9 @@
                     <RowDefinition Height="55*"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock
-                    Background="Yellow"
+                <Image
+                    Stretch="UniformToFill"
+                    Source="{Binding CoverImage}"
                     Grid.RowSpan="2" 
                     Grid.ColumnSpan="5"
                     />

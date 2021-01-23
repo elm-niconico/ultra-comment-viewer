@@ -11,6 +11,9 @@ namespace ultra_comment_viewer.src.model.websocket
 {
     public class TwicasWebSocketClient : ABLiveWebSocketClient
     {
+
+        public TwicasWebSocketClient(): base(new TimeSpan(0, 0, 10)) { }
+
         public override async Task DisconnectServer(WebSocketCloseStatus status, string message)
         {
             if (this.ItsOpeator.NotNull())
@@ -23,7 +26,7 @@ namespace ultra_comment_viewer.src.model.websocket
 
         protected override async IAsyncEnumerable<string> ReceiveResponse()
         {
-            await foreach(var response in this.ItsOpeator.ReceiveResponseAsync())
+            await foreach(var response in this.ItsOpeator.ReceiveResponseAsync(interval:10,message:""))
             {
                 yield return response;
             }

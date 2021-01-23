@@ -29,11 +29,8 @@ namespace ultra_comment_viewer.src.model.http.openrec
 
         public async Task<string> GetWebSocketUrlAsync(string id)
         {
-            var json = await ElmHttpClientUtil.WrapGetAsync(PunrecApi.GET_MOVIE_ID_API(id));
-            
-            var cnv = new ElmJsonConverter();
-            _channelInfo = cnv.ConvertToJsonModel<List<PunrecChannelInfoJsonModel>>(json)[0];
-           
+            var cr = new ChannelInfoRestClient();
+            _channelInfo = await cr.FetchChannelInfo(id); 
             SetLiveInfo();
 
             var movieId =  _channelInfo.movie_id.ToString();

@@ -7,6 +7,7 @@ namespace ultra_comment_viewer.src.viemodel
     public enum LiveSiteName
     {
         NICONICO,
-        TWICAS
+        TWICAS,
+        OPENREC,
     }
 }

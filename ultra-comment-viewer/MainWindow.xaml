@@ -158,7 +158,7 @@
             >
                 <StackPanel
                     Margin="0 3"
-                    Orientation="Horizontal"
+                    Orientation="Vertical"
                     >
 
                 <!-- OpenrecURlForm -->
@@ -166,17 +166,42 @@
                     Margin="20 0"
                     Orientation="Horizontal"
                     >
-                    <TextBox
-                        
+                    <Grid
+                        Width="500"
+                        >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                         <TextBox
                             x:Name="PunrecUrlText"
-                            Width="200"
+                            Grid.ColumnSpan="2"
                             md:HintAssist.Hint="Openrecの放送URlを入力して下さい"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                             VerticalAlignment="Top"
-                             />
+                            />
+                        <Button
+                            HorizontalAlignment="Right"
+                            Grid.Column="1"
+                            Width="25"
+                            Height="25"
+                            Click="Click_ClearPunrecUrlText"
+                            BorderBrush="White"
+                            Background="White"
+                            Foreground="Gray"
+                            Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                            >
+                            <md:PackIcon
+                                Kind="CloseOutline"
+                                Height="10"
+                                Width="10" />    
+                        </Button>
+                    </Grid>
+                   
                     <Button
                                 Content="接続"
                                 Width="60"
+                        IsEnabled="{Binding IsNotConnectPunrecLive}"
                                 Margin="10 10 0 0"
                                 Height="25" 
                                 Cursor="Hand"
@@ -188,7 +213,7 @@
                             BorderBrush="DodgerBlue"
                             Background="DeepSkyBlue"
                             Content="切断"
-
+                            Click="Click_DisconnectPunrecServer"
                             Width="60"
                             Margin="10 10 0 0"
                             Height="25" 
@@ -201,15 +226,37 @@
                             Margin="20 3 0 0"
                             Orientation="Horizontal"
                             >
-                    <TextBox
-                        x:Name="NicoUrlText"
-                        Width="200"
-                        Text="{Binding LiveUrlWrittenByNicoNicoForm, UpdateSourceTrigger=PropertyChanged}"
-                        md:HintAssist.Hint="ニコニコの放送URlを入力して下さい"
-                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        VerticalAlignment="Center"
-                    
-                         />
+                    <Grid
+                        Width="500"
+                        >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox
+                            x:Name="NicoUrlText"
+                            Grid.ColumnSpan="2"
+                            md:HintAssist.Hint="ニコニコの放送URlを入力して下さい"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            VerticalAlignment="Top"
+                            />
+                        <Button
+                            HorizontalAlignment="Right"
+                            Grid.Column="1"
+                            Width="25"
+                            Height="25"
+                            Click="Click_ClearNicoUrlText"
+                            BorderBrush="White"
+                            Background="White"
+                            Foreground="Gray"
+                            Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                            >
+                            <md:PackIcon
+                                Kind="CloseOutline"
+                                Height="10"
+                                Width="10" />
+                        </Button>
+                    </Grid>
                     <Button
                         Content="接続"
                         Width="60"
@@ -437,9 +484,11 @@
                     <StackPanel Orientation="Horizontal"
                                 >
                          <Image
+                             
                              HorizontalAlignment="Left"
                              Source="{Binding PunrecThumbnail}"
-                             Width="140"
+                             Margin="7 0"
+                             Width="128"
                              />       
                         <StackPanel
                             Width="440"

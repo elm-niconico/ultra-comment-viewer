@@ -7,8 +7,11 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using ultra_comment_viewer.src.commons.extends_mothod;
 using ultra_comment_viewer.src.model.http;
+using ultra_comment_viewer.src.model.http.openrec;
 using ultra_comment_viewer.src.model.json.model.niconico.user_page;
+using ultra_comment_viewer.src.model.json.model.openrec.channel;
 using ultra_comment_viewer.src.model.parser;
+using ultra_comment_viewer.src.model.parser.opnrec;
 using ultra_comment_viewer.src.model.xml.converter;
 using ultra_comment_viewer.src.model.xml.model;
 using ultra_comment_viewer.src.viemodel;
@@ -27,11 +30,58 @@ namespace ultra_comment_viewer.src.viewLogic.factory
 
                 case LiveSiteName.NICONICO:
                     return await CreateNicoNicoUserInfoWindow(model, window);
-                
+                case LiveSiteName.OPENREC:
+                    return await CreatePunrecUserInfoWindow(model);
                 default:
                     MessageBox.Show(Messages.NOT_SUPPORT_WINDOW_TYPE);
                     throw new NullReferenceException();
             }
+        }
+
+
+        private async Task<PunrecUserInfoWindow> CreatePunrecUserInfoWindow(CommentViewModel comment)
+        {
+            var info  = await FetchUserInfoAysnc(comment);
+
+
+            var model = new PunrecUserInfoViewModel()
+            {
+                UserName = comment.UserName,
+                UserId = comment.UserId,
+                UserIcon = comment.Image,
+                CoverImage = info.thumbnail,
+                ProfileDescription = info.Descripton,
+
+               
+            };
+            return new PunrecUserInfoWindow(model);
+        }
+
+        private async Task<Info> FetchUserInfoAysnc(CommentViewModel comment)
+        {
+            var rest = new ChannelInfoRestClient();
+            var info = await rest.FetchChannelInfo(comment.UserId);
+            var thumbnail = (info.NotNull()) ?
+                CreateThumbnail(info.channel.cover_image_url) :
+                CreateThumbnail("https://www.openrec.tv/viewapp/images/v8/img_back.png");
+
+            var html = await rest.LoadToUserHtml(comment.UserId);
+            var parser = new PunrecUserHtmlParser(html);
+
+            var description = parser.GetDescription(); 
+      
+
+            return new Info() 
+            {
+                Descripton = description,
+                thumbnail = thumbnail
+            };
+        }
+
+        private class Info
+        {
+            public string Descripton { get; set; }
+            public BitmapImage thumbnail { get; set; }
         }
 
         private async Task<NicoNicoUserInfoWindow> CreateNicoNicoUserInfoWindow(CommentViewModel model, Window window)

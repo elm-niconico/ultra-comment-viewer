@@ -31,31 +31,50 @@ namespace ultra_comment_viewer.src.commons.util
         public async Task<bool> StartConnectServer(string webSocketUrl)
         {
             if (this._webSocketClient.State != WebSocketState.Open)
-         
                 await this._webSocketClient.ConnectAsync(new Uri(webSocketUrl), CancellationToken.None);
             return IsOpen();
         }
 
         private bool IsOpen() => this._webSocketClient.NotNull() && this._webSocketClient.State == WebSocketState.Open; 
 
-        public async IAsyncEnumerable<string> ReceiveResponseAsync()
+        public async IAsyncEnumerable<string> ReceiveResponseAsync(int interval, string message)
         {
             var buffer = new byte[10000];
+            var dm = new LiveDateManager();
+
+            await SendPing(message);
+            var i = 0;
+
+
 
             while (IsOpen())
             {
+               
+
+                
+                if (dm.HasTimePassed(interval))
+                {
+                    await SendPing(message);
+                }
+                
                 var segment = new ArraySegment<byte>(buffer);
-                WebSocketReceiveResult response = null;
+
+
+                Task<WebSocketReceiveResult> task = null;
                 try
                 {
-                    response = await this._webSocketClient.ReceiveAsync(segment, CancellationToken.None);
-                }catch(Exception e)
+       
+                    task= this._webSocketClient.ReceiveAsync(segment, CancellationToken.None);
+                }
+                catch(Exception e)
                 {
-                    Debug.WriteLine(e.Message);
+
                 }
 
+                var response =  await FetchResponseMessage(task, interval, message, dm);
                 if (response != null)
                 {
+
                     if (response.MessageType == WebSocketMessageType.Close)
                     {
                         if (this._webSocketClient.State != WebSocketState.Closed)
@@ -63,15 +82,49 @@ namespace ultra_comment_viewer.src.commons.util
                         yield break;
                     }
 
-                    yield return Encoding.UTF8.GetString(buffer, 0, response.Count);
-
+                    var res = Encoding.UTF8.GetString(buffer, 0, response.Count);
+                   
+                    yield return res;
 
                 }
                 else
                 {
                     yield return null;
                 }
+
+
             }
+            
+        }
+
+        private async Task<WebSocketReceiveResult> FetchResponseMessage(Task<WebSocketReceiveResult> task,
+                                                             int time,
+                                                             string message,
+                                                             LiveDateManager dm
+                                                             )
+        {
+            if (task.IsNull()) return null;
+
+            await Task.Run(async () =>
+            {
+                while (task.IsCompleted == false)
+                {
+                    if (dm.HasTimePassed(time))
+                    {
+                        await SendPing(message);
+                    }
+
+                }
+            });
+            
+
+            return task.Result;
+        }
+
+        private async Task SendPing(string message)
+        {
+            var segement = new ArraySegment<byte>(Encoding.UTF8.GetBytes(message));
+            await _webSocketClient.SendAsync(segement, WebSocketMessageType.Text, endOfMessage: true, CancellationToken.None);
         }
 
         public async Task DisConnectServer(WebSocketCloseStatus status, string message)
@@ -91,7 +144,6 @@ namespace ultra_comment_viewer.src.commons.util
         public void DisposeInstance()
         {
             this._webSocketClient.Dispose();
-            this._webSocketClient = null;
             this._observer.Notify();
 
         }

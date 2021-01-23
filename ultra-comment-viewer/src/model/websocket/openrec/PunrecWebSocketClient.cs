@@ -5,36 +5,32 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ultra_comment_viewer.src.commons;
+using ultra_comment_viewer.src.commons.extends_mothod;
 
 namespace ultra_comment_viewer.src.model.websocket.openrec
 {
     public class PunrecWebSocketClient : ABLiveWebSocketClient
     {
-        public override Task DisconnectServer(WebSocketCloseStatus status, string message)
+
+        public PunrecWebSocketClient() : base(new TimeSpan(0, 0, 10)) { }
+        public async override Task DisconnectServer(WebSocketCloseStatus status, string message) 
         {
-            throw new NotImplementedException();
+            if (ItsOpeator.NotNull())
+            {
+                await ItsOpeator.DisConnectServer(WebSocketCloseStatus.NormalClosure, Messages.CLOSE_SERVER_NORMAL);
+            }
         }
 
         protected async override IAsyncEnumerable<string> ReceiveResponse()
         {
-            var dateManager = new LiveDateManager();
-            await foreach (var response in this.ItsOpeator.ReceiveResponseAsync())
+            await foreach (var response in this.ItsOpeator.ReceiveResponseAsync(interval:10, message:"2"))
             {
-                await SendPing(dateManager);
                 yield return response;
-
             }
 
         }
 
-        private async Task SendPing(LiveDateManager dateManager)
-        {
-            if (dateManager.HasTimePassed(10))
-            {
-                var segement = new ArraySegment<byte>(Encoding.UTF8.GetBytes("2"));
-                await ItswebSocketClient.SendAsync(segement, WebSocketMessageType.Text, endOfMessage: true, CancellationToken.None);
-            }
-        }
+        
 
     }
 }
