@@ -30,6 +30,8 @@
     <None Remove="Resources\elm_icon.ico" />
     <None Remove="Resources\guest_nico.jpg" />
     <None Remove="Resources\not_use_boyomi.png" />
+    <None Remove="Resources\premium.png" />
+    <None Remove="Resources\punrec-premium.png" />
     <None Remove="Resources\ニコニテレビ君-blue.png" />
     <None Remove="Resources\ニコニテレビ君-gray.png" />
     <None Remove="Resources\ニコニテレビ君-green.png" />
@@ -64,6 +66,8 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\not_use_boyomi.png" />
+    <Resource Include="Resources\premium.png" />
+    <Resource Include="Resources\punrec-premium.png" />
     <Resource Include="Resources\ニコニテレビ君-blue.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>

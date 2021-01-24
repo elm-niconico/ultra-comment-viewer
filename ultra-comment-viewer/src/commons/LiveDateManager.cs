@@ -22,6 +22,19 @@ namespace ultra_comment_viewer.src.commons
 
             this._beforeTime = now;
             return true;
+            
+        }
+
+        public DateTime FromString(string date)
+        {
+            try
+            {
+                return DateTime.ParseExact(date, "yyyy-MM-dd HH:mm:ss", null);
+            }
+            catch
+            {
+                return DateTime.Today;
+            }    
         }
 
         public DateTime FromUnixTime(long unixTime)

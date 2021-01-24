@@ -25,6 +25,8 @@ namespace ultra_comment_viewer.src.model.json.converter
     {
         private readonly LiveDateManager _manager = new LiveDateManager();
 
+        private readonly BitmapImage _premiumIcon = new BitmapImage(new Uri("Resourcespremium.png",UriKind.Relative));
+        
         public override async Task<CommentViewModel> CovertToCommentViewModel(string responseJson)
         {
             var jsonConverter = new ElmJsonConverter();
@@ -39,7 +41,7 @@ namespace ultra_comment_viewer.src.model.json.converter
             var userId = model.chat.user_id;
 
             var style = await NicoCommentStyle.BuildCommentStyle(commentKind, userId);
-
+            var postTime = _manager.FromUnixTime(model.chat.date);
 
             return new CommentViewModel()
             {
@@ -51,8 +53,10 @@ namespace ultra_comment_viewer.src.model.json.converter
                 ChatKind = commentKind,
                 Image = style.UserIcon,
                 No = model.chat.no,
-                PostTime = _manager.FromUnixTime(model.chat.date),
+                PostTime = postTime,
+                PostTimeString = postTime.ToString(),
                 Status = GetStatus(model.chat.premium),
+                PremiumICon =  (model.chat.premium == 3)? _premiumIcon : null
             };
         }
 

@@ -25,8 +25,7 @@ namespace ultra_comment_viewer.src.viewLogic
         private readonly ABDisconnectObserver _observer;
 
         private readonly BouyomiChanClient _boyomiChan;
-
-
+        
         public CommentGenerator(ObservableCollection<CommentViewModel> collections, ABDisconnectObserver observer)
         {
             this._collections = collections;
@@ -41,13 +40,13 @@ namespace ultra_comment_viewer.src.viewLogic
         {
             this._server = server;
             var logger = new Logger();
-           // var comegene = await ComeGeneWebSocketClient.BuildAsync("ws://127.0.0.1:5001");
+           //var comegene = await ComeGeneWebSocketClient.BuildAsync("ws://localhost:5001/");
 
             await foreach(var commentModel in _server.FetchCommentAsync(userId, this._observer))
             {
                 this._boyomiChan.SendComment(commentModel.Comment);
                 //await comegene.SendMessage(commentModel);
-                //logger.PushLog(commentModel);
+                logger.PushLog(commentModel);
                 _collections.Add(commentModel);
                 scrollChange();
             }

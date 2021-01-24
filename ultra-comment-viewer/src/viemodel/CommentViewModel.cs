@@ -31,7 +31,11 @@ namespace ultra_comment_viewer.src.viemodel
 
         //ユーザーのステータス(プレミアムや一般)
         public ListenerStatus Status { get; set; }
+        
+        public BitmapImage PremiumICon { get; set; }
 
+        public string PostTimeString { get; set; }
+        
         public static CommentViewModel BuildDisconnectModel()
         {
             return new CommentViewModel()

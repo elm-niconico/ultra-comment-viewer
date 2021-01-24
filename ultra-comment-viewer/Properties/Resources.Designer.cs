@@ -103,6 +103,26 @@ namespace ultra_comment_viewer.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap premium {
+            get {
+                object obj = ResourceManager.GetObject("premium", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap punrec_premium {
+            get {
+                object obj = ResourceManager.GetObject("punrec_premium", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap ニコニテレビ君_blue {
             get {
                 object obj = ResourceManager.GetObject("ニコニテレビ君_blue", resourceCulture);

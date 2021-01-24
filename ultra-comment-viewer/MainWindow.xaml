@@ -205,10 +205,10 @@
                                 Margin="10 10 0 0"
                                 Height="25" 
                                 Cursor="Hand"
-                                Background="Crimson"
-                                BorderBrush="Red"
-                                Click="Click_ConnectionPunrecServer"
-                                />
+                                Background="#DC245C"
+                                BorderBrush="#FF7B57"
+                                Click="Click_ConnectionPunrecServer">
+                    </Button>
                     <Button
                             BorderBrush="DodgerBlue"
                             Background="DeepSkyBlue"
@@ -606,46 +606,82 @@
                         <StackPanel
                             Margin="20 0 0 0"
                             Orientation="Horizontal"
-                            Height="50"
+ 
+
                             >
                             <StackPanel
-                                Width="70"
-                                Margin="0 0 20 0"
+                                Height="40"
+                                Width="50"             
                                 >
-                                <!-- ユーザーアイコン -->
-                                <Image
-                                    Height="40"
-                                    Width="40"
-                                    Source="{Binding Image}"
-                                    Grid.Row="0"
-                                    Grid.Column="0"
-                                    />
                                 <!-- ユーザーネーム -->
                                 <TextBlock
+                                    Height="20"
                                     TextWrapping="Wrap"
                                     Text="{Binding UserName}"
                                     FontSize="8"
                                     VerticalAlignment="Center"
                                     />
+                                <TextBlock
+                                    VerticalAlignment="Bottom"
+                                    FontSize="10"
+                                    Foreground="Black"
+                                    
+                                    
+                                    Text="{Binding No}"
+                                ></TextBlock>
+                           
+                            
                             </StackPanel>
+
+                            <Grid
+                                
+                                Height="40"
+                                Width="60"
+                                Margin="0 0 10 0"
+                                >
+
+                                <!-- ユーザーアイコン -->
+                                <Image
+        
+                                    Height="35"
+                                    Width="35"
+                                    Source="{Binding Image}"
+
+                                    />
+                                <Image
+                                    Source="{Binding PremiumICon}"
+                                    Width="17"
+                                    Height="17"
+                                    Margin="40 0 0 20"
+                                    />
+                            </Grid>
                             <!-- コメント -->
                             <md:Card
                                 Cursor="Hand"
                                 MouseMove="MouseMove_CommentDrag"
                                 VerticalAlignment="Top"
-                                Width="450"
+                                Width="300"
+                                Padding="10"
                                 ToolTip="{Binding Comment}"
                                 md:UniformCornerRadius="7"
                                 Background="{Binding CommentColor}"
                                 >
-                                <TextBlock 
+                          
+                                <TextBlock
                                     FontWeight="DemiBold"
-                                    Margin="15"
                                     HorizontalAlignment="Left"
-                                    FontSize="12"
+                                    FontSize="11"
+                                    TextWrapping="Wrap"
                                     Text="{Binding Comment}"      
                                      />
                             </md:Card>
+                            <TextBlock
+                                VerticalAlignment="Bottom"
+                                Text="{Binding PostTimeString}"
+                                Margin="10 0 0 3"
+                                Foreground="Gray"
+                                FontSize="10"
+                                />
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>

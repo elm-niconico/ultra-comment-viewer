@@ -47,7 +47,7 @@ namespace ultra_comment_viewer
 
             this.DataContext = this._model;
 
-
+            
             var bouyomi = new BouyomiChanClient();
             var bouyomiSettings = BouyomiSettingsModel.GetInstance();
 
