@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Prism.Mvvm;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ultra_comment_viewer.src.commons;
@@ -8,8 +11,10 @@ using ultra_comment_viewer.src.viemodel.status;
 
 namespace ultra_comment_viewer.src.viemodel
 {
-    public class CommentViewModel
+    public class CommentViewModel :BindableBase
     {
+        private int _size = 11;
+
         public BitmapImage Image { get; set; }
         public string UserName   { get; set; }
         public string Comment    { get; set; }
@@ -35,6 +40,18 @@ namespace ultra_comment_viewer.src.viemodel
         public BitmapImage PremiumICon { get; set; }
 
         public string PostTimeString { get; set; }
+
+      
+        public int CommentSize 
+        {
+            
+            get => _size;
+            set => SetProperty(ref _size, value);
+        }
+
+        public FontWeight CommentWeight { get; set; }
+
+        
         
         public static CommentViewModel BuildDisconnectModel()
         {

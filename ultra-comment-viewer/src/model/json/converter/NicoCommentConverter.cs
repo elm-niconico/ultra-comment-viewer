@@ -4,11 +4,14 @@ using System.Diagnostics;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ultra_comment_viewer.src.commons;
 using ultra_comment_viewer.src.commons.extends_mothod;
 using ultra_comment_viewer.src.commons.strings.api;
+using ultra_comment_viewer.src.model.check;
 using ultra_comment_viewer.src.model.http;
 using ultra_comment_viewer.src.model.json.model.niconico;
 using ultra_comment_viewer.src.model.parser;
@@ -27,6 +30,9 @@ namespace ultra_comment_viewer.src.model.json.converter
 
         private readonly BitmapImage _premiumIcon = new BitmapImage(new Uri("Resourcespremium.png",UriKind.Relative));
         
+
+        private CommentChecker _checker = new CommentChecker();
+
         public override async Task<CommentViewModel> CovertToCommentViewModel(string responseJson)
         {
             var jsonConverter = new ElmJsonConverter();
@@ -43,6 +49,9 @@ namespace ultra_comment_viewer.src.model.json.converter
             var style = await NicoCommentStyle.BuildCommentStyle(commentKind, userId);
             var postTime = _manager.FromUnixTime(model.chat.date);
 
+            
+            var textStyle = _checker.CreateStyle(userId);
+ 
             return new CommentViewModel()
             {
                 UserId = userId,
@@ -56,7 +65,9 @@ namespace ultra_comment_viewer.src.model.json.converter
                 PostTime = postTime,
                 PostTimeString = postTime.ToString(),
                 Status = GetStatus(model.chat.premium),
-                PremiumICon =  (model.chat.premium == 3)? _premiumIcon : null
+                PremiumICon =  (model.chat.premium == 3)? _premiumIcon : null,
+                CommentWeight = textStyle.Weight,
+                CommentSize = textStyle.FontSize
             };
         }
 

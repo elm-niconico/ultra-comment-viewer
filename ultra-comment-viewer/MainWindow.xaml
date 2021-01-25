@@ -662,15 +662,16 @@
                                 VerticalAlignment="Top"
                                 Width="300"
                                 Padding="10"
+                                
                                 ToolTip="{Binding Comment}"
                                 md:UniformCornerRadius="7"
                                 Background="{Binding CommentColor}"
                                 >
                           
                                 <TextBlock
-                                    FontWeight="DemiBold"
+                                    FontWeight="{Binding CommentWeight}" 
+                                    FontSize="{Binding CommentSize}"
                                     HorizontalAlignment="Left"
-                                    FontSize="11"
                                     TextWrapping="Wrap"
                                     Text="{Binding Comment}"      
                                      />
