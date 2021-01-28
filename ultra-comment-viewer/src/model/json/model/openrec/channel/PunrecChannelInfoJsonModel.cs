@@ -6,12 +6,12 @@ namespace ultra_comment_viewer.src.model.json.model.openrec.channel
 {
      public class SpriteImage    {
         public string url { get; set; } 
-        public int interval { get; set; } 
-        public int width { get; set; } 
-        public int height { get; set; } 
-        public int cols { get; set; } 
-        public int rows { get; set; } 
-        public int start_page { get; set; } 
+        public int? interval { get; set; } 
+        public int? width { get; set; } 
+        public int? height { get; set; } 
+        public int? cols { get; set; } 
+        public int? rows { get; set; } 
+        public int? start_page { get; set; } 
         public string ext { get; set; } 
     }
 
@@ -39,16 +39,16 @@ namespace ultra_comment_viewer.src.model.json.model.openrec.channel
     public class Channel    {
         public string id { get; set; } 
         public bool registered_user_id { get; set; } 
-        public int openrec_user_id { get; set; } 
-        public int recxuser_id { get; set; } 
+        public int? openrec_user_id { get; set; } 
+        public int? recxuser_id { get; set; } 
         public string nickname { get; set; } 
         public string introduction { get; set; } 
         public string icon_image_url { get; set; } 
         public string l_icon_image_url { get; set; } 
         public string cover_image_url { get; set; } 
         public string l_cover_image_url { get; set; } 
-        public int follows { get; set; } 
-        public int followers { get; set; } 
+        public int? follows { get; set; } 
+        public int? followers { get; set; } 
         public bool is_premium { get; set; } 
         public bool is_official { get; set; } 
         public bool is_fresh { get; set; } 
@@ -56,7 +56,7 @@ namespace ultra_comment_viewer.src.model.json.model.openrec.channel
         public bool is_team { get; set; } 
         public bool is_league_yell { get; set; } 
         public bool is_live { get; set; } 
-        public int live_views { get; set; } 
+        public int? live_views { get; set; } 
         public bool is_viewers_hidden { get; set; } 
         public DateTime registered_at { get; set; } 
         public DateTime last_updated_at { get; set; } 
@@ -68,8 +68,8 @@ namespace ultra_comment_viewer.src.model.json.model.openrec.channel
         public object user_status { get; set; } 
         public bool is_creator { get; set; } 
         public string name { get; set; } 
-        public int movies { get; set; } 
-        public int views { get; set; } 
+        public int? movies { get; set; } 
+        public int? views { get; set; } 
         public string chat_rule { get; set; } 
         public object twitter_screen_name { get; set; } 
         public object ga_tracking_id { get; set; } 
@@ -87,13 +87,13 @@ namespace ultra_comment_viewer.src.model.json.model.openrec.channel
         public bool is_official_hidden { get; set; } 
         public bool limited_unsubs_member_chat { get; set; } 
         public bool limited_continuous_chat { get; set; } 
-        public int continuous_chat_threshold { get; set; } 
+        public int? continuous_chat_threshold { get; set; } 
         public bool limited_unfollower_chat { get; set; } 
-        public int unfollower_chat_threshold { get; set; } 
+        public int? unfollower_chat_threshold { get; set; } 
         public bool limited_fresh_user_chat { get; set; } 
-        public int fresh_user_chat_threshold { get; set; } 
+        public int? fresh_user_chat_threshold { get; set; } 
         public bool limited_temporary_blacklist { get; set; } 
-        public int temporary_blacklist_threshold { get; set; } 
+        public int? temporary_blacklist_threshold { get; set; } 
         public bool limited_warned_user_chat { get; set; } 
         public string chat_rule { get; set; } 
         public bool chat_terms_required { get; set; } 
@@ -109,7 +109,7 @@ namespace ultra_comment_viewer.src.model.json.model.openrec.channel
 
     public class Game    {
         public string id { get; set; } 
-        public int game_id { get; set; } 
+        public int? game_id { get; set; } 
         public string title { get; set; } 
         public string introduction { get; set; } 
         public string title_image_url { get; set; } 
@@ -118,10 +118,10 @@ namespace ultra_comment_viewer.src.model.json.model.openrec.channel
         public string play_store_url { get; set; } 
         public string schema_url { get; set; } 
         public string package_name { get; set; } 
-        public int license_status { get; set; } 
+        public int? license_status { get; set; } 
         public string notice_message { get; set; } 
-        public int monetize_status { get; set; } 
-        public int cero_rating { get; set; } 
+        public int? monetize_status { get; set; } 
+        public int? cero_rating { get; set; } 
         public bool is_portrait { get; set; } 
         public DateTime? released_at { get; set; } 
         public object maker { get; set; } 
@@ -138,33 +138,33 @@ namespace ultra_comment_viewer.src.model.json.model.openrec.channel
 
     public class ViewHistory    {
         public object views_at { get; set; } 
-        public int play_position { get; set; } 
+        public int? play_position { get; set; } 
     }
 
     public class PunrecChannelInfoJsonModel   
     {
         public string id { get; set; } 
-        public int movie_id { get; set; } 
+        public int? movie_id { get; set; } 
         public string title { get; set; } 
         public string introduction { get; set; } 
         public bool is_hidden { get; set; } 
         public bool is_live { get; set; } 
-        public int onair_status { get; set; } 
+        public int? onair_status { get; set; } 
         public string movie_type { get; set; } 
         public string upload_status { get; set; } 
-        public int monetize_status { get; set; } 
+        public int? monetize_status { get; set; } 
         public string thumbnail_url { get; set; } 
         public string l_thumbnail_url { get; set; } 
         public string s_thumbnail_url { get; set; } 
         public string l_sprite_image_url { get; set; } 
         public string s_sprite_image_url { get; set; } 
-        public List<int> sprite_intervals { get; set; } 
+        public List<int?> sprite_intervals { get; set; } 
         public SpriteImage sprite_image { get; set; } 
         public object cover_image_url { get; set; } 
         public bool is_cover_image_icon { get; set; } 
         public int? live_views { get; set; } 
         public int? total_views { get; set; } 
-        public int total_yells { get; set; } 
+        public int? total_yells { get; set; } 
         public bool is_mobile { get; set; } 
         public bool is_low_latency { get; set; } 
         public bool is_dvr { get; set; } 
@@ -181,18 +181,18 @@ namespace ultra_comment_viewer.src.model.json.model.openrec.channel
         public DateTime ended_at { get; set; } 
         public object will_start_at { get; set; } 
         public object will_end_at { get; set; } 
-        public int start_time { get; set; } 
-        public int play_time { get; set; } 
+        public int? start_time { get; set; } 
+        public int? play_time { get; set; } 
         public bool is_banned { get; set; } 
-        public int ban_type { get; set; } 
-        public int orientation { get; set; } 
-        public int device_type { get; set; } 
+        public int? ban_type { get; set; } 
+        public int? orientation { get; set; } 
+        public int? device_type { get; set; } 
         public string broadcast_type { get; set; } 
         public object width { get; set; } 
         public object height { get; set; } 
-        public int connect_count { get; set; } 
+        public int? connect_count { get; set; } 
         public object continue_ticket_count { get; set; } 
-        public int play_list_id { get; set; } 
+        public int? play_list_id { get; set; } 
         public object league_id { get; set; } 
         public List<object> tags { get; set; } 
         public Media media { get; set; } 
@@ -203,7 +203,7 @@ namespace ultra_comment_viewer.src.model.json.model.openrec.channel
         public Game game { get; set; } 
         public object next { get; set; } 
         public List<object> casts { get; set; } 
-        public int popularity { get; set; } 
+        public int? popularity { get; set; } 
         public bool is_live_viewers { get; set; } 
         public bool is_viewers_hidden { get; set; } 
         public string public_type { get; set; } 
