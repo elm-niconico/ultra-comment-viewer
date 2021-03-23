@@ -26,7 +26,7 @@ namespace ultra_comment_viewer.src.model.websocket
 
         protected override async IAsyncEnumerable<string> ReceiveResponse()
         {
-            await foreach(var response in this.ItsOpeator.ReceiveResponseAsync(interval:10,message:""))
+            await foreach(var response in this.ItsOpeator.ReceiveResponseOrNullAsync(interval:10,message:""))
             {
                 yield return response;
             }

@@ -31,7 +31,7 @@ namespace ultra_comment_viewer.src.model.websocket.niconico
         {
   
             await SendMessageToCommentServerAsync();
-            await foreach(var response in this.ItsOpeator.ReceiveResponseAsync(interval: 60,message:""))
+            await foreach(var response in this.ItsOpeator.ReceiveResponseOrNullAsync(interval: 60,message:""))
             {
                 yield return response;
 

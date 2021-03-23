@@ -46,8 +46,9 @@ namespace ultra_comment_viewer.src.model.connection
                 yield break;
             }
 
-            await foreach(var response in this.ItsWebSocket.ReadCommentFromServerAsync(ItsWebSocketUrl, observer))
+            await foreach (var response in this.ItsWebSocket.ReadCommentFromServerAsync(ItsWebSocketUrl, observer))
             {
+
                 if (response.IsNull())
                 {
                     yield return CommentViewModel.BuildDisconnectModel();
@@ -55,7 +56,7 @@ namespace ultra_comment_viewer.src.model.connection
                 }
 
                 LiveStatus liveStatus = await CheckConnectionWebSocketAsync(response);
- 
+
                 switch (liveStatus)
                 {
                     case LiveStatus.SUCCESS_CONNECT:
@@ -65,9 +66,10 @@ namespace ultra_comment_viewer.src.model.connection
                         break;
                     case LiveStatus.EXIT:
                         await DisconnectServerASync();
-                        yield break;           
+                        yield break;
                 }
             }
+
         }
 
         public async Task DisconnectServerASync()

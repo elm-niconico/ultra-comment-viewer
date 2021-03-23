@@ -15,13 +15,18 @@
     <Optimize>false</Optimize>
 
     <PlatformTarget>AnyCPU</PlatformTarget>
-
+    <PublishTrimmed>true</PublishTrimmed>
+     <PublishSingleFile>true</PublishSingleFile>
+     <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
     <OutputPath></OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <WarningLevel>5</WarningLevel>
+    <PublishTrimmed>true</PublishTrimmed>
+     <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+    <PublishSingleFile>true</PublishSingleFile>
     <Optimize>false</Optimize>
   </PropertyGroup>
 

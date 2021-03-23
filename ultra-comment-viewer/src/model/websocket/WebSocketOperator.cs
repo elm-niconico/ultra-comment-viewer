@@ -13,7 +13,7 @@ namespace ultra_comment_viewer.src.commons.util
 {
     public class WebSocketOperator
     {
-        private ClientWebSocket _webSocketClient;
+        private readonly ClientWebSocket _webSocketClient;
 
         
         
@@ -37,21 +37,16 @@ namespace ultra_comment_viewer.src.commons.util
 
         private bool IsOpen() => this._webSocketClient.NotNull() && this._webSocketClient.State == WebSocketState.Open; 
 
-        public async IAsyncEnumerable<string> ReceiveResponseAsync(int interval, string message)
+        public async IAsyncEnumerable<string> ReceiveResponseOrNullAsync(int interval, string message)
         {
             var buffer = new byte[10000];
             var dm = new LiveDateManager();
 
             await SendPing(message);
-            var i = 0;
-
-
 
             while (IsOpen())
             {
-               
-
-                
+              
                 if (dm.HasTimePassed(interval))
                 {
                     await SendPing(message);
@@ -68,10 +63,10 @@ namespace ultra_comment_viewer.src.commons.util
                 }
                 catch(Exception e)
                 {
-
+                    MessageBox.Show(e.Message);
                 }
 
-                var response =  await FetchResponseMessage(task, interval, message, dm);
+                var response =  await SendPingAndFetchResponseTypeAsync(task, interval, message, dm);
                 if (response != null)
                 {
 
@@ -82,8 +77,15 @@ namespace ultra_comment_viewer.src.commons.util
                         yield break;
                     }
 
-                    var res = Encoding.UTF8.GetString(buffer, 0, response.Count);
-                   
+                    String res = null;
+                    try
+                    {
+                        res =  Encoding.UTF8.GetString(buffer, 0, response.Count);
+                    }catch(ArgumentException ex)
+                    {
+                        MessageBox.Show($"ArugumentError : {ex.Message}");
+                    }
+
                     yield return res;
 
                 }
@@ -92,12 +94,11 @@ namespace ultra_comment_viewer.src.commons.util
                     yield return null;
                 }
 
-
             }
             
         }
 
-        private async Task<WebSocketReceiveResult> FetchResponseMessage(Task<WebSocketReceiveResult> task,
+        private async Task<WebSocketReceiveResult> SendPingAndFetchResponseTypeAsync(Task<WebSocketReceiveResult> task,
                                                              int time,
                                                              string message,
                                                              LiveDateManager dm
@@ -124,7 +125,14 @@ namespace ultra_comment_viewer.src.commons.util
         private async Task SendPing(string message)
         {
             var segement = new ArraySegment<byte>(Encoding.UTF8.GetBytes(message));
-            await _webSocketClient.SendAsync(segement, WebSocketMessageType.Text, endOfMessage: true, CancellationToken.None);
+            try
+            {
+                 await _webSocketClient.SendAsync(segement, WebSocketMessageType.Text, endOfMessage: true, CancellationToken.None);
+            }catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+           
         }
 
         public async Task DisConnectServer(WebSocketCloseStatus status, string message)
